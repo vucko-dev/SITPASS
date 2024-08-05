@@ -1,0 +1,54 @@
+<div>
+    <app-navbar></app-navbar>
+    <div class="search-parametars">
+        <input type="text" class="search-parametars-search" placeholder="Pretraga">
+        <app-dropdown
+        [options]="citiesOptions"
+        placeholder="Gradovi"
+        (selectionChange)="onSelectionChange($event)">
+        </app-dropdown>
+
+        <app-dropdown
+        [options]="disciplinesOptions"
+        placeholder="Discipline"
+        (selectionChange)="onSelectionChange($event)">
+        </app-dropdown>
+
+        <app-dropdown
+        [options]="lowGradeOptions"
+        placeholder="Ocena (donja granica)"
+        (selectionChange)="onSelectionChange($event)">
+        </app-dropdown>
+
+        <app-dropdown
+        [options]="highGradeOptions"
+        placeholder="Ocena (gornja granica)"
+        (selectionChange)="onSelectionChange($event)">
+        </app-dropdown>
+
+        <app-dropdown
+        [options]="lowTimeOptions"
+        placeholder="Vreme (donja granica)"
+        (selectionChange)="onSelectionChange($event)">
+        </app-dropdown>
+
+        <app-dropdown
+        [options]="highTimeOptions"
+        placeholder="Vreme (gornja granica)"
+        (selectionChange)="onSelectionChange($event)">
+        </app-dropdown>
+    </div>
+    <div class="search-results">
+        <app-object></app-object>
+        <app-object></app-object>
+        <app-object></app-object>
+        <app-object></app-object>
+        <app-object></app-object>
+        <app-object></app-object>
+        <app-object></app-object>
+        <app-object></app-object>
+        <app-object></app-object>
+        <app-object></app-object>
+    </div>
+    <app-footer></app-footer>
+</div>

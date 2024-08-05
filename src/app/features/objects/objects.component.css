@@ -1,0 +1,40 @@
+.objects-component{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.objects-component-title{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.objects-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:20px;
+    justify-content: center;
+    padding:20px 100px;
+    flex-wrap: wrap;
+}
+
+.objects-component-more-button{
+    border:1px solid lightgray;
+    padding:10px 15px;
+    border-radius: 10px;
+    background-color: #17ABE8;
+    max-width: 200px;
+    text-align: center;
+    margin-top: 30px;
+}
+.objects-component-more-button-link{
+    color: #fff!important;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    text-decoration: none;
+}

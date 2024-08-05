@@ -1,3 +1,16 @@
 <div class="object-container">
-    
+    <div class="object-container-image-container" [style.background-image]="'url(' + objectImg + ')'" routerLink="/object">
+        <!-- <img [src]="objectImg" alt="" class="object-container-image-container-image"> -->
+    </div>
+    <div class="object-container-details">  
+        <div class="object-container-details-header">
+            <div class="object-container-details-header-top">
+                <div class="object-container-details-header-top-grade">
+                    <p>{{grade}}</p>
+                </div>
+                <h2 class="object-container-details-header-top-title" routerLink="/object">{{title}}</h2>
+            </div>
+            <p class="object-container-details-header-services">{{services}}</p>
+        </div>
+    </div>
 </div>

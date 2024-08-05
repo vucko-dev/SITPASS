@@ -1,0 +1,11 @@
+<div class="dropdown">
+    <button class="dropdown-button" (click)="toggleDropdown()">
+        {{ selectedOption || placeholder }}
+    </button>
+    <div class="dropdown-content" [class.show]="isOpen">
+        <div *ngFor="let option of options" (click)="selectOption(option)">
+        {{ option }}
+        </div>
+    </div>
+</div>
+  

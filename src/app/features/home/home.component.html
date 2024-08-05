@@ -5,11 +5,15 @@
             <h2 class="home-hero-content-title">Vezbaj</h2>
             <h3 class="home-hero-content-subtitle">u najboljim teretanama, fitnes studijima i sportskim centrima širom Srbije, sa samo jednom članarinom!</h3>
             <div class="home-hero-button">
-                <a class="home-hero-button-link" routerLink="/auth">Prijavi se</a>
+                <a class="home-hero-button-link" routerLink="/objects">Pogledaj objekte</a>
             </div>
         </div>
     </div>
     <div class="home-objects">
-        <app-object></app-object>
+        <app-objects [title]="'Objekti u Vasoj blizini'"></app-objects>
+        <app-objects [title]="'Najpopularniji objekti'"></app-objects>
+        <app-objects [title]="'Objekti koje ste posetili'"></app-objects>
+        <app-objects [title]="'Isprobaj nove objekte'"></app-objects>
     </div>
+    <app-footer></app-footer>
 </div>
