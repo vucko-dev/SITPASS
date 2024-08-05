@@ -1,0 +1,21 @@
+<nav>
+    <a routerLink="/" class="nav-logo">
+        <img [src]="logoUrl" class="nav-logo-img" />
+        <h1 class="nav-logo-title">Sitpass</h1>
+    </a>
+    <div class="nav-links">
+        <a routerLink="/">Pocetna</a>
+        <a routerLink="/">Objekti</a>
+        <a routerLink="/">FAQ</a>
+        <a routerLink="/">Kontakt</a>
+        <a routerLink="/">O nama</a>
+    </div>
+    <div class="nav-buttons">
+        <div class="nav-buttons-profile">
+            <a class="nav-buttons-profile-link" routerLink="/">Nalog</a>
+        </div>
+        <div class="nav-buttons-logout">
+            <a class="nav-buttons-logout-link" routerLink="/auth">Odjavi se</a>
+        </div>
+    </div>
+</nav>

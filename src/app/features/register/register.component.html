@@ -1,0 +1,20 @@
+<div class="background-container">  
+    <div class="register-container">
+        <div class="register-container-header">
+            <img [src]="logoUrl" class="register-container-logo" />
+            <h1 class="register-container-title">SITPASS</h1>
+            <h2 class="register-container-subtitle">Uvek uz tebe</h2>
+        </div>
+        <form class="register-container-form">
+            <h3 class="register-container-form-title">Registracija</h3>
+            <label for="name">Ime i prezime:</label>
+            <input type="text" id="name" />
+            <label for="username">Korisnicko ime:</label>
+            <input type="text" id="username" />
+            <label for="password">Lozinka:</label>
+            <input type="password" id="password"/>
+            <input type="submit" class="register-container-form-submit" value="Registruj se">
+            <p class="register-container-form-auth">Imas nalog? - <a routerLink="/auth">prijavi se</a></p>
+        </form>
+    </div>
+</div>

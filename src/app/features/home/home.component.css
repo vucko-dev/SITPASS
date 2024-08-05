@@ -1,0 +1,55 @@
+.home-hero-background{
+    background:url('../../../assets/images/background_image_hero.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: stretch;
+    height: auto;
+}
+
+.home-hero-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: stretch;
+    height: auto;
+    gap: 10px;
+    min-height: 400px;
+    padding:0 100px;
+    background-color: rgba(0,0,0,0.4);
+    color: #fff;
+}
+
+.home-hero-button{
+    border:1px solid lightgray;
+    padding:15px 20px;
+    border-radius: 10px;
+    background-color: #17ABE8;
+    max-width: 200px;
+    text-align: center;
+    margin-top: 30px;
+}
+.home-hero-button-link{
+    color: #fff!important;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.home-hero-content-title{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+}
+
+.home-hero-content-subtitle{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    width: 400px;
+}
