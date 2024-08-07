@@ -24,6 +24,5 @@ export class AllobjectsComponent {
 
   onSelectionChange(selectedOption: string) {
     console.log('Selected Option:', selectedOption);
-    // Handle the selected option
   }
 }

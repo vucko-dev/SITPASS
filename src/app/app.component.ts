@@ -3,12 +3,13 @@ import { RouterOutlet, RouterModule } from '@angular/router';
 import { NavbarComponent } from './features/navbar/navbar.component';
 import { AuthComponent } from './features/auth/auth.component';
 import { RegisterComponent } from './features/register/register.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, NavbarComponent, AuthComponent, RegisterComponent],
+  imports: [RouterOutlet, RouterModule, NavbarComponent, AuthComponent, RegisterComponent, MatTabsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

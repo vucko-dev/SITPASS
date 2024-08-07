@@ -1,0 +1,37 @@
+mat-tab-group {
+  width: 1000px;
+  height:300px;
+}
+  
+mat-tab-group .mat-tab-label {
+  font-size: 16px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+mat-tab-group .mat-tab-label-active {
+  color: #17ABE8;
+}
+
+mat-tab-group .mat-tab-body {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.profile-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20px 100px;
+  align-items: center;
+  min-height: 500px;
+}
+
+.profile-content-img{
+  background: url('../../../assets/images/userimg.png');
+  width: 128px;
+  height: 128px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

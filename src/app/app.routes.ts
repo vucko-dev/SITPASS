@@ -5,6 +5,7 @@ import { RegisterComponent } from './features/register/register.component';
 import { AppComponent } from './app.component';
 import { AllobjectsComponent } from './features/allobjects/allobjects.component';
 import { DetailedObjectComponent } from './features/detailed-object/detailed-object.component';
+import { ProfileComponent } from './features/profile/profile.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'objects', component: AllobjectsComponent },
   { path: 'object', component: DetailedObjectComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '**', redirectTo: '' }  // Redirect any unknown paths to home
 ];

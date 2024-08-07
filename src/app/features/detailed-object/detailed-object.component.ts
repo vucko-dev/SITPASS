@@ -10,5 +10,6 @@ import { FooterComponent } from '../footer/footer.component';
   styleUrl: './detailed-object.component.css'
 })
 export class DetailedObjectComponent {
+  location: string = 'assets/images/placeholder.png';
 
 }
