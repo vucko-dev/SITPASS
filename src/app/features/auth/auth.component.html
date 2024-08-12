@@ -5,13 +5,13 @@
             <h1 class="auth-container-title">SITPASS</h1>
             <h2 class="auth-container-subtitle">Uvek uz tebe</h2>
         </div>
-        <form class="auth-container-form">
+        <form class="auth-container-form" (ngSubmit)="onLogin()">
             <h3 class="auth-container-form-title">Prijava</h3>
             <label for="username">Korisnicko ime:</label>
-            <input type="text" id="username" />
+            <input type="text" id="username" [(ngModel)]="username" name="username" required />
             <label for="password">Lozinka:</label>
-            <input type="password" id="password"/>
-            <input type="submit" class="auth-container-form-submit" value="Prijavi se" routerLink="/home">
+            <input type="password" id="password" [(ngModel)]="password" name="password" required />
+            <input type="submit" class="auth-container-form-submit" value="Prijavi se">
             <p class="auth-container-form-register-request">Nemas otvoren nalog? - <a routerLink="/register">registruj se</a></p>
         </form>
     </div>

@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { AllobjectsComponent } from './features/allobjects/allobjects.component';
 import { DetailedObjectComponent } from './features/detailed-object/detailed-object.component';
 import { ProfileComponent } from './features/profile/profile.component';
+import { AuthGuard } from './guards/auth.guard';
+
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'auth', component: AuthComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'objects', component: AllobjectsComponent },
-  { path: 'object', component: DetailedObjectComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'objects', component: AllobjectsComponent, canActivate: [AuthGuard] },
+  { path: 'object', component: DetailedObjectComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }  // Redirect any unknown paths to home
 ];
