@@ -1,1 +1,6 @@
+<app-message
+*ngIf="globalMessage"
+[message]="globalMessage!.text"
+[color]="globalMessage!.color">
+</app-message>
 <router-outlet></router-outlet>

@@ -1,0 +1,44 @@
+<div class="edit-user-container">
+    <h2>Izmena podataka</h2>
+    <form (ngSubmit)="onUpdateUser()">
+      <div>
+        <label>Email:</label>
+        <input type="email" [(ngModel)]="userData.email" name="email" required>
+      </div>
+      <!-- <div>
+        <label>Lozinka:</label>
+        <input type="password" [(ngModel)]="userData.password" name="password" required>
+      </div> -->
+      <div>
+        <label>Ime:</label>
+        <input type="text" [(ngModel)]="userData.firstName" name="firstName" required>
+      </div>
+      <div>
+        <label>Prezime:</label>
+        <input type="text" [(ngModel)]="userData.lastName" name="lastName" required>
+      </div>
+      <div>
+        <label>Broj telefona:</label>
+        <input type="text" [(ngModel)]="userData.phoneNumber" name="phoneNumber" required>
+      </div>
+      <div>
+        <label>Adresa:</label>
+        <input type="text" [(ngModel)]="userData.address" name="address" required>
+      </div>
+      <div>
+        <label>Datum rodjenja:</label>
+        <input type="date" [(ngModel)]="userData.birthday" name="birthday" required>
+      </div>
+      <div>
+        <label>Grad:</label>
+        <input type="text" [(ngModel)]="userData.city" name="city" required>
+      </div>
+      <div>
+        <label>Postanski broj:</label>
+        <input type="text" [(ngModel)]="userData.zipCode" name="zipCode" required>
+      </div>
+      <p class="edit-user-container-note">Nakon uspesne izmene bicete preusmereni na stranicu za prijavu. Sva polja moraju biti popunjena.</p>
+      <button type="submit">Izmeni</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,5 @@
+<div *ngIf="isVisible" [ngClass]="colorClass" class="message-container">
+    <span>{{ message }}</span>
+    <button class="close-button" (click)="closeMessage()">×</button>
+</div>
+  

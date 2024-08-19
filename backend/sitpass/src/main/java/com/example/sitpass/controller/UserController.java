@@ -1,12 +1,18 @@
 package com.example.sitpass.controller;
 
+import com.example.sitpass.dto.ImageDTO;
 import com.example.sitpass.dto.UserRequest;
+import com.example.sitpass.model.Image;
 import com.example.sitpass.model.User;
+import com.example.sitpass.service.ImageService;
 import com.example.sitpass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.security.Principal;
 
 @RestController
@@ -15,6 +21,9 @@ public class UserController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private ImageService imageService;
 
   @GetMapping
   public ResponseEntity<User> getUserInfo(Principal principal) {
@@ -26,6 +35,7 @@ public class UserController {
     }
   }
 
+
   @PutMapping
   public ResponseEntity<User> updateUserInfo(Principal principal, @RequestBody UserRequest userDto) {
     User user = userService.updateUser(principal.getName(), userDto);
@@ -35,4 +45,37 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
   }
+
+  @PutMapping("/password")
+  public ResponseEntity<User> updateUserPassword(Principal principal, @RequestBody UserRequest userDto){
+    User user = userService.updatePassword(principal.getName(), userDto.getPassword());
+    if (user != null) {
+      return ResponseEntity.ok(user);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
+//  @PutMapping("/image")
+//  public ResponseEntity<User> uploadOrUpdateUserImage(
+//    Principal principal,
+//    @RequestParam("file") MultipartFile file
+//  ) throws IOException {
+//    // Get the current user by username
+//    User user = userService.findByUsername(principal.getName());
+//
+//    if (user != null) {
+//      // Convert the file into an Image entity and save it
+//      ImageDTO imageDTO = new ImageDTO();
+//      imageDTO.setFile(file);
+//      Image savedImage = imageService.save(imageDTO);
+//
+//      // Set the user's image
+//      user.setImage(savedImage);
+//      userService.updateUser(principal.getName(), user); // Assuming `save` also updates the user
+//
+//      return ResponseEntity.ok(user);
+//    } else {
+//      return ResponseEntity.notFound().build();
+//    }
+//  }
 }

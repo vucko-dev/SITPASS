@@ -6,12 +6,14 @@ import { RegisterComponent } from './features/register/register.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { MessageComponent } from './shared/message/message.component';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, NavbarComponent, AuthComponent, RegisterComponent, MatTabsModule, HttpClientModule],
+  imports: [RouterOutlet, RouterModule, NavbarComponent, AuthComponent, RegisterComponent, MatTabsModule, HttpClientModule, MessageComponent, CommonModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
@@ -20,4 +22,16 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 })
 export class AppComponent {
   title = 'my-angular-app';
+  globalMessage: { text: string, color: 'red' | 'green' | 'gray' } | null = null;
+
+  showMessage(text: string, color: 'red' | 'green' | 'gray') {
+    this.globalMessage = { text, color };
+    setTimeout(() => {
+      this.clearMessage();
+    }, 3000); 
+  }
+
+  clearMessage() {
+    this.globalMessage = null;
+  }
 }

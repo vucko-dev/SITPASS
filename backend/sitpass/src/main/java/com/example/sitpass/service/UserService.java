@@ -14,4 +14,6 @@ public interface UserService {
   User updateUser(String username, UserRequest userRequest);
 
   User getCurrentUser();
+
+  User updatePassword(String username, String newPassword);
 }

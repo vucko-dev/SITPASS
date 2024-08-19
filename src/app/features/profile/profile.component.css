@@ -28,10 +28,41 @@ mat-tab-group .mat-tab-body {
 }
 
 .profile-content-img{
-  background: url('../../../assets/images/userimg.png');
+  /* background: url('../../../assets/images/userimg.png'); */
   width: 128px;
   height: 128px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 50%;
+}
+
+.profile-content-div{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.profile-content-button{
+  background-color:#fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* align-self: baseline; */
+  width: 500px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.profile-content-button-link{
+  color: #000;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 10px;
+
 }

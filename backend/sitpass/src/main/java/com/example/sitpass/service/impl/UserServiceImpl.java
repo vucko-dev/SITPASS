@@ -1,9 +1,11 @@
 package com.example.sitpass.service.impl;
 
 import com.example.sitpass.dto.UserRequest;
+import com.example.sitpass.model.Image;
 import com.example.sitpass.model.Role;
 import com.example.sitpass.model.User;
 import com.example.sitpass.repository.UserRepository;
+import com.example.sitpass.service.ImageService;
 import com.example.sitpass.service.RoleService;
 import com.example.sitpass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private RoleService roleService;
 
+  @Autowired
+  private ImageService imageService;
+
   @Override
   public User findByUsername(String username) throws UsernameNotFoundException {
     return userRepository.findByEmail(username);
@@ -49,8 +54,11 @@ public class UserServiceImpl implements UserService {
     user.setEmail(userRequest.getEmail());
     user.setPhoneNumber(userRequest.getPhoneNumber());
     user.setAddress(userRequest.getAddress());
+    user.setCreatedAt(userRequest.getCreatedAt());
+    user.setBirthday(userRequest.getBirthday());
+    user.setCity(userRequest.getCity());
+    user.setZipCode(userRequest.getZipCode());
     user.setEnabled(true);
-
 
     List<Role> roles = roleService.findByName("USER");
     user.setRoles(roles);
@@ -61,12 +69,22 @@ public class UserServiceImpl implements UserService {
   @Override
   public User updateUser(String username, UserRequest userRequest) {
     User updatedUser = userRepository.findByEmail(username);
-    updatedUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+//    updatedUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
     updatedUser.setFirstName(userRequest.getFirstName());
     updatedUser.setLastName(userRequest.getLastName());
     updatedUser.setPhoneNumber(userRequest.getPhoneNumber());
     updatedUser.setAddress(userRequest.getAddress());
+    updatedUser.setBirthday(userRequest.getBirthday());
+    updatedUser.setCity(userRequest.getCity());
+    updatedUser.setZipCode(userRequest.getZipCode());
+    updatedUser.setEnabled(true);
+    return this.userRepository.save(updatedUser);
+  }
 
+  @Override
+  public User updatePassword(String username, String password) {
+    User updatedUser = userRepository.findByEmail(username);
+    updatedUser.setPassword(passwordEncoder.encode(password));
     return this.userRepository.save(updatedUser);
   }
 

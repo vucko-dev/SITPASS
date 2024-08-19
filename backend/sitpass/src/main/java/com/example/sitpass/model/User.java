@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="USERS")
@@ -27,10 +28,10 @@ public class User implements UserDetails {
   @Column(name = "password")
   private String password;
 
-  @Column(name = "first_name")
+  @Column(name = "name")
   private String firstName;
 
-  @Column(name = "last_name")
+  @Column(name = "surname")
   private String lastName;
 
   @Column(name = "phone_number")
@@ -38,6 +39,18 @@ public class User implements UserDetails {
 
   @Column(name = "address")
   private String address;
+
+  @Column(name = "created_at")
+  private LocalDate createdAt;
+
+  @Column(name = "birthday")
+  private LocalDate birthday;
+
+  @Column(name = "city")
+  private String city;
+
+  @Column(name = "zip_code")
+  private String zipCode;
 
   @Column(name = "enabled")
   private boolean enabled;
@@ -50,6 +63,16 @@ public class User implements UserDetails {
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private List<Role> roles;
+
+//  @Lob  // Ova anotacija označava BLOB ili CLOB polje.
+//  @Column(name="image")
+//  private byte[] image;
+
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinTable(name = "user_image",
+    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "image_id", referencedColumnName = "id"))
+  private Image image;
 
   public Long getId() {
     return id;
@@ -128,6 +151,39 @@ public class User implements UserDetails {
     this.address = address;
   }
 
+  public LocalDate getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDate createdAt) {
+    this.createdAt = createdAt;
+  }
+
+
+  public LocalDate getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(LocalDate birthday) {
+    this.birthday = birthday;
+  }
+
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public String getZipCode() {
+    return zipCode;
+  }
+
+  public void setZipCode(String zipCode) {
+    this.zipCode = zipCode;
+  }
+
   @Override
   public boolean isEnabled() {
     return enabled;
@@ -163,4 +219,12 @@ public class User implements UserDetails {
     return true;
   }
 
+
+  public Image getImage() {
+    return image;
+  }
+
+  public void setImage(Image image) {
+    this.image = image;
+  }
 }

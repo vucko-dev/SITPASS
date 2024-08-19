@@ -5,14 +5,26 @@
             <h1 class="register-container-title">SITPASS</h1>
             <h2 class="register-container-subtitle">Uvek uz tebe</h2>
         </div>
-        <form class="register-container-form">
+        <form class="register-container-form" (ngSubmit)="onRegister()">
             <h3 class="register-container-form-title">Registracija</h3>
-            <label for="name">Ime i prezime:</label>
-            <input type="text" id="name" />
-            <label for="username">Korisnicko ime:</label>
-            <input type="text" id="username" />
+            <label for="email">Email:</label>
+            <input type="email" id="email" [(ngModel)]="email" name="email" required />
             <label for="password">Lozinka:</label>
-            <input type="password" id="password"/>
+            <input type="password" id="password" [(ngModel)]="password" name="password" required />
+            <label for="name">Ime:</label>
+            <input type="text" id="name" [(ngModel)]="firstName" name="firstName" required />
+            <label for="surname">Prezime:</label>
+            <input type="text" id="surname" [(ngModel)]="lastName" name="lastName" required />
+            <label for="birthday">Datum rodjenja:</label>
+            <input type="date" id="birthday" [(ngModel)]="birthday" name="birthday" required />
+            <label for="phone">Broj telefona:</label>
+            <input type="text" id="phone" [(ngModel)]="phoneNumber" name="phoneNumber" required />
+            <label for="city">Grad:</label>
+            <input type="text" id="city" [(ngModel)]="city" name="city" required />
+            <label for="address">Adresa:</label>
+            <input type="text" id="address" [(ngModel)]="address" name="address" required />
+            <label for="zip">Postanski broj:</label>
+            <input type="text" id="zip" [(ngModel)]="zipCode" name="zipCode" required />
             <input type="submit" class="register-container-form-submit" value="Registruj se">
             <p class="register-container-form-auth">Imas nalog? - <a routerLink="/auth">prijavi se</a></p>
         </form>

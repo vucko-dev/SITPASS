@@ -1,5 +1,9 @@
 package com.example.sitpass.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
+
 public class UserRequest {
 
   private Long id;
@@ -16,6 +20,15 @@ public class UserRequest {
 
   private String address;
 
+  private LocalDate createdAt;
+
+  private LocalDate birthday;
+
+  private String city;
+
+  private String zipCode;
+
+  private ImageDTO image;
 
   public String getPassword() {
     return password;
@@ -71,5 +84,46 @@ public class UserRequest {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+
+  public LocalDate getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDate createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDate getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(LocalDate birthday) {
+    this.birthday = birthday;
+  }
+
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public String getZipCode() {
+    return zipCode;
+  }
+
+  public void setZipCode(String zipCode) {
+    this.zipCode = zipCode;
+  }
+
+  public ImageDTO getImage() {
+    return image;
+  }
+
+  public void setImage(ImageDTO image) {
+    this.image = image;
   }
 }

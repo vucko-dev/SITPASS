@@ -1,17 +1,37 @@
 <div>
     <app-navbar></app-navbar>
     <div class="profile-content">
-        <div class="profile-content-img">
+        <div class="profile-content-img" [style.background-image]="'url(' + 'data:image/jpeg;base64,' + userInfo.image + ')'">
         </div>
         <mat-tab-group>
           <mat-tab label="Informacije">
             <ng-template matTabContent>
-              <p>Informacije</p>
+              <div *ngIf="userInfo" class="profile-content-div">
+                <!-- <p><strong>ID:</strong> {{ userInfo.id }}</p> -->
+                <p><strong>Email:</strong> {{ userInfo.email }}</p>
+                <p><strong>Ime i prezime:</strong> {{ userInfo.firstName }} {{ userInfo.lastName }}</p>
+                <p><strong>Telefon:</strong> {{ userInfo.phoneNumber }}</p>
+                <p><strong>Adresa:</strong> {{ userInfo.address }}</p>
+                <p><strong>Grad:</strong> {{ userInfo.city }}</p>
+                <p><strong>Postanski broj:</strong> {{ userInfo.zipCode }}</p>
+                <p><strong>Datum rodjenja:</strong> {{ userInfo.birthday | date:'mediumDate' }}</p>
+                <!-- <p><strong>Roles:</strong> {{ userRoles.join(', ') }}</p> -->
+              </div>
             </ng-template>
           </mat-tab>
           <mat-tab label="Podesavanja">
             <ng-template matTabContent>
-              <p>Podesavanja</p>
+              <div class="profile-content-div">
+                <div class="profile-content-button">
+                  <a class="profile-content-button-link" (click)="onEditUser()">Izmeni podatke</a>
+                </div>
+                <div class="profile-content-button">
+                  <a class="profile-content-button-link" (click)="onEditUserPassword()">Promeni lozniku///</a>
+                </div>
+                <div class="profile-content-button">
+                  <a class="profile-content-button-link" (click)="onEditUser()">Promeni sliku///</a>
+                </div>
+              </div>
             </ng-template>
           </mat-tab>
           <mat-tab label="Poseceni objekti">
