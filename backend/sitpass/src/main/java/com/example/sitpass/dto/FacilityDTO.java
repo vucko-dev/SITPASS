@@ -23,6 +23,7 @@ public class FacilityDTO {
 
   private Set<DisciplineDTO> disciplines;
 
+  private Set<ImageDTO> images;
 
   public int getId() {
     return id;
@@ -94,5 +95,13 @@ public class FacilityDTO {
 
   public void setDisciplines(Set<DisciplineDTO> disciplines) {
     this.disciplines = disciplines;
+  }
+
+  public Set<ImageDTO> getImages() {
+    return images;
+  }
+
+  public void setImages(Set<ImageDTO> images) {
+    this.images = images;
   }
 }

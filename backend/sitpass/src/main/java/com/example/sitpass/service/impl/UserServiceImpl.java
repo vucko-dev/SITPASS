@@ -93,4 +93,11 @@ public class UserServiceImpl implements UserService {
     return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
   }
 
+  @Override
+  public User updateUserImage(String username, Image image) {
+    User updatedUser = userRepository.findByEmail(username);
+    updatedUser.setImage(image);
+    return this.userRepository.save(updatedUser);
+  }
+
 }

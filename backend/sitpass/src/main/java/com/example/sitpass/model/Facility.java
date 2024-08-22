@@ -43,6 +43,15 @@ public class Facility {
   private Set<Discipline> disciplines;
 
 
+  @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+  @JoinTable(
+    name = "facility_images",
+    joinColumns = @JoinColumn(name = "facility_id"),
+    inverseJoinColumns = @JoinColumn(name = "image_id")
+  )
+  private Set<Image> images;
+
+
   public Long getId() {
     return id;
   }
@@ -113,5 +122,13 @@ public class Facility {
 
   public void setDisciplines(Set<Discipline> disciplines) {
     this.disciplines = disciplines;
+  }
+
+  public Set<Image> getImages() {
+    return images;
+  }
+
+  public void setImages(Set<Image> images) {
+    this.images = images;
   }
 }

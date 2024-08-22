@@ -2,17 +2,22 @@ package com.example.sitpass.service.impl;
 
 import com.example.sitpass.dto.AccountRequestDTO;
 import com.example.sitpass.dto.FacilityDTO;
+import com.example.sitpass.dto.ImageDTO;
 import com.example.sitpass.enums.RequestStatus;
 import com.example.sitpass.model.AccountRequest;
 import com.example.sitpass.model.Discipline;
 import com.example.sitpass.model.Facility;
+import com.example.sitpass.model.Image;
 import com.example.sitpass.repository.DisciplineRepository;
 import com.example.sitpass.repository.FacilityRepository;
 import com.example.sitpass.service.FacilityService;
+import com.example.sitpass.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +30,9 @@ public class FacilityServiceImpl implements FacilityService {
 
   @Autowired
   private DisciplineRepository disciplineRepository;
+
+  @Autowired
+  private ImageService  imageService;
 
   @Override
   public Facility getFacilityById(Long id) {
@@ -83,6 +91,25 @@ public class FacilityServiceImpl implements FacilityService {
     Facility facility = facilityRepository.findById(id).orElseThrow(() -> new RuntimeException("Facility not found!"));
 
     facilityRepository.deleteById(id);
+  }
+
+  @Override
+  public Facility addImagesToFacility(Long facilityId, List<ImageDTO> imageDTOs) throws IOException, IOException {
+    Facility facility = facilityRepository.findById(facilityId).orElse(null);
+
+    if (facility == null) {
+      throw new RuntimeException("Facility not found");
+    }
+
+    Set<Image> images = new HashSet<>(facility.getImages());
+
+    for (ImageDTO imageDTO : imageDTOs) {
+      Image image = imageService.save(imageDTO);
+      images.add(image);
+    }
+
+    facility.setImages(images);
+    return facilityRepository.save(facility);
   }
 
 }

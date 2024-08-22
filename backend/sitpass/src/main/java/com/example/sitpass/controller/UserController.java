@@ -55,27 +55,19 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
   }
-//  @PutMapping("/image")
-//  public ResponseEntity<User> uploadOrUpdateUserImage(
-//    Principal principal,
-//    @RequestParam("file") MultipartFile file
-//  ) throws IOException {
-//    // Get the current user by username
-//    User user = userService.findByUsername(principal.getName());
-//
-//    if (user != null) {
-//      // Convert the file into an Image entity and save it
-//      ImageDTO imageDTO = new ImageDTO();
-//      imageDTO.setFile(file);
-//      Image savedImage = imageService.save(imageDTO);
-//
-//      // Set the user's image
-//      user.setImage(savedImage);
-//      userService.updateUser(principal.getName(), user); // Assuming `save` also updates the user
-//
-//      return ResponseEntity.ok(user);
-//    } else {
-//      return ResponseEntity.notFound().build();
-//    }
-//  }
+  @PutMapping("/image")
+  public ResponseEntity<User> uploadOrUpdateUserImage(
+    Principal principal,
+    @RequestParam("file") MultipartFile file
+  ) throws IOException {
+
+    ImageDTO imageDTO = new ImageDTO();
+    imageDTO.setFile(file);
+    Image savedImage = imageService.save(imageDTO);
+
+    User user = userService.updateUserImage(principal.getName(), savedImage);
+
+    return ResponseEntity.ok(user);
+  }
 }
+

@@ -1,8 +1,10 @@
 package com.example.sitpass.service;
 
 import com.example.sitpass.dto.FacilityDTO;
+import com.example.sitpass.dto.ImageDTO;
 import com.example.sitpass.model.Facility;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface FacilityService {
@@ -18,4 +20,7 @@ public interface FacilityService {
   Facility updateFacility(Long id, FacilityDTO facilityDTO);
 
   void deleteFacility(Long id);
+
+  Facility addImagesToFacility(Long facilityId, List<ImageDTO> images) throws IOException;
+
 }

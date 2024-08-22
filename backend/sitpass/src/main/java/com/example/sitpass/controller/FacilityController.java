@@ -2,6 +2,7 @@ package com.example.sitpass.controller;
 
 
 import com.example.sitpass.dto.FacilityDTO;
+import com.example.sitpass.dto.ImageDTO;
 import com.example.sitpass.exception.ResourceConflictException;
 import com.example.sitpass.model.Facility;
 import com.example.sitpass.service.FacilityService;
@@ -10,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,12 +25,14 @@ public class FacilityController {
   private FacilityService facilityService;
 
   @GetMapping
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public ResponseEntity<List<Facility>> getFacilities() {
       List <Facility> facilities = facilityService.getFacilities();
       return new ResponseEntity<>(facilities, HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public ResponseEntity<Facility> getFacility(@PathVariable Long id) {
       Facility facility = facilityService.getFacilityById(id);
       if (facility == null) {
@@ -48,7 +54,7 @@ public class FacilityController {
   }
 
   @PutMapping("/{id}")
-  @PreAuthorize("hasAuthority('ADMIN')")
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   public ResponseEntity<Facility> updateFacility(@PathVariable Long id, @RequestBody FacilityDTO facilityDTO) {
     Facility facility = facilityService.getFacilityById(id);
     if (facility == null) {
@@ -72,6 +78,27 @@ public class FacilityController {
     }
     facilityService.deleteFacility(facility.getId());
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
+  @PostMapping("/{facilityId}/images")
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+  public ResponseEntity<Facility> uploadImagesToFacility(
+    @PathVariable Long facilityId,
+    @RequestParam("images") List<MultipartFile> files
+  ) {
+    List<ImageDTO> imageDTOs = new ArrayList<>();
+    for (MultipartFile file : files) {
+      ImageDTO imageDTO = new ImageDTO();
+      imageDTO.setFile(file);
+      imageDTOs.add(imageDTO);
+    }
+
+    try {
+      Facility facility = facilityService.addImagesToFacility(facilityId, imageDTOs);
+      return new ResponseEntity<>(facility, HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
 }
