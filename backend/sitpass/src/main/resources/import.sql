@@ -47,6 +47,11 @@ INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('
 INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 1);
 
 
+INSERT INTO exercises (user_id, from_time, until_time, facility_id) VALUES (3, '2024-05-22 12:00', '2024-05-22 13:00', 1);
+
+# INSERT INTO user_facility (user_id, facility_id) VALUES (3, 1);
+
+
 
 
 

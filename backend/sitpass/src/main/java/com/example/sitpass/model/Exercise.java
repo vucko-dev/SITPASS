@@ -34,10 +34,8 @@ public class Exercise {
   @Column(name = "until_time")
   private LocalDateTime until;
 
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinTable(name = "user_facility",
-    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "facility_id", referencedColumnName = "id"))
+  @ManyToOne
+  @JoinColumn(name = "facility_id", nullable = false)
   private Facility facility;
 
 }
