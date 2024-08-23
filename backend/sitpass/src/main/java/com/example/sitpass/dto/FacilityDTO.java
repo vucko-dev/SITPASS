@@ -25,6 +25,8 @@ public class FacilityDTO {
 
   private Set<ImageDTO> images;
 
+  private Set<WorkDayDTO> workDays;
+
   public int getId() {
     return id;
   }
@@ -103,5 +105,13 @@ public class FacilityDTO {
 
   public void setImages(Set<ImageDTO> images) {
     this.images = images;
+  }
+
+  public Set<WorkDayDTO> getWorkDays() {
+    return workDays;
+  }
+
+  public void setWorkDays(Set<WorkDayDTO> workDays) {
+    this.workDays = workDays;
   }
 }

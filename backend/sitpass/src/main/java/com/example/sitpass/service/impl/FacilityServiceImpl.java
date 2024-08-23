@@ -3,15 +3,15 @@ package com.example.sitpass.service.impl;
 import com.example.sitpass.dto.AccountRequestDTO;
 import com.example.sitpass.dto.FacilityDTO;
 import com.example.sitpass.dto.ImageDTO;
+import com.example.sitpass.dto.WorkDayDTO;
 import com.example.sitpass.enums.RequestStatus;
-import com.example.sitpass.model.AccountRequest;
-import com.example.sitpass.model.Discipline;
-import com.example.sitpass.model.Facility;
-import com.example.sitpass.model.Image;
+import com.example.sitpass.model.*;
 import com.example.sitpass.repository.DisciplineRepository;
 import com.example.sitpass.repository.FacilityRepository;
+import com.example.sitpass.repository.WorkDayRepository;
 import com.example.sitpass.service.FacilityService;
 import com.example.sitpass.service.ImageService;
+import com.example.sitpass.service.WorkDayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +33,12 @@ public class FacilityServiceImpl implements FacilityService {
 
   @Autowired
   private ImageService  imageService;
+
+  @Autowired
+  private WorkDayRepository workDayRepository;
+
+  @Autowired
+  private WorkDayService workDayService;
 
   @Override
   public Facility getFacilityById(Long id) {
@@ -63,6 +69,16 @@ public class FacilityServiceImpl implements FacilityService {
       .map(disciplineDTO -> disciplineRepository.findById(disciplineDTO.getId()).orElseThrow(() -> new RuntimeException("Discipline not found")))
       .collect(Collectors.toSet());
     facility.setDisciplines(disciplinesEntities);
+    Set<WorkDayDTO> workDaysDTO = facilityDTO.getWorkDays();
+    Set<WorkDay> workdays = new HashSet<>();
+    if (workDaysDTO == null) {
+      throw new IllegalArgumentException("workDaysDTO is null");
+    }
+    for (WorkDayDTO workDayDTO : workDaysDTO) {
+      WorkDay workDay = workDayService.save(workDayDTO);
+      workdays.add(workDay);
+    }
+    facility.setWorkdays(workdays);
     return facilityRepository.save(facility);
   }
 
@@ -80,6 +96,13 @@ public class FacilityServiceImpl implements FacilityService {
       .map(disciplineDTO -> disciplineRepository.findById(disciplineDTO.getId()).orElseThrow(() -> new RuntimeException("Discipline not found")))
       .collect(Collectors.toSet());
     updatedFacility.setDisciplines(disciplinesEntities);
+    Set<WorkDayDTO> wordDaysDTO = facilityDTO.getWorkDays();
+    Set<WorkDay> workdays = new HashSet<>();
+    for (WorkDayDTO workDayDTO : wordDaysDTO) {
+      WorkDay workDay = workDayService.save(workDayDTO);
+      workdays.add(workDay);
+    }
+    updatedFacility.setWorkdays(workdays);
     return this.facilityRepository.save(updatedFacility);
   }
 

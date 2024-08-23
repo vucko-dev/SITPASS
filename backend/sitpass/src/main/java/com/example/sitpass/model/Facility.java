@@ -42,6 +42,14 @@ public class Facility {
   )
   private Set<Discipline> disciplines;
 
+  @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+  @JoinTable(
+    name = "facility_workdays",
+    joinColumns = @JoinColumn(name = "facility_id"),
+    inverseJoinColumns = @JoinColumn(name = "workday_id")
+  )
+  private Set<WorkDay> workdays;
+
 
   @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
   @JoinTable(
@@ -130,5 +138,13 @@ public class Facility {
 
   public void setImages(Set<Image> images) {
     this.images = images;
+  }
+
+  public Set<WorkDay> getWorkdays() {
+    return workdays;
+  }
+
+  public void setWorkdays(Set<WorkDay> workdays) {
+    this.workdays = workdays;
   }
 }

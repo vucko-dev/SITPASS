@@ -42,6 +42,12 @@ INSERT INTO facility_images (facility_id, image_id) VALUES (1, 1);
 INSERT INTO facility_images (facility_id, image_id) VALUES (1, 2);
 INSERT INTO facility_images (facility_id, image_id) VALUES (1, 3);
 
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',0, '08:00', '22:00');
+
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 1);
+
+
+
 
 
 -- CREATE TABLE account_request (

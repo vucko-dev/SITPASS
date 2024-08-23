@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
       .authorizeRequests().antMatchers("/auth/**").permitAll()
-//      .antMatchers(HttpMethod.POST, "/requests").permitAll()
+      .antMatchers(HttpMethod.POST, "/requests").permitAll()
 //      .antMatchers(HttpMethod.GET, "/facility").permitAll()
 //      .antMatchers(HttpMethod.GET, "/facility/**").permitAll()
 //      .antMatchers(HttpMethod.GET, "/disciplines").permitAll()
