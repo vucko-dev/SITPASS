@@ -4,7 +4,6 @@ import com.example.sitpass.dto.ExerciseDTO;
 import com.example.sitpass.model.Exercise;
 import com.example.sitpass.model.Facility;
 import com.example.sitpass.repository.ExerciseRepository;
-import com.example.sitpass.repository.FacilityRepository;
 import com.example.sitpass.service.ExerciseService;
 import com.example.sitpass.service.FacilityService;
 import com.example.sitpass.service.UserService;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ExerciseServiceImpl implements ExerciseService {
@@ -59,5 +57,11 @@ public class ExerciseServiceImpl implements ExerciseService {
   @Override
   public List<Exercise> getExercisesByUserId(Long userId){
     return this.exerciseRepository.findByUserId(userId);
+  }
+
+  @Override
+  public Integer getExercisesCountByFacilityId(Long facilityId, Long userId){
+    List<Exercise> exercises = this.exerciseRepository.findByFacilityIdAndUserId(facilityId, userId);
+    return (int) exercises.size();
   }
 }

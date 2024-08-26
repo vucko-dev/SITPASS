@@ -10,4 +10,6 @@ public interface ExerciseService {
 
 //  List<ExerciseDTO> getExercisesByUserId(Long userId);
   List<Exercise> getExercisesByUserId(Long userId);
+
+  Integer getExercisesCountByFacilityId(Long facilityId, Long userId);
 }
