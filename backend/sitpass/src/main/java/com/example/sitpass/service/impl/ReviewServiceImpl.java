@@ -4,6 +4,7 @@ import com.example.sitpass.dto.ReviewDTO;
 import com.example.sitpass.model.Comment;
 import com.example.sitpass.model.Rate;
 import com.example.sitpass.model.Review;
+import com.example.sitpass.model.User;
 import com.example.sitpass.repository.ReviewRepository;
 import com.example.sitpass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,10 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Autowired
   private RateService rateService;
+
+  @Autowired
+  private ManagesService managesService;
+
 
   @Override
   public Review getReviewById(Long id) {
@@ -67,13 +72,34 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Override
   public void showReviewById(Long id){
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
     Review review = reviewRepository.findById(id).orElse(null);
+
+    if(review == null){
+      throw new RuntimeException("Review not found!");
+    }
+
+    if(!(role.equals("ADMIN")||(role.equals("MANAGER") && managesService.hasRightsToFacility(user.getId(),review.getFacility().getId())))){
+      throw new RuntimeException("Insufficient permission!");
+    }
     review.setHidden(false);
+
   }
 
   @Override
   public void hideReviewById(Long id){
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
     Review review = reviewRepository.findById(id).orElse(null);
+
+    if(review == null){
+      throw new RuntimeException("Review not found!");
+    }
+
+    if(!(role.equals("ADMIN")||(role.equals("MANAGER") && managesService.hasRightsToFacility(user.getId(),review.getFacility().getId())))){
+      throw new RuntimeException("Insufficient permission!");
+    }
     review.setHidden(true);
   }
 

@@ -6,4 +6,6 @@ import com.example.sitpass.model.Rate;
 public interface RateService {
 
   Rate save(RateDTO rateDTO);
+
+  void updateFacilityRating(Long id);
 }

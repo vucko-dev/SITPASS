@@ -23,52 +23,94 @@ INSERT INTO Discipline (name) VALUES ('Vodjeni trening');
 INSERT INTO Discipline (name) VALUES ('Grupni trening');
 
 
-INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Teretana', 'Najjaca teretana','2024-05-22','Novi Sad', 'Novi Sad','10',true);
+INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Iron Republic 2', 'Iron RePublic je više od teretane.','2024-05-22','Novi Sad', 'Novi Sad','9.32',true);
+INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Ahilej Zemun', 'Najjaca teretana','2024-05-22','Beograd', 'Beograd','9.5',true);
+INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Ahilej Medakovic', 'Najjaca teretana','2024-05-22','Beograd', 'Medakovic','9.3',true);
 
 INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (1, 1);
 INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (1, 2);
 INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (1, 3);
 INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (1, 4);
+INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (2, 1);
+INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (2, 3);
+INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (2, 4);
+INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (3, 3);
+INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (3, 4);
+INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (3, 1);
+
 
 INSERT INTO Image (image) VALUES ('image_path_1');
 INSERT INTO Image (image) VALUES ('image_path_2');
 INSERT INTO Image (image) VALUES ('image_path_3');
+INSERT INTO Image (image) VALUES ('image_path_4');
+INSERT INTO Image (image) VALUES ('image_path_5');
+INSERT INTO Image (image) VALUES ('image_path_6');
+INSERT INTO Image (image) VALUES ('image_path_7');
+
 
 INSERT INTO user_image (user_id, image_id) VALUES (1, 1);
 INSERT INTO user_image (user_id, image_id) VALUES (2, 2);
 INSERT INTO user_image (user_id, image_id) VALUES (3, 3);
 
-INSERT INTO facility_images (facility_id, image_id) VALUES (1, 1);
-INSERT INTO facility_images (facility_id, image_id) VALUES (1, 2);
-INSERT INTO facility_images (facility_id, image_id) VALUES (1, 3);
+INSERT INTO facility_images (facility_id, image_id) VALUES (1, 4);
+INSERT INTO facility_images (facility_id, image_id) VALUES (1, 5);
+INSERT INTO facility_images (facility_id, image_id) VALUES (1, 6);
+INSERT INTO facility_images (facility_id, image_id) VALUES (2, 5);
+INSERT INTO facility_images (facility_id, image_id) VALUES (2, 6);
+INSERT INTO facility_images (facility_id, image_id) VALUES (2, 4);
+INSERT INTO facility_images (facility_id, image_id) VALUES (3, 7);
+INSERT INTO facility_images (facility_id, image_id) VALUES (3, 6);
+INSERT INTO facility_images (facility_id, image_id) VALUES (3, 4);
+
 
 INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',0, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',1, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',2, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',3, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',4, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',5, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',6, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',0, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',1, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',2, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',3, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',4, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',5, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',6, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',0, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',1, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',2, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',3, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',4, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',5, '08:00', '22:00');
+INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',6, '08:00', '22:00');
+
 
 INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 1);
-
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 2);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 3);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 4);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 5);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 6);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (1, 7);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (2, 1);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (2, 2);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (2, 3);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (2, 4);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (2, 5);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (2, 6);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (2, 7);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (3, 1);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (3, 2);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (3, 3);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (3, 4);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (3, 5);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (3, 6);
+INSERT INTO facility_workdays (facility_id, workday_id) VALUES (3, 7);
 
 INSERT INTO exercises (user_id, from_time, until_time, facility_id) VALUES (3, '2024-05-22 12:00', '2024-05-22 13:00', 1);
-
-# INSERT INTO user_facility (user_id, facility_id) VALUES (3, 1);
-
-
-
-
-
--- CREATE TABLE account_request (
---        id BIGINT PRIMARY KEY AUTO_INCREMENT,
---        password VARCHAR(255),
---        name VARCHAR(100),
---        surname VARCHAR(100),
---        email VARCHAR(100),
---        phone_number VARCHAR(20),
---        address VARCHAR(255),
---        created_at DATE,
---        birthday DATE,
---        city VARCHAR(100),
---        zip_code VARCHAR(10),
---        status VARCHAR(10)
--- );
+INSERT INTO exercises (user_id, from_time, until_time, facility_id) VALUES (3, '2024-05-23 12:00', '2024-05-23 13:00', 2);
+INSERT INTO exercises (user_id, from_time, until_time, facility_id) VALUES (3, '2024-05-24 12:00', '2024-05-24 13:00', 2);
 
 
 

@@ -44,4 +44,9 @@ public class ManagesServiceImpl implements ManagesService {
     Manages manages = managesRepository.findById(id);
     this.managesRepository.delete(manages);
   }
+
+  @Override
+  public Manages findById(Long id) {
+    return this.managesRepository.findById(id);
+  }
 }

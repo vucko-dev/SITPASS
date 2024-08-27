@@ -10,4 +10,6 @@ public interface ManagesService {
   Manages save(ManagesDTO managesDTO);
 
   void delete(Long id);
+
+  Manages findById(Long id);
 }

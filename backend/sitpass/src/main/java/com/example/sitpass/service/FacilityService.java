@@ -17,10 +17,12 @@ public interface FacilityService {
 
   Facility saveFacility(FacilityDTO facilityDTO);
 
-  Facility updateFacility(Long id, FacilityDTO facilityDTO);
+  Facility updateFacility(Long id, FacilityDTO facilityDTO) throws RuntimeException;
 
   void deleteFacility(Long id);
 
   Facility addImagesToFacility(Long facilityId, List<ImageDTO> images) throws IOException;
+
+  Facility updateFacilityRating(Long facilityId, Double rating);
 
 }

@@ -9,9 +9,7 @@ import com.example.sitpass.model.*;
 import com.example.sitpass.repository.DisciplineRepository;
 import com.example.sitpass.repository.FacilityRepository;
 import com.example.sitpass.repository.WorkDayRepository;
-import com.example.sitpass.service.FacilityService;
-import com.example.sitpass.service.ImageService;
-import com.example.sitpass.service.WorkDayService;
+import com.example.sitpass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +37,12 @@ public class FacilityServiceImpl implements FacilityService {
 
   @Autowired
   private WorkDayService workDayService;
+
+  @Autowired
+  private ManagesService managesService;
+
+  @Autowired
+  private UserService userService;
 
   @Override
   public Facility getFacilityById(Long id) {
@@ -83,7 +87,12 @@ public class FacilityServiceImpl implements FacilityService {
   }
 
   @Override
-  public Facility updateFacility(Long id,FacilityDTO facilityDTO) {
+  public Facility updateFacility(Long id,FacilityDTO facilityDTO) throws RuntimeException {
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
+    if(!(role.equals("ADMIN")||(role.equals("MANAGER") && managesService.hasRightsToFacility(user.getId(),(long)facilityDTO.getId())))){
+        throw new RuntimeException("Insufficient permission!");
+    }
     Facility updatedFacility = facilityRepository.findById(id).orElseGet(null);
     updatedFacility.setName(facilityDTO.getName());
     updatedFacility.setDescription(facilityDTO.getDescription());
@@ -124,6 +133,14 @@ public class FacilityServiceImpl implements FacilityService {
       throw new RuntimeException("Facility not found");
     }
 
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
+
+    if(!(role.equals("ADMIN")||(role.equals("MANAGER") && managesService.hasRightsToFacility(user.getId(),facilityId)))){
+      throw new RuntimeException("Insufficient permission!");
+    }
+
+
     Set<Image> images = new HashSet<>(facility.getImages());
 
     for (ImageDTO imageDTO : imageDTOs) {
@@ -133,6 +150,18 @@ public class FacilityServiceImpl implements FacilityService {
 
     facility.setImages(images);
     return facilityRepository.save(facility);
+  }
+
+  @Override
+  public Facility updateFacilityRating(Long id, Double rating){
+    Facility facility = facilityRepository.findById(id).orElse(null);
+
+    if (facility == null) {
+      throw new RuntimeException("Facility not found");
+    }
+
+    facility.setTotalRating(rating);
+    return this.facilityRepository.save(facility);
   }
 
 }

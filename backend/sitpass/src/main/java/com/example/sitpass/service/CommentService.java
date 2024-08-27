@@ -9,5 +9,4 @@ public interface CommentService {
   Comment addComment(CommentDTO commentDTO);
   List<Comment> getCommentsByReviewId(Long reviewId);
   Comment getCommentById(Long commentId);
-
 }
