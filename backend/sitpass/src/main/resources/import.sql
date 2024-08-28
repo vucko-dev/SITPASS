@@ -25,7 +25,7 @@ INSERT INTO Discipline (name) VALUES ('Grupni trening');
 
 INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Iron Republic 2', 'Iron RePublic je više od teretane.','2024-05-22','Novi Sad', 'Novi Sad','9.32',true);
 INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Ahilej Zemun', 'Najjaca teretana','2024-05-22','Beograd', 'Beograd','9.5',true);
-INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Ahilej Medakovic', 'Najjaca teretana','2024-05-22','Beograd', 'Medakovic','9.3',true);
+INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Ahilej Medakovic', 'Najjaca teretana','2024-05-22','Medakovic', 'Beograd','9.3',true);
 
 INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (1, 1);
 INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (1, 2);
@@ -54,13 +54,11 @@ INSERT INTO user_image (user_id, image_id) VALUES (3, 3);
 
 INSERT INTO facility_images (facility_id, image_id) VALUES (1, 4);
 INSERT INTO facility_images (facility_id, image_id) VALUES (1, 5);
-INSERT INTO facility_images (facility_id, image_id) VALUES (1, 6);
-INSERT INTO facility_images (facility_id, image_id) VALUES (2, 5);
 INSERT INTO facility_images (facility_id, image_id) VALUES (2, 6);
-INSERT INTO facility_images (facility_id, image_id) VALUES (2, 4);
-INSERT INTO facility_images (facility_id, image_id) VALUES (3, 7);
+INSERT INTO facility_images (facility_id, image_id) VALUES (2, 7);
+INSERT INTO facility_images (facility_id, image_id) VALUES (3, 5);
 INSERT INTO facility_images (facility_id, image_id) VALUES (3, 6);
-INSERT INTO facility_images (facility_id, image_id) VALUES (3, 4);
+INSERT INTO facility_images (facility_id, image_id) VALUES (3, 7);
 
 
 INSERT INTO work_day (valid_from, day_of_week, from_time, until_time ) VALUES ('2024-05-22',0, '08:00', '22:00');

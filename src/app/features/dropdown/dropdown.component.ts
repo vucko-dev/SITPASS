@@ -11,10 +11,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class DropdownComponent {
   @Input() options: string[] = [];
   @Input() placeholder: string = 'Select an option';
+  @Input() selectedOption: string = '';
   @Output() selectionChange = new EventEmitter<string>();
 
   isOpen = false;
-  selectedOption: string | null = null;
+  // selectedOption: string | null = null;
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;

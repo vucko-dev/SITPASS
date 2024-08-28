@@ -6,20 +6,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class FacilityService {
-
-  private apiUrl = 'http://localhost:8080/facility';
+export class DisciplineService {
+  private apiUrl = 'http://localhost:8080/disciplines';
 
   constructor(private http: HttpClient, private authService:AuthService) {}
 
-  getFacilities(): Observable<any> {
+  getDisciplines(): Observable<any> {
     return this.http.get(this.apiUrl, { headers: this.authService.authHeader() })
   }
-
-
-  getFacilityById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.authService.authHeader() });
-  }
-
-
 }

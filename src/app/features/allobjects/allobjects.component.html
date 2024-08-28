@@ -1,54 +1,74 @@
 <div>
     <app-navbar></app-navbar>
     <div class="search-parametars">
-        <input type="text" class="search-parametars-search" placeholder="Pretraga">
-        <app-dropdown
+        <input 
+            type="text" 
+            class="search-parametars-search" 
+            placeholder="Pretraga"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="filterFacilities()" 
+        />
+        <app-multi-select-dropdown
+        #citiesDropdown
         [options]="citiesOptions"
         placeholder="Gradovi"
-        (selectionChange)="onSelectionChange($event)">
-        </app-dropdown>
+        (selectionChange)="onCitiesSelectionChange($event)">
+        </app-multi-select-dropdown>
 
-        <app-dropdown
+        <app-multi-select-dropdown
+        #disciplinesDropdown
         [options]="disciplinesOptions"
         placeholder="Discipline"
-        (selectionChange)="onSelectionChange($event)">
+        (selectionChange)="onDisciplinesSelectionChange($event)">
+        </app-multi-select-dropdown>
+    
+        <app-dropdown
+            [options]="lowGradeOptions"
+            placeholder="Ocena (d. gr.)"
+            [selectedOption]="selectedLowGrade"
+            (selectionChange)="onLowGradeChange($event)">
+        </app-dropdown>
+    
+        <app-dropdown
+            [options]="highGradeOptions"
+            placeholder="Ocena (g. gr.)"
+            [selectedOption]="selectedHighGrade"
+            (selectionChange)="onHighGradeChange($event)">
+        </app-dropdown>
+    
+        <app-dropdown
+            [options]="lowTimeOptions"
+            placeholder="Vreme (d. gr.)"
+            [selectedOption]="selectedLowTime"
+            (selectionChange)="onLowTimeChange($event)">
+        </app-dropdown>
+    
+        <app-dropdown
+            [options]="highTimeOptions"
+            placeholder="Vreme (g. gr.)"
+            [selectedOption]="selectedHighTime"
+            (selectionChange)="onHighTimeChange($event)">
         </app-dropdown>
 
-        <app-dropdown
-        [options]="lowGradeOptions"
-        placeholder="Ocena (donja granica)"
-        (selectionChange)="onSelectionChange($event)">
-        </app-dropdown>
-
-        <app-dropdown
-        [options]="highGradeOptions"
-        placeholder="Ocena (gornja granica)"
-        (selectionChange)="onSelectionChange($event)">
-        </app-dropdown>
-
-        <app-dropdown
-        [options]="lowTimeOptions"
-        placeholder="Vreme (donja granica)"
-        (selectionChange)="onSelectionChange($event)">
-        </app-dropdown>
-
-        <app-dropdown
-        [options]="highTimeOptions"
-        placeholder="Vreme (gornja granica)"
-        (selectionChange)="onSelectionChange($event)">
-        </app-dropdown>
+        <div class="search-parametars-reset">
+            <a class="search-parametars-reset-link" (click)="resetFilter()">Resetuj filtere</a>
+        </div>
     </div>
+    
     <div class="search-results">
-        <app-object></app-object>
-        <app-object></app-object>
-        <app-object></app-object>
-        <app-object></app-object>
-        <app-object></app-object>
-        <app-object></app-object>
-        <app-object></app-object>
-        <app-object></app-object>
-        <app-object></app-object>
-        <app-object></app-object>
+
+        <p *ngIf="filteredFacilities.length === 0">Nema rezultata.</p>
+
+        <app-object 
+            *ngFor="let facility of filteredFacilities" 
+            [title]="facility.name" 
+            [grade]="facility.totalRating"
+            [services]="transformDisciplinesToString(facility.disciplines)"
+            [objectImg]="facility.images[0]?.image"
+            [id]="facility.id"
+        >
+        </app-object>
     </div>
+    
     <app-footer></app-footer>
 </div>

@@ -1,0 +1,33 @@
+.multi-select-dropdown {
+    position: relative;
+    width: 200px;
+  }
+  
+  .dropdown-header {
+    border: 1px solid #ccc;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .dropdown-arrow {
+    float: right;
+  }
+  
+  .dropdown-options {
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .dropdown-options div {
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .dropdown-options div:hover {
+    background-color: #f0f0f0;
+  }
+  
