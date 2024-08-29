@@ -54,7 +54,7 @@ public class ReviewController {
 
 
   @PostMapping
-  @PreAuthorize("hasAuthority('USER')")
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public ResponseEntity<Review> addReview(@RequestBody ReviewDTO reviewDTO) {
     Review review = reviewService.save(reviewDTO);
     rateService.updateFacilityRating(reviewDTO.getFacilityId());
@@ -62,7 +62,7 @@ public class ReviewController {
   }
 
   @PutMapping("/show/{id}")
-  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public void showReview(@PathVariable("id") Long id){
     Review review = reviewService.getReviewById(id);
     if(review != null){
@@ -73,7 +73,7 @@ public class ReviewController {
   }
 
   @PutMapping("/hide/{id}")
-  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public void hideReview(@PathVariable("id") Long id){
     Review review = reviewService.getReviewById(id);
     if(review != null){

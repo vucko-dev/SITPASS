@@ -1,7 +1,9 @@
 <div>
     <app-navbar></app-navbar>
     <div class="detailed-object-images-gallery">
-        <img src="../../assets/images/gym_background.jpg" alt="" class="detailed-object-images-gallery-image">
+        <img *ngFor="let image of images" [src]="'data:image/jpeg;base64,' + image.image" alt="" class="detailed-object-images-gallery-image">
+
+        <!-- <img src="../../assets/images/gym_background.jpg" alt="" class="detailed-object-images-gallery-image">
         <img src="../../assets/images/gym_background2.jpg" alt="" class="detailed-object-images-gallery-image">
         <img src="../../assets/images/gym_background3.jpg" alt="" class="detailed-object-images-gallery-image">
         <img src="../../assets/images/gym_background4.jpg" alt="" class="detailed-object-images-gallery-image">
@@ -9,7 +11,7 @@
         <img src="../../assets/images/gym_background2.jpg" alt="" class="detailed-object-images-gallery-image">
         <img src="../../assets/images/gym_background3.jpg" alt="" class="detailed-object-images-gallery-image">
         <img src="../../assets/images/gym_background4.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background.jpg" alt="" class="detailed-object-images-gallery-image">
+        <img src="../../assets/images/gym_background.jpg" alt="" class="detailed-object-images-gallery-image"> -->
 
     </div>
     <div class="detailed-object-details">
@@ -20,13 +22,13 @@
                 <div class="detailed-object-details-header-activities-activity">
                     Teretana
                 </div>
-                <div class="detailed-object-details-header-activities-activity">
-                    Kardio
+                <div *ngFor="let discipline of disciplines " class="detailed-object-details-header-activities-activity">
+                    {{discipline.name}}
                 </div>
             </div>
             <div class="detailed-object-details-header-location">
                 <img [src]="location" alt="" class="detailed-object-details-header-location-img">
-                <p class="detailed-object-details-header-location-address">Branka Bajića 11, Sajmište, Novi Sad</p>
+                <p class="detailed-object-details-header-location-address">{{address}}, {{city}}</p>
             </div>
         </div>
         <div class="detailed-object-details-main">
@@ -34,48 +36,34 @@
                 <h2>Radno vreme</h2>
                 <div class="horizontal-line"></div>
                 <table>
-                    <tr>
-                        <td>Ponedeljak</td>
-                        <td>6:00-23:00</td>
-                    </tr>
-                    <tr>
-                        <td>Utorak</td>
-                        <td>6:00-23:00</td>
-                    </tr>
-                    <tr>
-                        <td>Sreda</td>
-                        <td>6:00-23:00</td>
-                    </tr>
-                    <tr>
-                        <td>Cetvrtak</td>
-                        <td>6:00-23:00</td>
-                    </tr>
-                    <tr>
-                        <td>Petak</td>
-                        <td>6:00-23:00</td>
-                    </tr>
-                    <tr>
-                        <td>Subota</td>
-                        <td>6:00-23:00</td>
-                    </tr>
-                    <tr>
-                        <td>Nedelja</td>
-                        <td>6:00-23:00</td>
-                    </tr>
+                <tr *ngFor="let workday of sortedWorkdays">
+                    <td>
+                        <span *ngIf="workday.dayOfWeek === 'MONDAY'">Ponedeljak</span>
+                        <span *ngIf="workday.dayOfWeek === 'TUESDAY'">Utorak</span>
+                        <span *ngIf="workday.dayOfWeek === 'WEDNESDAY'">Sreda</span>
+                        <span *ngIf="workday.dayOfWeek === 'THURSDAY'">Četvrtak</span>
+                        <span *ngIf="workday.dayOfWeek === 'FRIDAY'">Petak</span>
+                        <span *ngIf="workday.dayOfWeek === 'SATURDAY'">Subota</span>
+                        <span *ngIf="workday.dayOfWeek === 'SUNDAY'">Nedelja</span>
+                    </td>
+                    <td>{{ workday.from[0] }}:{{ workday.from[1] | number:'2.0' }} - {{ workday.until[0] }}:{{ workday.until[1] | number:'2.0' }}</td>
+                </tr>
+        
+                    
                 </table>
             </div>
             <div class="detailed-object-details-main-about">
                 <h2>O nama</h2>
                 <div class="horizontal-line"></div>
                 <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit quas neque debitis autem natus! Voluptate ipsum, dolore natus quo sed totam omnis. Corporis, non delectus atque aut iste quibusdam distinctio.
+                    {{description}}
                 </p>
             </div>
         </div>
         <div class="detailed-object-details-footer">
             <h2 class="detailed-object-details-footer-title">Ocene i utisci</h2>
             <div class="detailed-object-details-footer-grades">
-                <h3 class="detailed-object-details-footer-grades-total">9.66</h3>
+                <h3 class="detailed-object-details-footer-grades-total">{{totalRating}}</h3>
                 <table class="detailed-object-details-footer-grades-specific-grades">
                     <tr>
                         <td>
@@ -112,34 +100,6 @@
                 </table>
             </div>
             <div class="detailed-object-details-footer-comments">
-                <div class="detailed-object-details-footer-comments-comment">
-                    <div class="detailed-object-details-footer-comments-comment-header">
-                        <p class="detailed-object-details-footer-comments-comment-header-grade">10</p>
-                        <p class="detailed-object-details-footer-comments-comment-header-date">9.7.2024/19:20</p>
-                    </div>
-                    <p class="detailed-object-details-footer-comments-comment-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae inventore laboriosam neque. Eaque explicabo aliquid quisquam numquam minus asperiores dignissimos. Facilis odio aliquam ipsam culpa sequi distinctio ea soluta tempore?</p>
-                </div>
-                <div class="detailed-object-details-footer-comments-comment">
-                    <div class="detailed-object-details-footer-comments-comment-header">
-                        <p class="detailed-object-details-footer-comments-comment-header-grade">10</p>
-                        <p class="detailed-object-details-footer-comments-comment-header-date">9.7.2024/19:20</p>
-                    </div>
-                    <p class="detailed-object-details-footer-comments-comment-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae inventore laboriosam neque. Eaque explicabo aliquid quisquam numquam minus asperiores dignissimos. Facilis odio aliquam ipsam culpa sequi distinctio ea soluta tempore?</p>
-                </div>
-                <div class="detailed-object-details-footer-comments-comment">
-                    <div class="detailed-object-details-footer-comments-comment-header">
-                        <p class="detailed-object-details-footer-comments-comment-header-grade">10</p>
-                        <p class="detailed-object-details-footer-comments-comment-header-date">9.7.2024/19:20</p>
-                    </div>
-                    <p class="detailed-object-details-footer-comments-comment-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae inventore laboriosam neque. Eaque explicabo aliquid quisquam numquam minus asperiores dignissimos. Facilis odio aliquam ipsam culpa sequi distinctio ea soluta tempore?</p>
-                </div>
-                <div class="detailed-object-details-footer-comments-comment">
-                    <div class="detailed-object-details-footer-comments-comment-header">
-                        <p class="detailed-object-details-footer-comments-comment-header-grade">10</p>
-                        <p class="detailed-object-details-footer-comments-comment-header-date">9.7.2024/19:20</p>
-                    </div>
-                    <p class="detailed-object-details-footer-comments-comment-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae inventore laboriosam neque. Eaque explicabo aliquid quisquam numquam minus asperiores dignissimos. Facilis odio aliquam ipsam culpa sequi distinctio ea soluta tempore?</p>
-                </div>
                 <div class="detailed-object-details-footer-comments-comment">
                     <div class="detailed-object-details-footer-comments-comment-header">
                         <p class="detailed-object-details-footer-comments-comment-header-grade">10</p>

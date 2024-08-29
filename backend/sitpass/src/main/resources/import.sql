@@ -110,5 +110,8 @@ INSERT INTO exercises (user_id, from_time, until_time, facility_id) VALUES (3, '
 INSERT INTO exercises (user_id, from_time, until_time, facility_id) VALUES (3, '2024-05-23 12:00', '2024-05-23 13:00', 2);
 INSERT INTO exercises (user_id, from_time, until_time, facility_id) VALUES (3, '2024-05-24 12:00', '2024-05-24 13:00', 2);
 
+INSERT INTO Rate(equipment,stuff,hygiene,space) VALUES(10,10,10,9);
 
+INSERT INTO Review(user_id, facility_id, created_at, exercise_count,hidden, comment_id) VALUES (3,2,'2024-05-22 15:00', 2, false, null);
 
+INSERT INTO review_rate(review_id, rate_id) VALUES (1,1);

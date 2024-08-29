@@ -32,14 +32,14 @@ public class Review {
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
-  @Column(name="excercise_count")
+  @Column(name="exercise_count")
   private Integer exerciseCount;
 
   @Column(name = "hidden")
   private Boolean hidden;
 
   @ManyToOne
-  @JoinColumn(name = "comment_id", nullable = false)
+  @JoinColumn(name = "comment_id", nullable = true)
   private Comment comment;
 
   public Long getId() {
