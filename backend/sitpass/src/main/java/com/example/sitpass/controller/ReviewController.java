@@ -45,7 +45,16 @@ public class ReviewController {
     return new ResponseEntity<>(reviews, HttpStatus.OK);
   }
 
-  @GetMapping("{id}")
+
+  @GetMapping("/facility/count/{id}")
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
+  public ResponseEntity<Integer> getReviewsCountByFacilityId(@PathVariable("id") Long id) {
+    List<Review> reviews = reviewService.getReviewsByFacilityId(id);
+    return new ResponseEntity<>(reviews.size(), HttpStatus.OK);
+  }
+
+
+    @GetMapping("{id}")
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public ResponseEntity<Review> getReviewById(@PathVariable("id") Long id) {
     Review review = reviewService.getReviewById(id);
@@ -57,6 +66,9 @@ public class ReviewController {
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public ResponseEntity<Review> addReview(@RequestBody ReviewDTO reviewDTO) {
     Review review = reviewService.save(reviewDTO);
+    if(review == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    }
     rateService.updateFacilityRating(reviewDTO.getFacilityId());
     return new ResponseEntity<>(review, HttpStatus.CREATED);
   }

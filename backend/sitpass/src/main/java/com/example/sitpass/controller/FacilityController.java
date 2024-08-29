@@ -41,6 +41,13 @@ public class FacilityController {
       return new ResponseEntity<>(facility, HttpStatus.OK);
   }
 
+//  @GetMapping("/city/{city}")
+//  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
+//  public ResponseEntity<List<Facility>> getFacilityByCity(@PathVariable String city) {
+//    List<Facility> facilities = facilityService.getFacilitiesByCityName(city);
+//    return new ResponseEntity<>(facilities, HttpStatus.OK);
+//  }
+
   @PostMapping
   @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<Facility> createFacility(@RequestBody FacilityDTO facilityDTO) {

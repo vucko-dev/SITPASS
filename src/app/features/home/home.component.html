@@ -10,10 +10,10 @@
         </div>
     </div>
     <div class="home-objects">
-        <app-objects [title]="'Objekti u Vasoj blizini'"></app-objects>
-        <app-objects [title]="'Najpopularniji objekti'"></app-objects>
-        <app-objects [title]="'Objekti koje ste posetili'"></app-objects>
-        <app-objects [title]="'Isprobaj nove objekte'"></app-objects>
+        <app-objects *ngIf="nearFacilities.length > 0" [title]="'Objekti u Vasoj blizini'" [data]="nearFacilities"></app-objects>
+        <app-objects *ngIf="mostPopularFacilities.length > 0" [title]="'Najpopularniji objekti'" [data]="mostPopularFacilities"></app-objects>
+        <app-objects *ngIf="visitedFacilities.length > 0" [title]="'Objekti koje ste posetili'" [data]="visitedFacilities"></app-objects>
+        <app-objects *ngIf="tryNewFacilities.length > 0" [title]="'Isprobaj novo'" [data]="tryNewFacilities"></app-objects>
     </div>
     <app-footer></app-footer>
 </div>

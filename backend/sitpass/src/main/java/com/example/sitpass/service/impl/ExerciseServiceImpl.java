@@ -64,4 +64,10 @@ public class ExerciseServiceImpl implements ExerciseService {
     List<Exercise> exercises = this.exerciseRepository.findByFacilityIdAndUserId(facilityId, userId);
     return (int) exercises.size();
   }
+
+  @Override
+  public  List<Exercise> getExercisesFromFacilityByUserId(Long facilityId, Long userId){
+    List<Exercise> exercises = this.exerciseRepository.findByFacilityIdAndUserId(facilityId, userId);
+    return exercises;
+  }
 }

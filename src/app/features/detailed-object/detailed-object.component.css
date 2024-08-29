@@ -166,10 +166,10 @@
 
 .detailed-object-details-footer-comments-comment-header{
     display: flex;
-    flex-direction: row;
-    gap: 15px;
+    flex-direction: column;
+    gap: 10px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    align-items: center;
+    /* align-items: center; */
     font-size: 12px;
     font-weight: 300;
 }
@@ -209,4 +209,32 @@
     font-size: 14px;
 }   
 
+.detailed-object-details-footer-comments-comment-header-user{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+    align-items: center;
+}
 
+.detailed-object-details-footer-comments-comment-header-grades{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    align-items: center;
+}
+
+.detailed-object-details-footer-comments-comment-header-user-image{
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+.detailed-object-details-footer-gardes-nogrades{
+    font-size: 14px;
+    margin-top: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 400;
+}

@@ -49,4 +49,11 @@ public class ExerciseController {
     return new ResponseEntity<>(exerciseDTO, HttpStatus.CREATED);
   }
 
+  @GetMapping("/{id}")
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
+  public ResponseEntity<Integer> getExercisesCount(Principal principal, @PathVariable Long id) {
+    Long userId = userService.findByUsername(principal.getName()).getId();
+    Integer num = exerciseService.getExercisesCountByFacilityId(id,userId);
+    return new ResponseEntity<>(num, HttpStatus.OK);
+  }
 }

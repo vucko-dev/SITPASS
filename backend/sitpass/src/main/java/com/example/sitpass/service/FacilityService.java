@@ -25,4 +25,6 @@ public interface FacilityService {
 
   Facility updateFacilityRating(Long facilityId, Double rating);
 
+//  List<Facility> getFacilitiesByCityName(String cityName);
+
 }

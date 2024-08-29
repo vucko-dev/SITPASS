@@ -164,4 +164,9 @@ public class FacilityServiceImpl implements FacilityService {
     return this.facilityRepository.save(facility);
   }
 
+//  @Override
+//  public List<Facility> getFacilitiesByCityName(String cityName){
+//    return facilityRepository.findByCity(cityName);
+//  }
+
 }

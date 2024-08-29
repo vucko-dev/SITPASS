@@ -12,4 +12,13 @@ import { CommonModule } from '@angular/common';
 })
 export class ObjectsComponent {
   @Input() title: string = 'Naziv sekcije';
+  @Input() data:any[] = [];
+
+  // ngOnInit():void{
+  //   console.log(this.data);
+  // }
+
+  transformDisciplinesToString(disciplines: any[]): string {
+    return disciplines.map(d => d.name).join(", ");
+  }
 }

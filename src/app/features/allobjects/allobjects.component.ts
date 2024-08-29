@@ -115,35 +115,33 @@ export class AllobjectsComponent {
     console.log(this.selectedDisciplines);
     console.log(this.selectedCities);
   
-    // Convert selected times to Date objects
     const lowTimeDate = this.selectedLowTime ? this.convertToDate(this.selectedLowTime) : null;
     const highTimeDate = this.selectedHighTime ? this.convertToDate(this.selectedHighTime) : null;
   
     this.filteredFacilities = this.facilities.filter(facility => {
-      // Check if the facility's city is in the selected cities array
       const matchesCity = this.selectedCities.length === 0 || this.selectedCities.includes(facility.city);
   
-      // Check if the facility's disciplines intersect with selected disciplines
       const matchesDisciplines = this.selectedDisciplines.length === 0 || facility.disciplines.some((d: Discipline) => this.selectedDisciplines.includes(d.name));
   
       const matchesLowGrade = this.selectedLowGrade === '' || facility.totalRating >= +this.selectedLowGrade;
       const matchesHighGrade = this.selectedHighGrade === '' || facility.totalRating <= +this.selectedHighGrade;
   
-      // Handle time filtering based on workdays
       const matchesTime = facility.workdays.some((workday:WorkDay) => {
-        // Convert workday times to Date objects
         const fromTime = this.convertToDate(`${workday.from[0]}:${workday.from[1]}`);
         const untilTime = this.convertToDate(`${workday.until[0]}:${workday.until[1]}`);
 
-        console.log(fromTime);
-        console.log(untilTime);
-        console.log(lowTimeDate);
-        console.log(highTimeDate);
+        // console.log(fromTime);
+        // console.log(untilTime);
+        // console.log(lowTimeDate);
+        // console.log(highTimeDate);
   
-        // Check if the facility's workday falls within the selected time range
-        const isWithinLowTime = !lowTimeDate || fromTime >= lowTimeDate;
-        const isWithinHighTime = !highTimeDate || untilTime <= highTimeDate;
+        const isWithinLowTime = !lowTimeDate  || (fromTime <= lowTimeDate && lowTimeDate<=untilTime);
+        const isWithinHighTime =  !highTimeDate || (untilTime >= highTimeDate && highTimeDate>=fromTime);
   
+        if(lowTimeDate && highTimeDate){
+          return lowTimeDate>=fromTime && highTimeDate<=untilTime && lowTimeDate<=highTimeDate;
+        }
+
         return isWithinLowTime && isWithinHighTime;
       });
   

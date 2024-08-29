@@ -17,11 +17,9 @@
     <div class="detailed-object-details">
         <div class="detailed-object-details-header">
             <h2 class="detailed-object-details-header-title">{{name}}</h2>
-            <p class="detailed-object-details-header-grade">Ocena: {{totalRating}}</p>
+            <p *ngIf="reviewsCount>0" class="detailed-object-details-header-grade">Ocena: {{totalRating}}</p>
+            <p *ngIf="reviewsCount<=0" class="detailed-object-details-header-grade">Ocena: ovaj objekat nije ocenjivan</p>
             <div class="detailed-object-details-header-activities">
-                <div class="detailed-object-details-header-activities-activity">
-                    Teretana
-                </div>
                 <div *ngFor="let discipline of disciplines " class="detailed-object-details-header-activities-activity">
                     {{discipline.name}}
                 </div>
@@ -62,7 +60,7 @@
         </div>
         <div class="detailed-object-details-footer">
             <h2 class="detailed-object-details-footer-title">Ocene i utisci</h2>
-            <div class="detailed-object-details-footer-grades">
+            <div *ngIf="reviewsCount>0" class="detailed-object-details-footer-grades">
                 <h3 class="detailed-object-details-footer-grades-total">{{totalRating}}</h3>
                 <table class="detailed-object-details-footer-grades-specific-grades">
                     <tr>
@@ -70,7 +68,7 @@
                             Opremljenost
                         </td>
                         <td>
-                            9.7
+                            {{equipment}}
                         </td>
                     </tr>
                     <tr>
@@ -78,7 +76,7 @@
                             Osoblje
                         </td>
                         <td>
-                            9.5
+                            {{stuff}}
                         </td>
                     </tr>
                     <tr>
@@ -86,32 +84,48 @@
                             Higijena
                         </td>
                         <td>
-                            9.7
+                            {{hygiene}}
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Prostorije
+                            Prostor
                         </td>
                         <td>
-                            9.7
+                            {{space}}
                         </td>
                     </tr>
                 </table>
             </div>
+            <div *ngIf="reviewsCount<=0" class="detailed-object-details-footer-grades">
+                <h3 class="detailed-object-details-footer-gardes-nogrades">Ovaj objekat nije ocenjivan.</h3>
+            </div>
             <div class="detailed-object-details-footer-comments">
-                <div class="detailed-object-details-footer-comments-comment">
+                <div *ngFor="let review of reviews" class="detailed-object-details-footer-comments-comment">
                     <div class="detailed-object-details-footer-comments-comment-header">
-                        <p class="detailed-object-details-footer-comments-comment-header-grade">10</p>
-                        <p class="detailed-object-details-footer-comments-comment-header-date">9.7.2024/19:20</p>
+                        <div class="detailed-object-details-footer-comments-comment-header-user">
+                            <div class="detailed-object-details-footer-comments-comment-header-user-image" [style.background-image]="'url(' + 'data:image/jpeg;base64,' + review.user.image.image + ')'"></div>
+                            <p class="detailed-object-details-footer-comments-comment-header-user-name">{{review.user.firstName}} {{review.user.lastName}}</p>
+                            <p class="detailed-object-details-footer-comments-comment-header-user-date">{{review.createdAt[2]}}.{{review.createdAt[1]}}.{{review.createdAt[0]}} {{ review.createdAt[3] }}:{{ review.createdAt[4] | number:'2.0' }}</p>
+                            <p class="detailed-object-details-footer-comments-comment-header-user-exerciseCount">Poseceno puta: {{review.exerciseCount}}</p>
+                        </div>
+                        <div class="detailed-object-details-footer-comments-comment-header-grades">
+                            <p class="detailed-object-details-footer-comments-comment-header-grade">Higijena: {{review.rate.hygiene}}</p>
+                            <p class="detailed-object-details-footer-comments-comment-header-grade">Osoblje: {{review.rate.stuff}} </p>
+                            <p class="detailed-object-details-footer-comments-comment-header-grade">Prostor: {{review.rate.space}}</p>
+                            <p class="detailed-object-details-footer-comments-comment-header-grade">Opremljenost: {{review.rate.equipment}} </p>
+                        </div>
                     </div>
-                    <p class="detailed-object-details-footer-comments-comment-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae inventore laboriosam neque. Eaque explicabo aliquid quisquam numquam minus asperiores dignissimos. Facilis odio aliquam ipsam culpa sequi distinctio ea soluta tempore?</p>
+                    <p class="detailed-object-details-footer-comments-comment-comment">{{review.comment.text}}</p>
                 </div>
-                <div class="detailed-object-details-footer-comments-comment">
+                <div *ngIf="exerciseCount > 0" class="detailed-object-details-footer-comments-comment">
                     <div class="detailed-object-details-footer-comments-comment-header">
                         <h2 class="detailed-object-details-footer-comments-comment-header-leave-comment">Ostavi svoj utisak</h2>
                     </div>
                     <textarea name="Komentar" id="" placeholder="Komentar"></textarea>
+                </div>
+                <div *ngIf="exerciseCount <= 0" class="detailed-object-details-footer-comments-comment">
+                    <h2 class="detailed-object-details-footer-comments-comment-header-leave-comment">Ne mozete ostaviti komentar jer niste posetili ovu teretanu.</h2>
                 </div>
             </div>
         </div>

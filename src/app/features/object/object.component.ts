@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FacilityService } from '../../services/facility.service';
+import { ReviewService } from '../../services/review.service';
 
 @Component({
   selector: 'app-object',
@@ -12,9 +13,21 @@ import { FacilityService } from '../../services/facility.service';
 })
 export class ObjectComponent {
   // objectImg: string = 'assets/images/object_img.jpg';
+
+  constructor(private reviewService:ReviewService){}
+
   @Input() title: string = 'Naziv objekta';
   @Input() services: string = 'Usluge objekta';
   @Input() objectImg: string = 'assets/images/object_img.jpg';
   @Input() grade: string = '5.0';
-  @Input() id:number|null = null;
+  @Input() id:number = 0;
+
+  reviewsCount:number = 0;
+
+  ngOnInit(): void {
+    this.reviewService.getReviewsCountByFacilityId(this.id).subscribe((data) => {
+      this.reviewsCount = data;
+      // console.log(data);
+    });
+  }
 }

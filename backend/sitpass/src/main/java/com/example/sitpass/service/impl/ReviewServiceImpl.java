@@ -46,6 +46,11 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Override
   public Review save(ReviewDTO reviewDTO) {
+
+    Integer numberOfExercises = exerciseService.getExercisesCountByFacilityId(reviewDTO.getFacilityId(),reviewDTO.getUserId());
+    if(numberOfExercises == 0){
+      return null;
+    }
     Review review = new Review();
     review.setId(reviewDTO.getId());
     Comment comment = this.commentService.addComment(reviewDTO.getCommentDTO());

@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FacilityService } from '../../services/facility.service';
 import { CommonModule } from '@angular/common';
 import { WorkDay } from '../../models/interfaces';
+import { ReviewService } from '../../services/review.service';
+import { ExerciseService } from '../../services/exercise.service';
 
 @Component({
   selector: 'app-detailed-object',
@@ -25,16 +27,13 @@ export class DetailedObjectComponent {
   disciplines:any[] = [];
   images:any[] = [];
   facility: any;
-
-  dayTranslation = {
-    "MONDAY": 'Ponedeljak',
-    "TUESDAY": 'Utorak',
-    "WEDNESDAY": 'Sreda',
-    "THURSDAY": 'Cetvrtak',
-    "FRIDAY": 'Petak',
-    "SATURDAY": 'Subota',
-    "SUNDAY": 'Nedelja'
-  };
+  reviews:any[] = [];
+  exerciseCount:number = 0;
+  reviewsCount:number = 0;
+  stuff:number = 0;
+  equipment:number = 0;
+  space:number = 0;
+  hygiene:number = 0;
   
   dayOrder = [
     'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'
@@ -42,7 +41,9 @@ export class DetailedObjectComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private facilityService: FacilityService
+    private facilityService: FacilityService,
+    private reviewService: ReviewService,
+    private exerciseService: ExerciseService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +51,64 @@ export class DetailedObjectComponent {
       if(params.get('id') != null){
         const id = params.get('id'); 
         this.loadFacility(Number(id));
+        this.loadReviews(Number(id));
+        this.loadExerciseCount(Number(id));
       }
+    });
+  }
+  
+  calculateStuff():void{
+    let sum:number = 0;
+    this.reviews.forEach(element => {
+      sum+=element.rate.stuff;
+    });
+    this.stuff =  sum/this.reviews.length;
+  }
+
+  calculateHygiene():void{
+    let sum:number = 0;
+    this.reviews.forEach(element => {
+      sum+=element.rate.hygiene;
+    });
+    this.hygiene = sum/this.reviews.length;
+  }
+
+  calculateSpace():void{
+    let sum:number = 0;
+    this.reviews.forEach(element => {
+      sum+=element.rate.space;
+    });
+    this.space = sum/this.reviews.length;
+  }
+
+  calculateEquipment():void{
+    let sum:number = 0;
+    this.reviews.forEach(element => {
+      sum+=element.rate.equipment;
+    });
+    this.equipment = sum/this.reviews.length;
+  }
+
+  loadExerciseCount(id: number): void{
+    this.exerciseService.getExercisesCountForSpecificFacility(id).subscribe(data=>{
+      this.exerciseCount = data;
+      // console.log('Broj poseta:');
+      // console.log(data);
+    })
+  }
+
+  loadReviews(id: number): void {
+    this.reviewService.getReviewsByFacilityId(id).subscribe(data=>{
+      this.reviews = data;
+      this.reviewsCount = data.length;
+      if(this.reviewsCount >0){
+        this.calculateEquipment();
+        this.calculateHygiene();
+        this.calculateSpace();
+        this.calculateStuff();
+      }
+      // console.log(this.reviewsCount);
+      // console.log(data);
     });
   }
 
@@ -68,7 +126,7 @@ export class DetailedObjectComponent {
       this.sortedWorkdays = this.workdays.sort((a, b) => {
         return this.dayOrder.indexOf(a.dayOfWeek) - this.dayOrder.indexOf(b.dayOfWeek);
       });
-      console.log(data);
+      // console.log(data);
     });
   }
 }
