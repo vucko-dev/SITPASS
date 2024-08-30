@@ -44,8 +44,9 @@ public class ExerciseController {
 
   @PostMapping
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
-  public ResponseEntity<ExerciseDTO> createExercise(@RequestBody ExerciseDTO exerciseDTO) {
-    exerciseService.createExercise(exerciseDTO);
+  public ResponseEntity<ExerciseDTO> createExercise(@RequestBody ExerciseDTO exerciseDTO, Principal principal) {
+    User user = userService.findByUsername(principal.getName());
+    exerciseService.createExercise(exerciseDTO, user.getId());
     return new ResponseEntity<>(exerciseDTO, HttpStatus.CREATED);
   }
 

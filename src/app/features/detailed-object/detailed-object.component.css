@@ -238,3 +238,32 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 400;
 }
+
+.detailed-object-details-header-main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.detailed-object-details-header-main-action-button{
+    border:1px solid lightgray;
+    padding:5px 5px;
+    border-radius: 10px;
+    background-color: #17ABE8;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+  }
+.detailed-object-details-header-main-action-button-link{
+    color: #fff!important;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 400;
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+  

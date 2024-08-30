@@ -1,0 +1,17 @@
+<div class="add-exercise-container">
+    <h2>Zakazivanje termina</h2>
+    <form (ngSubmit)="addExercise()">
+      
+    <div>
+        <label>Od:</label>
+        <input type="datetime-local" [(ngModel)]="data.from" name="from" required>
+    </div>
+    <div>
+        <label>Do:</label>
+        <input type="datetime-local" [(ngModel)]="data.until" name="until" required>
+    </div>
+      <p class="add-exercise-container-note">{{note}}</p>
+      <button type="submit">Zakazi termin</button>
+    </form>
+  </div>
+  

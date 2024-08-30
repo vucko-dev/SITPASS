@@ -45,24 +45,27 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public Review save(ReviewDTO reviewDTO) {
+  public Review save(ReviewDTO reviewDTO, Long userId) {
 
-    Integer numberOfExercises = exerciseService.getExercisesCountByFacilityId(reviewDTO.getFacilityId(),reviewDTO.getUserId());
+    Integer numberOfExercises = exerciseService.getExercisesCountByFacilityId(reviewDTO.getFacilityId(),userId);
     if(numberOfExercises == 0){
-      return null;
+      throw new RuntimeException("Niste posetili ovu teretanu!");
     }
     Review review = new Review();
-    review.setId(reviewDTO.getId());
-    Comment comment = this.commentService.addComment(reviewDTO.getCommentDTO());
-    review.setComment(comment);
+//    review.setId(reviewDTO.getId());
     review.setFacility(facilityService.getFacilityById(reviewDTO.getFacilityId()));
     review.setCreatedAt(LocalDateTime.now());
-    review.setUser(userService.findById(reviewDTO.getUserId()));
-    review.setExerciseCount(exerciseService.getExercisesCountByFacilityId(reviewDTO.getFacilityId(), reviewDTO.getUserId()));
+    review.setUser(userService.findById(userId));
+    review.setExerciseCount(exerciseService.getExercisesCountByFacilityId(reviewDTO.getFacilityId(), userId));
     review.setHidden(false);
     Rate rate = rateService.save(reviewDTO.getRate());
     review.setRate(rate);
-    return reviewRepository.save(review);
+    Review returnRev = reviewRepository.save(review);
+    if(reviewDTO.getCommentDTO()!=null) { // Ovo treba doriaditi returnRev.getId();
+      Comment comment = this.commentService.addComment(reviewDTO.getCommentDTO());
+      review.setComment(comment);
+    }
+    return returnRev;
   }
 
   @Override

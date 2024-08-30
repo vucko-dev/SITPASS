@@ -16,7 +16,12 @@
     </div>
     <div class="detailed-object-details">
         <div class="detailed-object-details-header">
-            <h2 class="detailed-object-details-header-title">{{name}}</h2>
+            <div class="detailed-object-details-header-main">
+                <h2 class="detailed-object-details-header-title">{{name}}</h2>
+                <div class="detailed-object-details-header-main-action-button">
+                    <a class="detailed-object-details-header-main-action-button-link" (click)="onAddExercise()">Zakazi termin</a>
+                </div>
+            </div>
             <p *ngIf="reviewsCount>0" class="detailed-object-details-header-grade">Ocena: {{totalRating}}</p>
             <p *ngIf="reviewsCount<=0" class="detailed-object-details-header-grade">Ocena: ovaj objekat nije ocenjivan</p>
             <div class="detailed-object-details-header-activities">

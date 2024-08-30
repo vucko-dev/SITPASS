@@ -6,7 +6,7 @@ import com.example.sitpass.model.Exercise;
 import java.util.List;
 
 public interface ExerciseService {
-  Exercise createExercise(ExerciseDTO exerciseDTO);
+  Exercise createExercise(ExerciseDTO exerciseDTO, Long userId);
 
 //  List<ExerciseDTO> getExercisesByUserId(Long userId);
   List<Exercise> getExercisesByUserId(Long userId);

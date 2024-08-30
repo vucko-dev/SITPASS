@@ -41,10 +41,10 @@ public class RateServiceImpl implements RateService {
     Facility facility = facilityService.getFacilityById(id);
     if (facility != null) {
       List<Review> reviews = reviewService.getReviewsByFacilityId(facility.getId());
-      Double sum = (double) 0;
+      double sum = (double) 0;
       for (Review review : reviews) {
         Rate rate = review.getRate();
-        Double avg = (double) (rate.getEquipment() + rate.getHygiene() + rate.getSpace() + rate.getStuff());
+        double avg = (double) (rate.getEquipment() + rate.getHygiene() + rate.getSpace() + rate.getStuff());
         avg = avg/4;
         sum = sum + avg;
       }

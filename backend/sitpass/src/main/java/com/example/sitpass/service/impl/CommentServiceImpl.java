@@ -37,7 +37,7 @@ public class CommentServiceImpl implements CommentService {
   public Comment addComment(CommentDTO commentDTO) {
     Comment comment = new Comment();
     comment.setParentComment(commentRepository.findById(commentDTO.getParentCommentId()).get());
-    comment.setId(commentDTO.getId());
+//    comment.setId(commentDTO.getId());
     comment.setText(commentDTO.getText());
     comment.setCreatedAt(LocalDateTime.now());
 //    comment.setReplies(commentDTO.getReplies());

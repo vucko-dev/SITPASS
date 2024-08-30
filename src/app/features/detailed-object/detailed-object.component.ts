@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { WorkDay } from '../../models/interfaces';
 import { ReviewService } from '../../services/review.service';
 import { ExerciseService } from '../../services/exercise.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddExerciseComponent } from '../../dialogs/add-exercise/add-exercise.component';
 
 @Component({
   selector: 'app-detailed-object',
@@ -43,13 +45,15 @@ export class DetailedObjectComponent {
     private route: ActivatedRoute,
     private facilityService: FacilityService,
     private reviewService: ReviewService,
-    private exerciseService: ExerciseService
+    private exerciseService: ExerciseService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       if(params.get('id') != null){
         const id = params.get('id'); 
+        localStorage.setItem('currentFacility',id==null?'':id);
         this.loadFacility(Number(id));
         this.loadReviews(Number(id));
         this.loadExerciseCount(Number(id));
@@ -128,5 +132,9 @@ export class DetailedObjectComponent {
       });
       // console.log(data);
     });
+  }
+
+  onAddExercise(){
+    this.dialog.open(AddExerciseComponent, {});
   }
 }

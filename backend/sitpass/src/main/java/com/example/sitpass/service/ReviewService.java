@@ -6,7 +6,7 @@ import com.example.sitpass.model.Review;
 import java.util.List;
 
 public interface ReviewService {
-  Review save(ReviewDTO reviewDTO);
+  Review save(ReviewDTO reviewDTO, Long userId);
   List<Review> getReviewsByUserId(Long userId);
   Review getReviewById(Long id);
   void hideReviewById(Long id);

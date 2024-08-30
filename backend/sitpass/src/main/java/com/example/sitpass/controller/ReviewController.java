@@ -64,8 +64,9 @@ public class ReviewController {
 
   @PostMapping
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
-  public ResponseEntity<Review> addReview(@RequestBody ReviewDTO reviewDTO) {
-    Review review = reviewService.save(reviewDTO);
+  public ResponseEntity<Review> addReview(@RequestBody ReviewDTO reviewDTO, Principal principal) {
+    User user = userService.findByUsername(principal.getName());
+    Review review = reviewService.save(reviewDTO, user.getId());
     if(review == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
