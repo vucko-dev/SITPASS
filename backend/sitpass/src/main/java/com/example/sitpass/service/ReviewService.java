@@ -13,4 +13,5 @@ public interface ReviewService {
   void showReviewById(Long id);
   List<Review> getReviewsByFacilityId(Long facilityId);
 
+  void deleteReviewById(Long id);
 }

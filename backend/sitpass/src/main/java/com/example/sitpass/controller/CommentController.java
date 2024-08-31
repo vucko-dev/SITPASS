@@ -3,13 +3,16 @@ package com.example.sitpass.controller;
 
 import com.example.sitpass.dto.CommentDTO;
 import com.example.sitpass.model.Comment;
+import com.example.sitpass.model.User;
 import com.example.sitpass.service.CommentService;
+import com.example.sitpass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -19,10 +22,14 @@ public class CommentController {
   @Autowired
   private CommentService commentService;
 
-  @PostMapping
+  @Autowired
+  private UserService userService;
+
+  @PostMapping("{id}")
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
-  public ResponseEntity<Comment> addComment(@RequestBody CommentDTO commentDTO) {
-    Comment comment = commentService.addComment(commentDTO);
+  public ResponseEntity<Comment> addComment(@RequestBody CommentDTO commentDTO, @PathVariable Long id, Principal principal) {
+    User user  = userService.findByUsername(principal.getName());
+    Comment comment = commentService.addComment(commentDTO, id, user.getId());
     return new ResponseEntity<>(comment, HttpStatus.CREATED);
   }
 

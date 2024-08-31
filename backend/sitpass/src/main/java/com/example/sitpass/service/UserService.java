@@ -19,4 +19,8 @@ public interface UserService {
   User updatePassword(String username, String newPassword);
 
   User updateUserImage(String username, Image image);
+
+  User promote(String username);
+
+  User demote(String username);
 }

@@ -6,7 +6,8 @@ import com.example.sitpass.model.Comment;
 import java.util.List;
 
 public interface CommentService {
-  Comment addComment(CommentDTO commentDTO);
+  Comment addComment(CommentDTO commentDTO, Long reviewId, Long userId);
   List<Comment> getCommentsByReviewId(Long reviewId);
   Comment getCommentById(Long commentId);
+  void deleteCommentById(Long commentId);
 }

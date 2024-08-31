@@ -1,0 +1,10 @@
+<div class="delete-facility-container">
+    <h2>Brisanje</h2>
+    <form (ngSubmit)="deleteFacility()">
+        <p>Da li ste sigurni da zelite obrisati ovu teretanu?</p>
+      <p class="delete-facility-container-note">{{note}}</p>
+      <button type="submit">Obrisi teretanu</button>
+      <button type="button" (click)="onClose()">Otkazi</button>
+    </form>
+  </div>
+  

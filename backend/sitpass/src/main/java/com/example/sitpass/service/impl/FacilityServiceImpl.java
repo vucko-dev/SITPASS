@@ -6,9 +6,7 @@ import com.example.sitpass.dto.ImageDTO;
 import com.example.sitpass.dto.WorkDayDTO;
 import com.example.sitpass.enums.RequestStatus;
 import com.example.sitpass.model.*;
-import com.example.sitpass.repository.DisciplineRepository;
-import com.example.sitpass.repository.FacilityRepository;
-import com.example.sitpass.repository.WorkDayRepository;
+import com.example.sitpass.repository.*;
 import com.example.sitpass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +41,19 @@ public class FacilityServiceImpl implements FacilityService {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private ReviewService reviewService;
+
+  @Autowired
+  private ManagesRepository managesRepository;
+
+  @Autowired
+  private ExerciseRepository exerciseRepository;
+
+
+  @Autowired
+  private ExerciseService exerciseService;
 
   @Override
   public Facility getFacilityById(Long id) {
@@ -122,7 +133,26 @@ public class FacilityServiceImpl implements FacilityService {
     }
     Facility facility = facilityRepository.findById(id).orElseThrow(() -> new RuntimeException("Facility not found!"));
 
+    List<Review> reviews = reviewService.getReviewsByFacilityId(id);
+    for (Review review : reviews) {
+      reviewService.deleteReviewById(review.getId());
+    }
+
+    List<Exercise> exercises = exerciseRepository.findByFacilityId(id);
+    for (Exercise exercise : exercises) {
+        exerciseService.deleteExercise(exercise.getId());
+    }
+
+    List<Manages> manages = managesRepository.findByFacilityId(id);
+    for(Manages manage: manages){
+      managesService.delete(manage.getId());
+    }
+
     facilityRepository.deleteById(id);
+    Set<Image> images = facility.getImages();
+    for(Image image : images) {
+      imageService.deleteById(image.getId());
+    }
   }
 
   @Override

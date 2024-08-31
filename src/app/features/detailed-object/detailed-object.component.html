@@ -21,7 +21,14 @@
                 <div class="detailed-object-details-header-main-action-button">
                     <a class="detailed-object-details-header-main-action-button-link" (click)="onAddExercise()">Zakazi termin</a>
                 </div>
+                <div *ngIf="role=='ADMIN'" class="detailed-object-details-header-main-action-button">
+                    <a class="detailed-object-details-header-main-action-button-link" (click)="onDeleteFacility()">Obrisi</a>
+                </div>
+                <div *ngIf="role=='ADMIN' || (role=='MANAGER' && hasManagerRight==true)" class="detailed-object-details-header-main-action-button">
+                    <a class="detailed-object-details-header-main-action-button-link" (click)="onEditFacility()">Izmeni</a>
+                </div>
             </div>
+            <!-- <Trebas sad ispitati da li je korisnik menadzer i napraviti ono da je korisnik menadzer kad upravlja teretanom -->
             <p *ngIf="reviewsCount>0" class="detailed-object-details-header-grade">Ocena: {{totalRating}}</p>
             <p *ngIf="reviewsCount<=0" class="detailed-object-details-header-grade">Ocena: ovaj objekat nije ocenjivan</p>
             <div class="detailed-object-details-header-activities">
@@ -116,18 +123,35 @@
                         </div>
                         <div class="detailed-object-details-footer-comments-comment-header-grades">
                             <p class="detailed-object-details-footer-comments-comment-header-grade">Higijena: {{review.rate.hygiene}}</p>
-                            <p class="detailed-object-details-footer-comments-comment-header-grade">Osoblje: {{review.rate.stuff}} </p>
+                            <p class="detailed-object-details-footer-comments-comment-header-grade">Osoblje: {{review.rate.staff}} </p>
                             <p class="detailed-object-details-footer-comments-comment-header-grade">Prostor: {{review.rate.space}}</p>
                             <p class="detailed-object-details-footer-comments-comment-header-grade">Opremljenost: {{review.rate.equipment}} </p>
                         </div>
                     </div>
-                    <p class="detailed-object-details-footer-comments-comment-comment">{{review.comment.text}}</p>
+                    <p *ngIf="review?.commentDTO?.text!=undefined" class="detailed-object-details-footer-comments-comment-comment">{{review?.commentDTO?.text}}</p>
                 </div>
-                <div *ngIf="exerciseCount > 0" class="detailed-object-details-footer-comments-comment">
+                <div *ngIf="exerciseCount > 0 && alreadyComment == false" class="detailed-object-details-footer-comments-comment">
                     <div class="detailed-object-details-footer-comments-comment-header">
                         <h2 class="detailed-object-details-footer-comments-comment-header-leave-comment">Ostavi svoj utisak</h2>
                     </div>
-                    <textarea name="Komentar" id="" placeholder="Komentar"></textarea>
+                    <form (ngSubmit)="onReviewPost()" class="add-review-form">
+                        <label for="staff">Osoblje</label>
+                        <input name="staff" [(ngModel)]="reviewData.rate.staff" id="staff" type="number" min="1" max="10" required />
+                      
+                        <label for="equipment">Opremljenost</label>
+                        <input name="equipment" [(ngModel)]="reviewData.rate.equipment" id="equipment" type="number" min="1" max="10" required />
+                      
+                        <label for="space">Prostor</label>
+                        <input name="space" [(ngModel)]="reviewData.rate.space" id="space" type="number" min="1" max="10" required />
+                      
+                        <label for="hygiene">Higijena</label>
+                        <input name="hygiene" [(ngModel)]="reviewData.rate.hygiene" id="hygiene" type="number" min="1" max="10" required />
+                      
+                        <label for="comment">Komentar</label>
+                        <textarea name="comment" id="comment" [(ngModel)]="reviewData.commentDTO.text" placeholder="Komentar"></textarea>
+                      
+                        <button type="submit">Postavi</button>
+                      </form>
                 </div>
                 <div *ngIf="exerciseCount <= 0" class="detailed-object-details-footer-comments-comment">
                     <h2 class="detailed-object-details-footer-comments-comment-header-leave-comment">Ne mozete ostaviti komentar jer niste posetili ovu teretanu.</h2>

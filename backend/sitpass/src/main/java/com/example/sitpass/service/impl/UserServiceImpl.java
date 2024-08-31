@@ -100,4 +100,18 @@ public class UserServiceImpl implements UserService {
     return this.userRepository.save(updatedUser);
   }
 
+  @Override
+  public User promote(String username){
+    User user = userRepository.findByEmail(username);
+    user.setRoles(roleService.findByName("MANAGER"));
+    return user;
+  }
+
+  @Override
+  public User demote(String username){
+    User user = userRepository.findByEmail(username);
+    user.setRoles(roleService.findByName("USER"));
+    return user;
+  }
+
 }

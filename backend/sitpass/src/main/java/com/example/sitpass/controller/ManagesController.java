@@ -40,10 +40,7 @@ public class ManagesController {
     if(facility == null || user == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    manages.setFacility(facility);
-    manages.setUser(user);
-    manages.setStartTime(managesDTO.getStartTime());
-    manages.setEndTime(managesDTO.getEndTime());
+    managesService.save(managesDTO);
     return new ResponseEntity<>(manages, HttpStatus.CREATED);
   }
 
@@ -56,5 +53,18 @@ public class ManagesController {
     }
     managesService.delete(manages.getId());
     return new ResponseEntity<>(manages, HttpStatus.NO_CONTENT);
+  }
+
+  @GetMapping("/{id}")
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
+  public ResponseEntity<Boolean> hasRightToFacility(@PathVariable Long id, Principal principal) {
+      User user = userService.findByUsername(principal.getName());
+      Facility facility = facilityService.getFacilityById(id);
+      if(facility!=null && user!=null){
+        Boolean ans = managesService.hasRightsToFacility(user.getId(),id);
+        return new ResponseEntity<>(ans, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
+      }
   }
 }

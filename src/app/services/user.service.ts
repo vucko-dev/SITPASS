@@ -17,6 +17,8 @@ export class UserService {
     return this.http.get(this.apiUrl, { headers: this.authService.authHeader() })
   }
 
+
+
   async getUserRole(): Promise<string> {
     const data = await this.getUserInfo().toPromise();
     return data.roles[0]?.name || '';
@@ -29,4 +31,9 @@ export class UserService {
   updateUserPassword(userData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}` + "/password", userData, { headers: this.authService.authHeader() });
   }
+
+  getUserInfoByUserId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.authService.authHeader() });
+  }
+
 }

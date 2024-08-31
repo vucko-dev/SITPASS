@@ -55,9 +55,6 @@ INSERT INTO user_image (user_id, image_id) VALUES (3, 3);
 INSERT INTO facility_images (facility_id, image_id) VALUES (1, 4);
 INSERT INTO facility_images (facility_id, image_id) VALUES (1, 5);
 INSERT INTO facility_images (facility_id, image_id) VALUES (2, 6);
-INSERT INTO facility_images (facility_id, image_id) VALUES (2, 7);
-INSERT INTO facility_images (facility_id, image_id) VALUES (3, 5);
-INSERT INTO facility_images (facility_id, image_id) VALUES (3, 6);
 INSERT INTO facility_images (facility_id, image_id) VALUES (3, 7);
 
 
@@ -115,5 +112,7 @@ INSERT INTO Rate(equipment,stuff,hygiene,space) VALUES(10,10,10,9);
 INSERT INTO Review(user_id, facility_id, created_at, exercise_count,hidden, comment_id) VALUES (3,2,'2024-05-22 15:00', 2, false, null);
 
 INSERT INTO review_rate(review_id, rate_id) VALUES (1,1);
+
+INSERT INTO manages(start_time, end_time, user_id, facility_id) VALUES ('2024-05-22','2024-10-22',2,1);
 
 # INSERT INTO comment(text, user_id, review_id) VALUES ('Odlicna teretana',3,1);

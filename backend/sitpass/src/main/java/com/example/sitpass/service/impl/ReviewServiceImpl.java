@@ -1,5 +1,6 @@
 package com.example.sitpass.service.impl;
 
+import com.example.sitpass.dto.CommentDTO;
 import com.example.sitpass.dto.ReviewDTO;
 import com.example.sitpass.model.Comment;
 import com.example.sitpass.model.Rate;
@@ -47,6 +48,10 @@ public class ReviewServiceImpl implements ReviewService {
   @Override
   public Review save(ReviewDTO reviewDTO, Long userId) {
 
+    if(reviewRepository.findByFacilityIdAndUserId((Long) reviewDTO.getFacilityId(), userId) != null) {
+      throw new RuntimeException("Vec ste ostavili utisak na ovu teretanu!");
+    }
+
     Integer numberOfExercises = exerciseService.getExercisesCountByFacilityId(reviewDTO.getFacilityId(),userId);
     if(numberOfExercises == 0){
       throw new RuntimeException("Niste posetili ovu teretanu!");
@@ -62,7 +67,7 @@ public class ReviewServiceImpl implements ReviewService {
     review.setRate(rate);
     Review returnRev = reviewRepository.save(review);
     if(reviewDTO.getCommentDTO()!=null) { // Ovo treba doriaditi returnRev.getId();
-      Comment comment = this.commentService.addComment(reviewDTO.getCommentDTO());
+      Comment comment = this.commentService.addComment(reviewDTO.getCommentDTO(), returnRev.getId(), userId);
       review.setComment(comment);
     }
     return returnRev;
@@ -111,5 +116,23 @@ public class ReviewServiceImpl implements ReviewService {
     review.setHidden(true);
   }
 
+
+  @Override
+  public void deleteReviewById(Long id){
+    Review review = reviewRepository.findById(id).orElse(null);
+    if(review == null){
+      throw new RuntimeException("Review not found!");
+    }
+    Comment comment = review.getComment();
+    if(comment != null){
+      commentService.deleteCommentById(comment.getId());
+    }
+//
+//    Rate rate = review.getRate();
+//    if(rate != null){
+//      rateService.deleteFacilityRating(rate.getId());
+//    }
+    reviewRepository.delete(review);
+  }
 
 }

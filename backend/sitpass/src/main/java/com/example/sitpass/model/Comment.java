@@ -1,6 +1,7 @@
 package com.example.sitpass.model;
 
 import com.example.sitpass.dto.CommentDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,13 +24,14 @@ public class Comment {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "review_id", nullable = false)
+  @JsonBackReference
   private Review review;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "parent_comment_id")
+  @JoinColumn(name = "parent_comment_id", nullable = true)
   private Comment parentComment;
 
   @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)

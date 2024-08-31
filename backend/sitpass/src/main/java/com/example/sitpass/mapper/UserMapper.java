@@ -2,6 +2,7 @@ package com.example.sitpass.mapper;
 
 import com.example.sitpass.dto.UserRequest;
 import com.example.sitpass.model.User;
+import org.springframework.stereotype.Component;
 
 
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.Base64;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+
+@Component
 public class UserMapper implements MapperInterface<User, UserRequest> {
 
   public UserMapper() {

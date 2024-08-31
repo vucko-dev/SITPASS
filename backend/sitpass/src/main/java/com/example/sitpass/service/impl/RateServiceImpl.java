@@ -28,7 +28,7 @@ public class RateServiceImpl implements RateService {
   @Override
   public Rate save(RateDTO rateDTO) {
     Rate rate = new Rate();
-    rate.setId(rateDTO.getId());
+//    rate.setId(rateDTO.getId());
     rate.setEquipment(rateDTO.getEquipment());
     rate.setHygiene(rateDTO.getHygiene());
     rate.setSpace(rateDTO.getSpace());
@@ -53,5 +53,11 @@ public class RateServiceImpl implements RateService {
     } else{
       throw new RuntimeException("Facility not found");
     }
+  }
+
+  public void deleteFacilityRating(Long id) {
+
+    Rate rate  = rateRepository.findById(id).get();
+    rateRepository.delete(rate);
   }
 }

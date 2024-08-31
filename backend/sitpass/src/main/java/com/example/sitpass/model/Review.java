@@ -1,5 +1,7 @@
 package com.example.sitpass.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -40,6 +42,7 @@ public class Review {
 
   @ManyToOne
   @JoinColumn(name = "comment_id", nullable = true)
+  @JsonBackReference
   private Comment comment;
 
   public Long getId() {

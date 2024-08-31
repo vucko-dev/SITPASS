@@ -105,4 +105,10 @@ public class ExerciseServiceImpl implements ExerciseService {
     List<Exercise> exercises = this.exerciseRepository.findByFacilityIdAndUserId(facilityId, userId);
     return exercises;
   }
+
+  @Override
+  public void deleteExercise(Long exerciseId) {
+
+    this.exerciseRepository.deleteById(exerciseId);
+  }
 }

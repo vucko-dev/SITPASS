@@ -2,6 +2,7 @@ package com.example.sitpass.controller;
 
 
 import com.example.sitpass.dto.ReviewDTO;
+import com.example.sitpass.mapper.ReviewMapper;
 import com.example.sitpass.model.Review;
 import com.example.sitpass.model.User;
 import com.example.sitpass.service.RateService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +32,11 @@ public class ReviewController {
   @Autowired
   private RateService rateService;
 
+  @Autowired
+  private ReviewMapper reviewMapper;
+
+
+
   @GetMapping
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public ResponseEntity<List<Review>> getReviewsFromUserId(Principal principal) {
@@ -40,9 +47,13 @@ public class ReviewController {
 
   @GetMapping("/facility/{id}")
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
-  public ResponseEntity<List<Review>> getReviewsByFacilityId(@PathVariable("id") Long id) {
+  public ResponseEntity<List<ReviewDTO>> getReviewsByFacilityId(@PathVariable("id") Long id) {
     List<Review> reviews = reviewService.getReviewsByFacilityId(id);
-    return new ResponseEntity<>(reviews, HttpStatus.OK);
+    List<ReviewDTO>reviewsdto = new ArrayList<>();
+    for (Review review : reviews) {
+      reviewsdto.add(reviewMapper.toDto(review));
+    }
+    return new ResponseEntity<>(reviewsdto, HttpStatus.OK);
   }
 
 
@@ -64,18 +75,18 @@ public class ReviewController {
 
   @PostMapping
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
-  public ResponseEntity<Review> addReview(@RequestBody ReviewDTO reviewDTO, Principal principal) {
+  public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO, Principal principal) {
     User user = userService.findByUsername(principal.getName());
     Review review = reviewService.save(reviewDTO, user.getId());
     if(review == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
     rateService.updateFacilityRating(reviewDTO.getFacilityId());
-    return new ResponseEntity<>(review, HttpStatus.CREATED);
+    return new ResponseEntity<>(reviewDTO, HttpStatus.CREATED);
   }
 
   @PutMapping("/show/{id}")
-  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   public void showReview(@PathVariable("id") Long id){
     Review review = reviewService.getReviewById(id);
     if(review != null){
@@ -86,7 +97,7 @@ public class ReviewController {
   }
 
   @PutMapping("/hide/{id}")
-  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   public void hideReview(@PathVariable("id") Long id){
     Review review = reviewService.getReviewById(id);
     if(review != null){

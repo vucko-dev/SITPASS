@@ -14,4 +14,7 @@ public interface ExerciseService {
   List<Exercise> getExercisesFromFacilityByUserId(Long facilityId, Long userId);
 
   Integer getExercisesCountByFacilityId(Long facilityId, Long userId);
+
+  void deleteExercise(Long exerciseId);
+
 }

@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
     //   // height: '400px',
     //   // width: '600px',
     // });
-    console.log(role);
+    // console.log(role);
   }
 
   loadUserInfo() {

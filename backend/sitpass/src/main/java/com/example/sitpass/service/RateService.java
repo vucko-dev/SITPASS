@@ -8,4 +8,6 @@ public interface RateService {
   Rate save(RateDTO rateDTO);
 
   void updateFacilityRating(Long id);
+
+  void deleteFacilityRating(Long id);
 }
