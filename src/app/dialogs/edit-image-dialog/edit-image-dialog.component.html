@@ -1,0 +1,14 @@
+<div class="edit-user-container">
+    <h2>Promena profilne slike</h2>
+    <form (ngSubmit)="onUpdateImage()">
+      <div>
+        <div>
+            <label>Slike:</label>
+            <input type="file" (change)="onFileSelected($event)" multiple="false">
+          </div>
+      </div>
+      <p class="edit-user-container-note">{{note}}</p>
+      <button type="submit">Izmeni</button>
+    </form>
+  </div>
+  

@@ -18,4 +18,8 @@ export class ManagesService {
       observe: 'response'
     });
   }
+
+  getManagesByUser(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}`, { headers: this.authService.authHeader() });
+  }
 }

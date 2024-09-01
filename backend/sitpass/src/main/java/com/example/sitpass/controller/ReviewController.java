@@ -39,10 +39,14 @@ public class ReviewController {
 
   @GetMapping
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
-  public ResponseEntity<List<Review>> getReviewsFromUserId(Principal principal) {
+  public ResponseEntity<List<ReviewDTO>> getReviewsFromUserId(Principal principal) {
     User user = userService.findByUsername(principal.getName());
     List<Review> reviews = reviewService.getReviewsByUserId(user.getId());
-    return new ResponseEntity<>(reviews, HttpStatus.OK);
+    List<ReviewDTO>reviewsdto = new ArrayList<>();
+    for (Review review : reviews) {
+      reviewsdto.add(reviewMapper.toDto(review));
+    }
+    return new ResponseEntity<>(reviewsdto, HttpStatus.OK);
   }
 
   @GetMapping("/facility/{id}")

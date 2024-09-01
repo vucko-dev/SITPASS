@@ -15,4 +15,6 @@ public interface ManagesService {
 
   Manages findById(Long id);
 
+
+  List<Manages> findByUserId(Long userId);
 }

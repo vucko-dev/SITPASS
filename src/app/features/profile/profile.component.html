@@ -26,22 +26,52 @@
                   <a class="profile-content-button-link" (click)="onEditUser()">Izmeni podatke</a>
                 </div>
                 <div class="profile-content-button">
-                  <a class="profile-content-button-link" (click)="onEditUserPassword()">Promeni lozniku///</a>
+                  <a class="profile-content-button-link" (click)="onEditUserPassword()">Promeni lozniku</a>
                 </div>
                 <div class="profile-content-button">
-                  <a class="profile-content-button-link" (click)="onEditUser()">Promeni sliku///</a>
+                  <a class="profile-content-button-link" (click)="onEditImage()">Promeni sliku</a>
                 </div>
               </div>
             </ng-template>
           </mat-tab>
           <mat-tab label="Poseceni objekti">
             <ng-template matTabContent>
-              <p>Poseceni objekti</p>
+              <div class="visited-facilities-container">
+                <div *ngFor="let exercise of exercises" class="visited-facility-container">
+                  <h3 class="visited-facility-container-title">{{exercise.facility.name}}</h3>
+                  <p class="visited-facility-container-date">{{exercise.from[2]}}.{{exercise.from[1]}}.{{exercise.from[0]}} {{ exercise.from[3] }}:{{ exercise.from[4] | number:'2.0' }}</p>
+                  <p class="visited-facility-container-date">{{exercise.until[2]}}.{{exercise.until[1]}}.{{exercise.until[0]}} {{ exercise.until[3] }}:{{ exercise.until[4] | number:'2.0' }}</p>
+                </div>
+              </div>
             </ng-template>
           </mat-tab>
           <mat-tab label="Utisci">
             <ng-template matTabContent>
-              <p>Utisci</p>
+              <div class="reviews-container">
+                <div *ngFor="let review of reviews" class="review-container">
+                  <div class="review-container-header">
+                    <h3 class="review-container-title">{{review.facility.name}}</h3>
+                    <p class="review-container-date">{{review.createdAt[2]}}.{{review.createdAt[1]}}.{{review.createdAt[0]}} {{ review.createdAt[3] }}:{{ review.createdAt[4] | number:'2.0' }}</p>
+                    <p>Poseceno:  {{review.exerciseCount}}</p>
+                  </div>
+                  <div class="review-container-grades">
+                    <p class="review-container-grades-grade">Higijena: {{review.rate.hygiene}}</p>
+                    <p class="review-container-grades-grade">Prostor: {{review.rate.space}}</p>
+                    <p class="review-container-grades-grade">Opremljenost: {{review.rate.equipment}}</p>
+                    <p class="review-container-grades-grade">Osoblje: {{review.rate.staff}}</p>
+                  </div>
+                  <p *ngIf="review?.commentDTO?.text!=undefined" >{{review?.commentDTO?.text}}</p>
+                </div>
+              </div>
+            </ng-template>
+          </mat-tab>
+          <mat-tab *ngIf="isManages" label="Menadzer">
+            <ng-template matTabContent>
+              <div class="visited-facilities-container">
+                <div *ngFor="let manage of manages" class="visited-facility-container">
+                  <h3 class="visited-facility-container-title">{{manage.facility.name}}</h3>
+                </div>
+              </div>
             </ng-template>
           </mat-tab>
         </mat-tab-group>

@@ -2,6 +2,7 @@ package com.example.sitpass.controller;
 
 
 import com.example.sitpass.dto.ExerciseDTO;
+import com.example.sitpass.mapper.ExerciseMapper;
 import com.example.sitpass.model.Exercise;
 import com.example.sitpass.service.ExerciseService;
 import com.example.sitpass.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.example.sitpass.model.User;
 
@@ -26,6 +28,9 @@ public class ExerciseController {
   @Autowired
   private UserService userService;
 
+
+  @Autowired
+  public ExerciseMapper exerciseMapper;
 //  @GetMapping
 //  @PreAuthorize("hasAuthority('USER')")
 //  public ResponseEntity<List<ExerciseDTO>> getUserExercises(Principal principal) {
@@ -36,10 +41,15 @@ public class ExerciseController {
 
   @GetMapping
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
-  public ResponseEntity<List<Exercise>> getUserExercises(Principal principal) {
+  public ResponseEntity<List<ExerciseDTO>> getUserExercises(Principal principal) {
     User user = userService.findByUsername(principal.getName());
     List<Exercise> exercises = exerciseService.getExercisesByUserId(user.getId());
-    return new ResponseEntity<>(exercises, HttpStatus.OK);
+    List<ExerciseDTO> exerciseDTOS = new ArrayList<>();
+    for (Exercise exercise : exercises) {
+      ExerciseDTO exerciseDTO = exerciseMapper.toDto(exercise);
+      exerciseDTOS.add(exerciseDTO);
+    }
+    return new ResponseEntity<>(exerciseDTOS, HttpStatus.OK);
   }
 
   @PostMapping

@@ -56,10 +56,11 @@ export class EditUserComponent implements OnInit {
     this.userService.updateUser(this.userData).subscribe({
       next: (response) => {
         console.log('User updated successfully', response);
-        this.authService.logout();
+        // this.authService.logout();
         this.dialogRef.close();
+        window.location.reload();
         // this.appComponent.showMessage('Uspesno ste izmenili profil. Vraceni ste na stranicu za prijavu.', 'green');
-        this.router.navigate(['/auth']);
+        // this.router.navigate(['/auth']);
       },
       error: (err) => {
         console.error('Failed to update user', err);

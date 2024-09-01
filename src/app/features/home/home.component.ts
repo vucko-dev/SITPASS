@@ -10,6 +10,7 @@ import { AppComponent } from '../../app.component';
 import { FacilityService } from '../../services/facility.service';
 import { UserService } from '../../services/user.service';
 import { ExerciseService } from '../../services/exercise.service';
+import { forkJoin, map } from 'rxjs';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -59,20 +60,60 @@ export class HomeComponent {
   }
 
   loadExercises():void{
-    this.exerciseService.getExercisesForUser().subscribe((data: any[]) =>{
+    this.exerciseService.getExercisesForUser().subscribe((data: any[]) => {
       this.exercises = data;
-      this.visitedFacilities = this.exercises.map(exercise=>exercise.facility);
-      // console.log('Exercises:');
-      // console.log(this.removeFacilityDuplicates(this.visitedFacilities));
-      this.visitedFacilities = this.removeDuplicates(this.visitedFacilities);
-      this.tryNewFacilities = this.getUnvisitedFacilities(this.facilities, this.visitedFacilities);
-      this.userDisciplines = this.visitedFacilities.map(facility=>facility.disciplines);
-      this.userDisciplines = this.userDisciplines.flat();
-      this.userDisciplines = this.removeDuplicates(this.userDisciplines);
-      this.tryNewFacilities = this.getTryNewFacilities(this.tryNewFacilities, this.userDisciplines);
-      // console.log(this.userDisciplines);
-    })
+    
+      const facilityRequests = this.exercises.map(exercise => 
+        this.facilityService.getFacilityById(exercise.facilityId)
+      );
+    
+      forkJoin(facilityRequests).subscribe({
+        next: (facilities) => {
+          // Assign facilities to their respective exercises
+          this.exercises.forEach((exercise, index) => {
+            exercise.facility = facilities[index];
+          });
+    
+          // Extract and remove duplicates from facilities
+          this.visitedFacilities = this.exercises.map(exercise => exercise.facility);
+          this.visitedFacilities = this.removeDuplicates(this.visitedFacilities);
+          this.tryNewFacilities = this.getUnvisitedFacilities(this.facilities, this.visitedFacilities);
+          this.userDisciplines = this.visitedFacilities.map(facility=>facility.disciplines);
+          this.userDisciplines = this.userDisciplines.flat();
+          this.userDisciplines = this.removeDuplicates(this.userDisciplines);
+          this.tryNewFacilities = this.getTryNewFacilities(this.tryNewFacilities, this.userDisciplines);
+        },
+        error: (err) => {
+          console.error('Failed to load facilities', err);
+        }
+      });
+    });
+    // this.exerciseService.getExercisesForUser().subscribe((data: any[]) =>{
+    //   this.exercises = data;
+    //   this.exercises.forEach(exercise => {
+    //     this.facilityService.getFacilityById(exercise.facilityId).subscribe({
+    //       next: (facility) => {
+    //         // Add the facility to the exercise object
+    //         exercise.facility = facility;
+    //       },
+    //       error: (err) => {
+    //         console.error(`Failed to load facility for exercise ID ${exercise.id}`, err);
+    //       }
+    //     });
+    //   });
+    //   this.visitedFacilities = this.exercises.map(exercise=>exercise.facility);
+    //   this.visitedFacilities = this.removeDuplicates(this.visitedFacilities);      // console.log(this.visitedFacilities);
+    //   // console.log('Exercises:');
+    //   // console.log(this.removeFacilityDuplicates(this.visitedFacilities));
+    //   this.tryNewFacilities = this.getUnvisitedFacilities(this.facilities, this.visitedFacilities);
+    //   this.userDisciplines = this.visitedFacilities.map(facility=>facility.disciplines);
+    //   this.userDisciplines = this.userDisciplines.flat();
+    //   this.userDisciplines = this.removeDuplicates(this.userDisciplines);
+    //   this.tryNewFacilities = this.getTryNewFacilities(this.tryNewFacilities, this.userDisciplines);
+    //   // console.log(this.userDisciplines);
+    // })
   }
+
 
   removeDuplicates(arr: any[]): any[] {
     const unique = arr.reduce((acc, current) => {

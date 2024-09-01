@@ -63,4 +63,9 @@ public class ManagesServiceImpl implements ManagesService {
   public Manages findById(Long id) {
     return this.managesRepository.findById(id);
   }
+
+  @Override
+  public List<Manages> findByUserId(Long userId) {
+    return this.managesRepository.findByUserId(userId);
+  }
 }

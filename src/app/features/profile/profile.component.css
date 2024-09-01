@@ -64,5 +64,53 @@ mat-tab-group .mat-tab-body {
   display: block;
   text-align: center;
   padding: 10px;
+}
 
+.visited-facilities-container, .reviews-container{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+}
+
+.visited-facility-container, .review-container{
+  width: 100%;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.visited-facility-container-title, .review-container-title{
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.review-container{
+  flex-direction: column;
+  gap:5px;
+  align-items: flex-start;
+}
+
+.review-container-header{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.review-container-grades{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-container-grades-grade{
+  background-color: #17ABE8;
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 20px;
 }

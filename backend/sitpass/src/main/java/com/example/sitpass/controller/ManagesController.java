@@ -2,6 +2,7 @@ package com.example.sitpass.controller;
 
 
 import com.example.sitpass.dto.ManagesDTO;
+import com.example.sitpass.mapper.ManagesMapper;
 import com.example.sitpass.model.Facility;
 import com.example.sitpass.model.Manages;
 import com.example.sitpass.model.Review;
@@ -16,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +32,9 @@ public class ManagesController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private ManagesMapper managesMapper;
 
   @PostMapping
   @PreAuthorize("hasAuthority('ADMIN')")
@@ -66,5 +71,20 @@ public class ManagesController {
       } else {
         return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
       }
+  }
+
+  @GetMapping
+  @PreAuthorize("hasAuthority('MANAGER')")
+  public ResponseEntity<List<ManagesDTO>> getManagesForUser(Principal principal) {
+    User user = userService.findByUsername(principal.getName());
+    List<Manages> manages = managesService.findByUserId(user.getId());
+    if(manages==null || manages.size()==0) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    List<ManagesDTO> managesDTOList = new ArrayList<>();
+    for(Manages manage: manages){
+      managesDTOList.add(managesMapper.toDto(manage));
+    }
+    return new ResponseEntity<>(managesDTOList, HttpStatus.OK);
   }
 }

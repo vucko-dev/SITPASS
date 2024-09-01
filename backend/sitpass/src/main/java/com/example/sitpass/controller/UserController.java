@@ -66,6 +66,7 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
   }
+
   @PutMapping("/image")
   public ResponseEntity<User> uploadOrUpdateUserImage(
     Principal principal,
