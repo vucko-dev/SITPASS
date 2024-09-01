@@ -10,9 +10,11 @@ import com.example.sitpass.repository.*;
 import com.example.sitpass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,9 +53,9 @@ public class FacilityServiceImpl implements FacilityService {
   @Autowired
   private ExerciseRepository exerciseRepository;
 
-
   @Autowired
   private ExerciseService exerciseService;
+
 
   @Override
   public Facility getFacilityById(Long id) {
@@ -122,7 +124,19 @@ public class FacilityServiceImpl implements FacilityService {
       WorkDay workDay = workDayService.save(workDayDTO);
       workdays.add(workDay);
     }
-    updatedFacility.setWorkdays(workdays);
+        updatedFacility.setWorkdays(workdays);
+
+//    Set<ImageDTO> imagesDTO = facilityDTO.getImages();
+//    Set<Image> images = new HashSet<>();
+//    for (ImageDTO imageDTO : imagesDTO) {
+//      try {
+//        Image image = imageService.save(imageDTO);
+//        images.add(image);
+//      } catch (IOException e) {
+//        throw new RuntimeException(e);
+//      }
+//    }
+//    updatedFacility.setImages(images);
     return this.facilityRepository.save(updatedFacility);
   }
 
@@ -198,5 +212,27 @@ public class FacilityServiceImpl implements FacilityService {
 //  public List<Facility> getFacilitiesByCityName(String cityName){
 //    return facilityRepository.findByCity(cityName);
 //  }
+
+  @Override
+  public Facility addImages(Long facilityId, List<MultipartFile>images){
+    Facility facility = facilityRepository.findById(facilityId).orElse(null);
+    if (facility == null) {
+      throw new RuntimeException("Facility not found");
+    }
+    Set<Image> imagesList = new HashSet<>();
+    for (MultipartFile image : images) {
+      try {
+        ImageDTO imageDTO = new ImageDTO();
+        imageDTO.setFile(image);
+        Image imageEntity = imageService.save(imageDTO);
+        imageEntity.setImage(image.getBytes());
+        imagesList.add(imageEntity);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    facility.setImages(imagesList);
+    return facilityRepository.save(facility);
+  }
 
 }

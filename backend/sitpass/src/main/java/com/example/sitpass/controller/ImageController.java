@@ -28,4 +28,5 @@ public class ImageController {
       }
       return new ResponseEntity<>(image, HttpStatus.OK);
   }
+
 }

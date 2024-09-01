@@ -68,10 +68,10 @@ public class FacilityController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    Facility existFacility = facilityService.getFacilityByFacilityName(facilityDTO.getName());
-    if (existFacility != null) {
-      throw new ResourceConflictException(existFacility.getId(), "Facility already exists with name: " + facilityDTO.getName());
-    }
+//    Facility existFacility = facilityService.getFacilityByFacilityName(facilityDTO.getName());
+//    if (existFacility != null) {
+//      throw new ResourceConflictException(existFacility.getId(), "Facility already exists with name: " + facilityDTO.getName());
+//    }
     facilityService.updateFacility(id,facilityDTO);
     return new ResponseEntity<>(facility, HttpStatus.OK);
   }
@@ -106,6 +106,20 @@ public class FacilityController {
     } catch (IOException e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  @PostMapping("/image/{id}")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public ResponseEntity<Facility> addImage(@RequestParam("file") List<MultipartFile> files, @PathVariable Long id) throws IOException {
+    if (files.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    Facility facility = facilityService.getFacilityById(id);
+    if (facility == null) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    facilityService.addImages(id,files);
+    return new ResponseEntity<>(facility, HttpStatus.OK);
   }
 
 }

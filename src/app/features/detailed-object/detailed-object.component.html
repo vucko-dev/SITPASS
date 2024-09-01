@@ -27,6 +27,9 @@
                 <div *ngIf="role=='ADMIN' || (role=='MANAGER' && hasManagerRight==true)" class="detailed-object-details-header-main-action-button">
                     <a class="detailed-object-details-header-main-action-button-link" (click)="onEditFacility()">Izmeni</a>
                 </div>
+                <div *ngIf="role=='ADMIN'" class="detailed-object-details-header-main-action-button">
+                    <a class="detailed-object-details-header-main-action-button-link" (click)="onOpenManagers()">Menadzeri</a>
+                </div>
             </div>
             <!-- <Trebas sad ispitati da li je korisnik menadzer i napraviti ono da je korisnik menadzer kad upravlja teretanom -->
             <p *ngIf="reviewsCount>0" class="detailed-object-details-header-grade">Ocena: {{totalRating}}</p>
@@ -112,6 +115,12 @@
             <div *ngIf="reviewsCount<=0" class="detailed-object-details-footer-grades">
                 <h3 class="detailed-object-details-footer-gardes-nogrades">Ovaj objekat nije ocenjivan.</h3>
             </div>
+            <select *ngIf="reviewsCount>0" (change)="onSortChange($event)">
+                <option value="createdAtAsc">Sortiraj po datumu: Rastuce</option>
+                <option value="createdAtDesc">Sortiraj po datumu: Opadajuce</option>
+                <option value="rateAsc">Sortiraj po oceni: Rastuce</option>
+                <option value="rateDesc">Sortiraj po oceni: Opadajuce</option>
+              </select>
             <div class="detailed-object-details-footer-comments">
                 <div *ngFor="let review of reviews" class="detailed-object-details-footer-comments-comment">
                     <div class="detailed-object-details-footer-comments-comment-header">
@@ -126,6 +135,7 @@
                             <p class="detailed-object-details-footer-comments-comment-header-grade">Osoblje: {{review.rate.staff}} </p>
                             <p class="detailed-object-details-footer-comments-comment-header-grade">Prostor: {{review.rate.space}}</p>
                             <p class="detailed-object-details-footer-comments-comment-header-grade">Opremljenost: {{review.rate.equipment}} </p>
+                            <p class="detailed-object-details-footer-comments-comment-header-grade">Ukupno: {{review.rate.total}} </p>
                         </div>
                     </div>
                     <p *ngIf="review?.commentDTO?.text!=undefined" class="detailed-object-details-footer-comments-comment-comment">{{review?.commentDTO?.text}}</p>

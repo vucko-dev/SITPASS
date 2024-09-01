@@ -32,4 +32,24 @@ export class FacilityService {
     });
   }
 
+  updateFacility(id:number, data:any): Observable<HttpResponse<any>>{
+    return this.http.put<any>(`${this.apiUrl}/${id}`,data,{
+      headers: this.authService.authHeader(),
+      observe: 'response'
+    })
+  };
+
+  addImages(id: number, files: File[]): Observable<any> {
+    const formData: FormData = new FormData();
+
+    files.forEach(file => {
+      formData.append('file', file);
+    });
+
+    return this.http.post(`${this.apiUrl}/image/${id}`, formData, {
+      headers: this.authService.authHeader(),
+      observe: 'response'
+    });
+  }
+
 }

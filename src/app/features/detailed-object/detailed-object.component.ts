@@ -139,6 +139,7 @@ export class DetailedObjectComponent {
         if(review.userId == this.userData.id){
           this.alreadyComment = true;
         }
+        review.rate.total = (Number(review.rate.staff) + Number(review.rate.equipment) + Number(review.rate.space) + Number(review.rate.hygiene))/4;
       });
       // console.log(this.reviews);
       if(this.reviewsCount >0){
@@ -149,6 +150,7 @@ export class DetailedObjectComponent {
       }
       // console.log(this.reviewsCount);
       // console.log(data);
+      console.log(this.reviews);
     });
   }
 
@@ -200,6 +202,10 @@ export class DetailedObjectComponent {
     this.dialog.open(EditFacilityDialogComponent,{});
   }
 
+  onOpenManagers(){
+    
+  }
+
   onReviewPost(){
     // this.reviewData.rate.staff = this.staffInput;
     // this.reviewData.rate.equipment = this.equipmentInput;
@@ -220,4 +226,42 @@ export class DetailedObjectComponent {
     });
 
   }
+
+  sortByCreatedAt(reviews: any[], ascending: boolean = true): any[] {
+    return reviews.sort((a, b) => {
+        const dateA = new Date(a.createdAt[0], a.createdAt[1] - 1, a.createdAt[2], a.createdAt[3], a.createdAt[4]);
+        const dateB = new Date(b.createdAt[0], b.createdAt[1] - 1, b.createdAt[2], b.createdAt[3], b.createdAt[4]);
+
+        return ascending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+    });
+  }
+
+  sortByRateTotal(reviews: any[], ascending: boolean = true): any[] {
+    return reviews.sort((a, b) => {
+        return ascending ? a.rate.total - b.rate.total : b.rate.total - a.rate.total;
+    });
+}
+onSortChange(event: Event) {
+  const target = event.target as HTMLSelectElement;
+  const sortOption = target.value;
+
+  switch (sortOption) {
+    case 'createdAtAsc':
+      this.reviews = this.sortByCreatedAt(this.reviews, true);
+      break;
+    case 'createdAtDesc':
+      this.reviews = this.sortByCreatedAt(this.reviews, false);
+      break;
+    case 'rateAsc':
+      this.reviews = this.sortByRateTotal(this.reviews, true);
+      break;
+    case 'rateDesc':
+      this.reviews = this.sortByRateTotal(this.reviews, false);
+      break;
+    default:
+      break;
+  }
+}
+
+
 }
