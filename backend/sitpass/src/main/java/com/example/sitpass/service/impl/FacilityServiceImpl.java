@@ -59,17 +59,50 @@ public class FacilityServiceImpl implements FacilityService {
 
   @Override
   public Facility getFacilityById(Long id) {
-    return facilityRepository.findById(id).orElseGet(null);
+    Facility facility =  facilityRepository.findById(id).orElseGet(null);
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
+    if(facility==null){
+      throw new RuntimeException("No facility found");
+    }
+    if(role.equals("ADMIN") || facility.getActive()){
+      return facility;
+    } else{
+      return null;
+    }
   }
 
   @Override
   public Facility getFacilityByFacilityName(String facilityName) {
-    return facilityRepository.findByName(facilityName);
+    Facility facility =  facilityRepository.findByName(facilityName);
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
+    if(facility==null){
+      throw new RuntimeException("No facility found");
+    }
+    if(role.equals("ADMIN") || facility.getActive()){
+      return facility;
+    } else{
+      return null;
+    }
   }
 
   @Override
   public List<Facility> getFacilities() {
-    return facilityRepository.findAll();
+    List<Facility> allFacilities =  facilityRepository.findAll();
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
+    List<Facility> facilities = new ArrayList<>();
+    if((role.equals("ADMIN"))) {
+      facilities = allFacilities;
+    }else{
+      for(Facility facility : allFacilities) {
+        if(facility.getActive()==true){
+          facilities.add(facility);
+        }
+      }
+    }
+    return facilities;
   }
 
   @Override

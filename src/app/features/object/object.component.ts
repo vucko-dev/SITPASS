@@ -21,8 +21,10 @@ export class ObjectComponent {
   @Input() objectImg: string = 'assets/images/object_img.jpg';
   @Input() grade: string = '5.0';
   @Input() id:number = 0;
+  @Input() active:boolean = true;
 
   reviewsCount:number = 0;
+
 
   ngOnInit(): void {
     this.reviewService.getReviewsCountByFacilityId(this.id).subscribe((data) => {

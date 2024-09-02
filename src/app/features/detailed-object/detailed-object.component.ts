@@ -45,6 +45,7 @@ export class DetailedObjectComponent {
   hasManagerRight:any = false;
   alreadyComment:boolean = false;
   userData:any;
+  commentResponse:string = '';
   reviewData = {
     facilityId:0,
     rate: {
@@ -223,6 +224,7 @@ export class DetailedObjectComponent {
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
+      this.commentResponse = error.error.message;
     });
 
   }

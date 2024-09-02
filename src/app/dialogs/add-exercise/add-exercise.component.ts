@@ -53,7 +53,7 @@ export class AddExerciseComponent {
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
-      this.note = 'Proverite unos ponovo';
+      this.note = 'Proverite unos ponovo.' + error.error.message;
     });
     
 

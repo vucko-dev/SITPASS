@@ -25,7 +25,7 @@ INSERT INTO Discipline (name) VALUES ('Grupni trening');
 
 INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Iron Republic 2', 'Iron RePublic je više od teretane.','2024-05-22','Novi Sad', 'Novi Sad','0',true);
 INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Ahilej Zemun', 'Najjaca teretana','2024-05-22','Beograd', 'Beograd','9.91',true);
-INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Ahilej Medakovic', 'Najjaca teretana','2024-05-22','Medakovic', 'Beograd','0',true);
+INSERT INTO Facility (name, description, created_at, address, city, total_rating, active) VALUES ('Ahilej Medakovic', 'Najjaca teretana','2024-05-22','Medakovic', 'Beograd','0',false);
 
 INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (1, 1);
 INSERT INTO facility_disciplines (facility_id, discipline_id) VALUES (1, 2);
@@ -113,7 +113,7 @@ INSERT INTO Rate(equipment,stuff,hygiene,space) VALUES(10,10,10,9);
 INSERT INTO Rate(equipment,stuff,hygiene,space) VALUES(10,10,10,10);
 INSERT INTO Rate(equipment,stuff,hygiene,space) VALUES(10,10,10,10);
 
-INSERT INTO Review(user_id, facility_id, created_at, exercise_count,hidden, comment_id) VALUES (3,2,'2024-05-22 15:00', 2, false, null);
+INSERT INTO Review(user_id, facility_id, created_at, exercise_count,hidden, comment_id) VALUES (3,2,'2024-05-22 15:00', 2, true, null);
 INSERT INTO Review(user_id, facility_id, created_at, exercise_count,hidden, comment_id) VALUES (2,2,'2024-05-24 15:00', 1, false, null);
 INSERT INTO Review(user_id, facility_id, created_at, exercise_count,hidden, comment_id) VALUES (1,2,'2024-05-24 16:00', 1, false, null);
 
@@ -122,5 +122,6 @@ INSERT INTO review_rate(review_id, rate_id) VALUES (2,2);
 INSERT INTO review_rate(review_id, rate_id) VALUES (3,3);
 
 INSERT INTO manages(start_time, end_time, user_id, facility_id) VALUES ('2024-05-22','2024-10-22',2,1);
+INSERT INTO manages(start_time, end_time, user_id, facility_id) VALUES ('2024-05-22','2024-10-22',2,2);
 
 # INSERT INTO comment(text, user_id, review_id) VALUES ('Odlicna teretana',3,1);

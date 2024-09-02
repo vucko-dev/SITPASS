@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,6 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
     return reviewRepository.findById(id).orElse(null);
   }
 
+
   @Override
   public Review save(ReviewDTO reviewDTO, Long userId) {
 
@@ -58,6 +60,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
     Review review = new Review();
 //    review.setId(reviewDTO.getId());
+    if(facilityService.getFacilityById(reviewDTO.getFacilityId()).getActive()==false) {
+      throw new RuntimeException("Teretana nije aktivna.");
+    }
     review.setFacility(facilityService.getFacilityById(reviewDTO.getFacilityId()));
     review.setCreatedAt(LocalDateTime.now());
     review.setUser(userService.findById(userId));
@@ -66,7 +71,7 @@ public class ReviewServiceImpl implements ReviewService {
     Rate rate = rateService.save(reviewDTO.getRate());
     review.setRate(rate);
     Review returnRev = reviewRepository.save(review);
-    if(reviewDTO.getCommentDTO()!=null) { // Ovo treba doriaditi returnRev.getId();
+    if(reviewDTO.getCommentDTO()!=null) {
       Comment comment = this.commentService.addComment(reviewDTO.getCommentDTO(), returnRev.getId(), userId);
       review.setComment(comment);
     }
@@ -75,12 +80,37 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Override
   public List<Review> getReviewsByUserId(Long userId) {
-    return reviewRepository.findByUserId(userId);
+    User user = userService.findById(userId);
+    String role = user.getRoles().get(0).getName();
+    if(role.equals("ADMIN")) {
+      return reviewRepository.findByUserId(userId);
+    }
+    List<Review> reviews =  reviewRepository.findByUserId(userId);
+    List<Review> returnReviews = new ArrayList<>();
+    for (Review review : reviews) {
+      if(!review.getHidden() || (role.equals("MANAGER") && managesService.hasRightsToFacility(user.getId(), review.getFacility().getId()))){
+        returnReviews.add(review);
+      }
+    }
+    return returnReviews;
   }
 
   @Override
   public List<Review> getReviewsByFacilityId(Long facilityId) {
-    return reviewRepository.findByFacilityId(facilityId);
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
+    if(role.equals("ADMIN") || (role.equals("MANAGER") && managesService.hasRightsToFacility(user.getId(), facilityId))) {
+      return reviewRepository.findByFacilityId(facilityId);
+    }
+
+    List<Review> reviews =  reviewRepository.findByFacilityId(facilityId);
+    List<Review> returnReviews = new ArrayList<>();
+    for (Review review : reviews) {
+      if(!review.getHidden()){
+        returnReviews.add(review);
+      }
+    }
+    return returnReviews;
   }
 
   @Override
@@ -117,11 +147,18 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
 
+
   @Override
   public void deleteReviewById(Long id){
     Review review = reviewRepository.findById(id).orElse(null);
     if(review == null){
       throw new RuntimeException("Review not found!");
+    }
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
+
+    if(!(role.equals("ADMIN")||(role.equals("MANAGER") && managesService.hasRightsToFacility(user.getId(),review.getFacility().getId())))){
+      throw new RuntimeException("Insufficient permission!");
     }
     Comment comment = review.getComment();
     if(comment != null){

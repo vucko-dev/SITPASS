@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -56,6 +57,9 @@ public class UserServiceImpl implements UserService {
     user.setAddress(userRequest.getAddress());
     user.setCreatedAt(userRequest.getCreatedAt());
     user.setBirthday(userRequest.getBirthday());
+    if(userRequest.getBirthday().isAfter(LocalDate.now())){
+      throw new RuntimeException("Greska");
+    }
     user.setCity(userRequest.getCity());
     user.setZipCode(userRequest.getZipCode());
     user.setEnabled(true);
@@ -75,6 +79,9 @@ public class UserServiceImpl implements UserService {
     updatedUser.setPhoneNumber(userRequest.getPhoneNumber());
     updatedUser.setAddress(userRequest.getAddress());
     updatedUser.setBirthday(userRequest.getBirthday());
+    if(userRequest.getBirthday().isAfter(LocalDate.now())){
+      throw new RuntimeException("Greska");
+    }
     updatedUser.setCity(userRequest.getCity());
     updatedUser.setZipCode(userRequest.getZipCode());
     updatedUser.setEnabled(true);

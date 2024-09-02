@@ -25,6 +25,9 @@ public class WorkDayServiceImpl implements WorkDayService {
     WorkDay workDay = new WorkDay();
     workDay.setDayOfWeek(workDayDTO.getDayOfWeek());
     workDay.setValidFrom(workDayDTO.getValidFrom());
+    if(workDayDTO.getFrom().isAfter(workDayDTO.getUntil())){
+      throw new RuntimeException("Greska");
+    }
     workDay.setFrom(workDayDTO.getFrom());
     workDay.setUntil(workDayDTO.getUntil());
     return this.workDayRepository.save(workDay);
@@ -35,6 +38,9 @@ public class WorkDayServiceImpl implements WorkDayService {
     WorkDay workDay = findById(workDayDTO.getId());
     workDay.setDayOfWeek(workDayDTO.getDayOfWeek());
     workDay.setValidFrom(workDayDTO.getValidFrom());
+    if(workDayDTO.getFrom().isAfter(workDayDTO.getUntil())){
+      throw new RuntimeException("Greska");
+    }
     workDay.setFrom(workDayDTO.getFrom());
     workDay.setUntil(workDayDTO.getUntil());
     return this.workDayRepository.save(workDay);

@@ -1,6 +1,7 @@
 package com.example.sitpass.service.impl;
 
 import com.example.sitpass.dto.ManagesDTO;
+import com.example.sitpass.model.Facility;
 import com.example.sitpass.model.Manages;
 import com.example.sitpass.model.User;
 import com.example.sitpass.repository.ManagesRepository;
@@ -44,6 +45,7 @@ public class ManagesServiceImpl implements ManagesService {
     manages.setStartTime(managesDTO.getStartTime());
     manages.setUser(userService.findById(managesDTO.getUserId()));
     manages.setFacility(facilityService.getFacilityById(managesDTO.getFacilityId()));
+    facilityService.getFacilityById(managesDTO.getFacilityId()).setActive(true);
     User user = userService.findById(managesDTO.getUserId());
     userService.promote(user.getUsername());
     return this.managesRepository.save(manages);
@@ -55,6 +57,11 @@ public class ManagesServiceImpl implements ManagesService {
     List<Manages> allUserManages = managesRepository.findByUserId(manages.getUser().getId());
     if(allUserManages.size()<=0){
       userService.demote(manages.getUser().getUsername());
+    }
+    Facility facility = manages.getFacility();
+    List<Manages> facilityManages = managesRepository.findByFacilityId(facility.getId());
+    if(facilityManages.size()<=0){
+      facility.setActive(false);
     }
     this.managesRepository.delete(manages);
   }

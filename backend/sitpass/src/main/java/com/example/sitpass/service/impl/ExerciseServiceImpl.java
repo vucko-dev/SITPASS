@@ -37,11 +37,18 @@ public class ExerciseServiceImpl implements ExerciseService {
     User user = userService.findById(userId);
     exercise.setUser(user);
     Facility facility = facilityService.getFacilityById(exerciseDTO.getFacilityId());
+    if(facility.getActive() == false){
+      throw new RuntimeException("Teretana nije aktivna");
+    }
     exercise.setFacility(facility);
     Set<WorkDay> workdays = facility.getWorkdays();
 
     LocalDateTime from = exerciseDTO.getFrom();
     LocalDateTime until = exerciseDTO.getUntil();
+
+    if(until.isBefore(from) || until.isEqual(from)){
+      throw new RuntimeException("Greska.");
+    }
 
     DayOfWeek fromDayOfWeek = DayOfWeek.valueOf(from.getDayOfWeek().name());
     DayOfWeek untilDayOfWeek = DayOfWeek.valueOf(until.getDayOfWeek().name());
