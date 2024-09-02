@@ -38,14 +38,13 @@ public class ManagesController {
 
   @PostMapping
   @PreAuthorize("hasAuthority('ADMIN')")
-  public ResponseEntity<Manages> addManages(ManagesDTO managesDTO) {
-    Manages manages = new Manages();
+  public ResponseEntity<Manages> addManages(@RequestBody ManagesDTO managesDTO) {
     Facility facility = facilityService.getFacilityById(managesDTO.getFacilityId());
     User user = userService.findById(managesDTO.getUserId());
     if(facility == null || user == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    managesService.save(managesDTO);
+    Manages manages = managesService.save(managesDTO);
     return new ResponseEntity<>(manages, HttpStatus.CREATED);
   }
 
@@ -71,6 +70,19 @@ public class ManagesController {
       } else {
         return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
       }
+  }
+
+  @GetMapping("/{userId}/{facilityId}")
+  @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
+  public ResponseEntity<Boolean> hasRightToFacilityByUserAndFacilityId(@PathVariable Long userId,@PathVariable Long facilityId) {
+    User user = userService.findById(userId);
+    Facility facility = facilityService.getFacilityById(facilityId);
+    if(facility!=null && user!=null){
+      Boolean ans = managesService.hasRightsToFacility(userId,facilityId);
+      return new ResponseEntity<>(ans, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
+    }
   }
 
   @GetMapping

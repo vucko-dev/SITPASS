@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityService } from '../../services/facility.service';
 import { CommonModule } from '@angular/common';
 import { WorkDay } from '../../models/interfaces';
@@ -14,6 +14,9 @@ import { DeleteFacilityDialogComponent } from '../../dialogs/delete-facility-dia
 import { ManagesService } from '../../services/manages.service';
 import { EditFacilityDialogComponent } from '../../dialogs/edit-facility-dialog/edit-facility-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { RateService } from '../../services/rate.service';
+import { AppComponent } from '../../app.component';
+import { EditFacilityManagesComponent } from '../../dialogs/edit-facility-manages/edit-facility-manages.component';
 
 @Component({
   selector: 'app-detailed-object',
@@ -46,6 +49,7 @@ export class DetailedObjectComponent {
   alreadyComment:boolean = false;
   userData:any;
   commentResponse:string = '';
+  
   reviewData = {
     facilityId:0,
     rate: {
@@ -69,7 +73,10 @@ export class DetailedObjectComponent {
     private exerciseService: ExerciseService,
     private dialog: MatDialog,
     private userService:UserService,
-    private managesService:ManagesService
+    private managesService:ManagesService,
+    private rateService:RateService,
+    private appComponent:AppComponent,
+    private router:Router
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -82,6 +89,10 @@ export class DetailedObjectComponent {
         this.loadReviews(Number(id));
         this.loadExerciseCount(Number(id));
         this.hasRights(Number(id));
+        this.calculateStuff(Number(id));
+        this.calculateEquipment(Number(id));
+        this.calculateHygiene(Number(id));
+        this.calculateSpace(Number(id));
         // this.loadUserData();
       }
     });
@@ -89,36 +100,56 @@ export class DetailedObjectComponent {
     this.role = role;
   }
   
-  calculateStuff():void{
-    let sum:number = 0;
-    this.reviews.forEach(element => {
-      sum+=element.rate.staff;
+  calculateStuff(id:number):void{
+    this.rateService.getTotalStaff(id).subscribe(response => {
+      // console.log('Status Code:', response.status);
+      // console.log('Response Body:', response.body);
+      this.stuff = response;
+      // console.log(response);
+    }, error => {
+      console.log('Error Status Code:', error.status);
+      console.log('Error Message:', error.message);
+      this.stuff = 0;
     });
-    this.stuff =  sum/this.reviews.length;
   }
 
-  calculateHygiene():void{
-    let sum:number = 0;
-    this.reviews.forEach(element => {
-      sum+=element.rate.hygiene;
+  calculateHygiene(id:number):void{
+    this.rateService.getTotalHygiene(id).subscribe(response => {
+      // console.log('Status Code:', response.status);
+      // console.log('Response Body:', response.body);
+      this.hygiene = response;
+      // console.log(response);
+    }, error => {
+      console.log('Error Status Code:', error.status);
+      console.log('Error Message:', error.message);
+      this.hygiene = 0;
     });
-    this.hygiene = sum/this.reviews.length;
   }
 
-  calculateSpace():void{
-    let sum:number = 0;
-    this.reviews.forEach(element => {
-      sum+=element.rate.space;
+  calculateSpace(id:number):void{
+    this.rateService.getTotalSpace(id).subscribe(response => {
+      // console.log('Status Code:', response.status);
+      // console.log('Response Body:', response.body);
+      this.space = response;
+      // console.log(response);
+    }, error => {
+      console.log('Error Status Code:', error.status);
+      console.log('Error Message:', error.message);
+      this.space = 0;
     });
-    this.space = sum/this.reviews.length;
   }
 
-  calculateEquipment():void{
-    let sum:number = 0;
-    this.reviews.forEach(element => {
-      sum+=element.rate.equipment;
+  calculateEquipment(id:number):void{
+    this.rateService.getTotalEquipment(id).subscribe(response => {
+      // console.log('Status Code:', response.status);
+      // console.log('Response Body:', response.body);
+      this.equipment = response;
+      // console.log(response);
+    }, error => {
+      console.log('Error Status Code:', error.status);
+      console.log('Error Message:', error.message);
+      this.equipment = 0;
     });
-    this.equipment = sum/this.reviews.length;
   }
 
   loadExerciseCount(id: number): void{
@@ -144,10 +175,10 @@ export class DetailedObjectComponent {
       });
       // console.log(this.reviews);
       if(this.reviewsCount >0){
-        this.calculateEquipment();
-        this.calculateHygiene();
-        this.calculateSpace();
-        this.calculateStuff();
+        // this.calculateEquipment();
+        // this.calculateHygiene();
+        // this.calculateSpace();
+        // this.calculateStuff();
       }
       // console.log(this.reviewsCount);
       // console.log(data);
@@ -156,7 +187,8 @@ export class DetailedObjectComponent {
   }
 
   loadFacility(id: number): void {
-    this.facilityService.getFacilityById(id).subscribe(data => {
+    this.facilityService.getFacilityById(id).subscribe({
+    next: (data) => {
       this.facility = data;
       this.name = data.name;
       this.totalRating = data.totalRating;
@@ -170,7 +202,12 @@ export class DetailedObjectComponent {
         return this.dayOrder.indexOf(a.dayOfWeek) - this.dayOrder.indexOf(b.dayOfWeek);
       });
       // console.log(data);
-    });
+    },
+    error: (err) => {
+      console.error('Failed to facility info', err);
+      this.appComponent.showMessage('Pogresan url.', 'red');
+      this.router.navigate(['/home']); 
+    }});
   }
 
   hasRights(id:number):void{
@@ -204,7 +241,7 @@ export class DetailedObjectComponent {
   }
 
   onOpenManagers(){
-    
+    this.dialog.open(EditFacilityManagesComponent, {});
   }
 
   onReviewPost(){
@@ -263,6 +300,45 @@ onSortChange(event: Event) {
     default:
       break;
   }
+}
+
+showReview(id:number){
+  this.reviewService.showReview(id).subscribe(response => {
+    // console.log(response);
+    // console.log('Status Code:', response.status);
+    // console.log('Response Body:', response.body);
+    window.location.reload();
+  }, error => {
+    console.log('Error Status Code:', error.status);
+    console.log('Error Message:', error.message);
+    this.commentResponse = error.error.message;
+  });
+}
+
+hideReview(id:number){
+  this.reviewService.hideReview(id).subscribe(response => {
+    // console.log(response);
+    // console.log('Status Code:', response.status);
+    // console.log('Response Body:', response.body);
+    window.location.reload();
+  }, error => {
+    console.log('Error Status Code:', error.status);
+    console.log('Error Message:', error.message);
+    this.commentResponse = error.error.message;
+  });
+}
+
+deleteReview(id:number){
+  this.reviewService.deleteReview(id).subscribe(response => {
+    // console.log(response);
+    // console.log('Status Code:', response.status);
+    // console.log('Response Body:', response.body);
+    window.location.reload();
+  }, error => {
+    console.log('Error Status Code:', error.status);
+    console.log('Error Message:', error.message);
+    this.commentResponse = error.error.message;
+  });
 }
 
 

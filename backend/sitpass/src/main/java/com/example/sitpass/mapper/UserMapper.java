@@ -1,8 +1,11 @@
 package com.example.sitpass.mapper;
 
 import com.example.sitpass.dto.UserRequest;
+import com.example.sitpass.model.Image;
 import com.example.sitpass.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.example.sitpass.service.ImageService;
 
 
 import java.io.IOException;
@@ -14,9 +17,11 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper implements MapperInterface<User, UserRequest> {
 
-  public UserMapper() {
+  @Autowired
+  private ImageService imageService;
 
-  }
+
+  //Ne koristi se
   @Override
   public User toEntity(UserRequest dto){
     if (dto == null) {
@@ -33,18 +38,16 @@ public class UserMapper implements MapperInterface<User, UserRequest> {
     user.setCity(dto.getCity());
     user.setZipCode(dto.getZipCode());
     user.setBirthday(dto.getBirthday());
-//    if(dto.getImageFromFrontend()!=null){
-//      try {
-//        user.setImage(dto.getImageFromFrontend().getBytes());
-//      } catch (IOException e) {
-//        throw new RuntimeException("Greška prilikom čitanja slike", e);
-//      }
-//    }
+    Image img = imageService.findById(dto.getImage().getId());
+    user.setImage(img);
+    user.setEnabled(true);
+    user.setCreatedAt(dto.getCreatedAt());
+    user.setAddress(dto.getAddress());
+    user.setPhoneNumber(dto.getPhoneNumber());
 
     return user;
   }
 
-  // Pretvara entitet u DTO
   @Override
   public UserRequest toDto(User entity) {
     if (entity == null) {
@@ -54,16 +57,21 @@ public class UserMapper implements MapperInterface<User, UserRequest> {
     UserRequest userRequest = new UserRequest();
 
     userRequest.setId(entity.getId());
-    userRequest.setFirstName(userRequest.getFirstName());
-    userRequest.setLastName(userRequest.getLastName());
-    userRequest.setEmail(userRequest.getEmail());
-    userRequest.setPassword(userRequest.getPassword());
-    userRequest.setCity(userRequest.getCity());
-    userRequest.setZipCode(userRequest.getZipCode());
-    userRequest.setBirthday(userRequest.getBirthday());
-//    if(entity.getImage()!=null) {
-//      userRequest.setImageFromBackend(Base64.getEncoder().encodeToString(entity.getImage()));
-//    }
+    userRequest.setFirstName(entity.getFirstName());
+    userRequest.setLastName(entity.getLastName());
+    userRequest.setEmail(entity.getEmail());
+    userRequest.setPassword(null);
+    userRequest.setCity(entity.getCity());
+    userRequest.setZipCode(entity.getZipCode());
+    userRequest.setBirthday(entity.getBirthday());
+    userRequest.setAddress(entity.getAddress());
+    userRequest.setCreatedAt(entity.getCreatedAt());
+    userRequest.setPhoneNumber(entity.getPhoneNumber());
+    //Ne znam bas kako bih mapirao sliku ali i nece trebati, ovo koristim svakako samo za izlistavanje user-a
+    //kada adminu treba da vidi menadzere objekta npr. - za to ni ne treba slika, ne treba ni pola ovih informacija
+    //ovo koristim samo da smanjim json response jer ako je puno korisnika a slike dugacke to je veliki problem
+    userRequest.setImage(null);
+
     return userRequest;
   }
 }

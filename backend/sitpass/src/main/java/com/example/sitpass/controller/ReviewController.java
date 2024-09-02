@@ -3,6 +3,7 @@ package com.example.sitpass.controller;
 
 import com.example.sitpass.dto.ReviewDTO;
 import com.example.sitpass.mapper.ReviewMapper;
+import com.example.sitpass.model.Facility;
 import com.example.sitpass.model.Review;
 import com.example.sitpass.model.User;
 import com.example.sitpass.service.RateService;
@@ -69,7 +70,7 @@ public class ReviewController {
   }
 
 
-    @GetMapping("{id}")
+  @GetMapping("{id}")
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")
   public ResponseEntity<Review> getReviewById(@PathVariable("id") Long id) {
     Review review = reviewService.getReviewById(id);
@@ -89,25 +90,40 @@ public class ReviewController {
     return new ResponseEntity<>(reviewDTO, HttpStatus.CREATED);
   }
 
+  @DeleteMapping("{id}")
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+  public ResponseEntity<Review> deleteReviewById(@PathVariable("id") Long id) {
+    Review review = reviewService.getReviewById(id);
+    if(review == null){
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    Long facilityId = review.getFacility().getId();
+    reviewService.deleteReviewById(id);
+    rateService.updateFacilityRating(facilityId);
+    return new ResponseEntity<>(review, HttpStatus.NO_CONTENT);
+  }
+
   @PutMapping("/show/{id}")
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-  public void showReview(@PathVariable("id") Long id){
+  public ResponseEntity<Review> showReview(@PathVariable("id") Long id){
     Review review = reviewService.getReviewById(id);
     if(review != null){
       reviewService.showReviewById(id);
+      return new ResponseEntity<>(review, HttpStatus.NO_CONTENT);
     } else{
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 
   @PutMapping("/hide/{id}")
   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-  public void hideReview(@PathVariable("id") Long id){
+  public ResponseEntity<Review> hideReview(@PathVariable("id") Long id){
     Review review = reviewService.getReviewById(id);
     if(review != null){
       reviewService.hideReviewById(id);
+      return new ResponseEntity<>(review, HttpStatus.NO_CONTENT);
     } else{
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 

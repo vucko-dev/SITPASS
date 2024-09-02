@@ -8,7 +8,7 @@
     <div class="object-container-details">  
         <div class="object-container-details-header">
             <div class="object-container-details-header-top">
-                <div *ngIf="reviewsCount>0" class="object-container-details-header-top-grade">
+                <div *ngIf="+grade>0" class="object-container-details-header-top-grade">
                     <p>{{grade}}</p>
                 </div>
                 <h2 class="object-container-details-header-top-title" [routerLink]="['/object', id]">{{title}}</h2>

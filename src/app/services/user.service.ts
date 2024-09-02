@@ -14,12 +14,9 @@ export class UserService {
 
   constructor(private http: HttpClient, private authService:AuthService) {}
 
-  // Get user info
   getUserInfo(): Observable<any> {
     return this.http.get(this.apiUrl, { headers: this.authService.authHeader() })
   }
-
-
 
   async getUserRole(): Promise<string> {
     const data = await this.getUserInfo().toPromise();
@@ -58,5 +55,12 @@ export class UserService {
   getUserInfoByUserId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.authService.authHeader() });
   }
+
+
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/all`, { headers: this.authService.authHeader() });
+  }
+
+
 
 }

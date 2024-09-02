@@ -30,4 +30,23 @@ export class ReviewService {
       observe: 'response'
     });
   }
+
+  deleteReview(id: number): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`, {
+      headers: this.authService.authHeader(),
+      observe: 'response'
+    });
+  }
+
+  showReview(id: number): Observable<HttpResponse<any>> {
+    return this.http.put<any>(`${this.apiUrl}/show/${id}`,{}, {
+      headers: this.authService.authHeader(),
+    });
+  }
+
+  hideReview(id: number): Observable<HttpResponse<any>> {
+    return this.http.put<any>(`${this.apiUrl}/hide/${id}`,{}, {
+      headers: this.authService.authHeader(),
+    });
+  }
 }

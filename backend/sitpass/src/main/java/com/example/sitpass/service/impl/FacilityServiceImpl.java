@@ -59,6 +59,7 @@ public class FacilityServiceImpl implements FacilityService {
 
   @Override
   public Facility getFacilityById(Long id) {
+//    System.out.println(id);
     Facility facility =  facilityRepository.findById(id).orElseGet(null);
     User user = userService.getCurrentUser();
     String role = user.getRoles().get(0).getName();
@@ -251,6 +252,13 @@ public class FacilityServiceImpl implements FacilityService {
     Facility facility = facilityRepository.findById(facilityId).orElse(null);
     if (facility == null) {
       throw new RuntimeException("Facility not found");
+    }
+
+    User user = userService.getCurrentUser();
+    String role = user.getRoles().get(0).getName();
+
+    if(!(role.equals("ADMIN")||(role.equals("MANAGER") && managesService.hasRightsToFacility(user.getId(),facilityId)))){
+      throw new RuntimeException("Insufficient permission!");
     }
     Set<Image> imagesList = new HashSet<>();
     for (MultipartFile image : images) {

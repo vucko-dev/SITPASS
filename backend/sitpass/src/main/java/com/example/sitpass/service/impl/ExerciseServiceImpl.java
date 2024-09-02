@@ -47,7 +47,11 @@ public class ExerciseServiceImpl implements ExerciseService {
     LocalDateTime until = exerciseDTO.getUntil();
 
     if(until.isBefore(from) || until.isEqual(from)){
-      throw new RuntimeException("Greska.");
+      throw new RuntimeException("Greska. Proverite datume");
+    }
+
+    if(until.isBefore(LocalDateTime.now()) || from.isBefore(LocalDateTime.now())){
+      throw new RuntimeException("Greska: Ne mozete rezervisati odlazak za vreme prije trenutnog!");
     }
 
     DayOfWeek fromDayOfWeek = DayOfWeek.valueOf(from.getDayOfWeek().name());

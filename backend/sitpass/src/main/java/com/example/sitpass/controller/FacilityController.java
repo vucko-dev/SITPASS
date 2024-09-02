@@ -87,29 +87,29 @@ public class FacilityController {
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
-  @PostMapping("/{facilityId}/images")
-  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-  public ResponseEntity<Facility> uploadImagesToFacility(
-    @PathVariable Long facilityId,
-    @RequestParam("images") List<MultipartFile> files
-  ) {
-    List<ImageDTO> imageDTOs = new ArrayList<>();
-    for (MultipartFile file : files) {
-      ImageDTO imageDTO = new ImageDTO();
-      imageDTO.setFile(file);
-      imageDTOs.add(imageDTO);
-    }
-
-    try {
-      Facility facility = facilityService.addImagesToFacility(facilityId, imageDTOs);
-      return new ResponseEntity<>(facility, HttpStatus.OK);
-    } catch (IOException e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+//  @PostMapping("/{facilityId}/images")
+//  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+//  public ResponseEntity<Facility> uploadImagesToFacility(
+//    @PathVariable Long facilityId,
+//    @RequestParam("images") List<MultipartFile> files
+//  ) {
+//    List<ImageDTO> imageDTOs = new ArrayList<>();
+//    for (MultipartFile file : files) {
+//      ImageDTO imageDTO = new ImageDTO();
+//      imageDTO.setFile(file);
+//      imageDTOs.add(imageDTO);
+//    }
+//
+//    try {
+//      Facility facility = facilityService.addImagesToFacility(facilityId, imageDTOs);
+//      return new ResponseEntity<>(facility, HttpStatus.OK);
+//    } catch (IOException e) {
+//      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//  }
 
   @PostMapping("/image/{id}")
-  @PreAuthorize("hasAuthority('ADMIN')")
+  @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
   public ResponseEntity<Facility> addImage(@RequestParam("file") List<MultipartFile> files, @PathVariable Long id) throws IOException {
     if (files.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

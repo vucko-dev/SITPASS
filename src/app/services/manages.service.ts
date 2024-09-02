@@ -19,7 +19,29 @@ export class ManagesService {
     });
   }
 
+  hasRightsByUserIdAndFacilityId(userId:number, facilityId:number): Observable<HttpResponse<any>>{
+    return this.http.get<any>(`${this.apiUrl}/${userId}/${facilityId}`,  { 
+      headers: this.authService.authHeader(),
+      observe: 'response'
+    });
+  }
+
+
   getManagesByUser(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}`, { headers: this.authService.authHeader() });
+  }
+
+  addManages(data: any): Observable<HttpResponse<any>> {
+    return this.http.post<any>(`${this.apiUrl}`, data, {
+      headers: this.authService.authHeader(),
+      observe: 'response'
+    });
+  }
+
+  deleteManages(id: number): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`, {
+      headers: this.authService.authHeader(),
+      observe: 'response'
+    });
   }
 }

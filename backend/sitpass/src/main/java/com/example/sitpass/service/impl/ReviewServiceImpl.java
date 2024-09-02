@@ -127,6 +127,7 @@ public class ReviewServiceImpl implements ReviewService {
       throw new RuntimeException("Insufficient permission!");
     }
     review.setHidden(false);
+    reviewRepository.save(review);
 
   }
 
@@ -144,6 +145,7 @@ public class ReviewServiceImpl implements ReviewService {
       throw new RuntimeException("Insufficient permission!");
     }
     review.setHidden(true);
+    reviewRepository.save(review);
   }
 
 

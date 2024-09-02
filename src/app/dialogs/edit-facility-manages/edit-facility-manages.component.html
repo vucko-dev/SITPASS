@@ -1,0 +1,25 @@
+<div class="facility-manages-container">
+    <h2>Menadzeri</h2>
+    <div *ngFor="let user of users" class="facility-manages-container-one-user">
+        <div class="facility-manages-container-one-user-data">
+            <h5>{{user.firstName}} {{user.lastName}}</h5>
+            <p>{{user.email}}</p>
+        </div>
+        <div class="facility-manages-container-one-user-commands">
+            <div *ngIf="user.hasManagerRight == false" class="facility-manages-container-one-user-commands-add-command">
+                <div class="facility-manages-container-one-user-commands-add-command-dates">
+                    <input type="date" name="from" id="from" [(ngModel)]="user.startTime" style="width: auto;" required>
+                    <input type="date" name="from" id="from" [(ngModel)]="user.endTime" style="width: auto;" required>
+                </div>
+                <div class="facility-manages-container-one-user-commands-command">
+                    <a class="facility-manages-container-one-user-commands-command-link" (click)="addManages(user.startTime, user.endTime, user.id)">Dodaj</a>
+                </div>
+            </div>
+            <div *ngIf="user.hasManagerRight == true" class="facility-manages-container-one-user-commands-command">
+                <a class="facility-manages-container-one-user-commands-command-link" (click)="removeManages()">Obrisi</a>
+            </div>
+        </div>
+    </div>  
+    <p>{{note}}</p>  
+</div>
+  

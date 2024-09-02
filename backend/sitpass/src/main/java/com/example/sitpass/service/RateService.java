@@ -10,4 +10,9 @@ public interface RateService {
   void updateFacilityRating(Long id);
 
   void deleteFacilityRating(Long id);
+
+  Double calculateTotalStaffRatingByFacilityId(Long id);
+  Double calculateTotalEquipmentRatingByFacilityId(Long id);
+  Double calculateTotalHygieneRatingByFacilityId(Long id);
+  Double calculateTotalSpaceRatingByFacilityId(Long id);
 }
