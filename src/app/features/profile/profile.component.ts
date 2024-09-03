@@ -13,9 +13,10 @@ import { EditUserPasswordComponent } from '../../dialogs/edit-user-password/edit
 import { EditImageDialogComponent } from '../../dialogs/edit-image-dialog/edit-image-dialog.component';
 import { ExerciseService } from '../../services/exercise.service';
 import { FacilityService } from '../../services/facility.service';
-import { forkJoin, map, mergeMap } from 'rxjs';
+import { catchError, forkJoin, map, mergeMap, of } from 'rxjs';
 import { ReviewService } from '../../services/review.service';
 import { ManagesService } from '../../services/manages.service';
+import { AccRequestService } from '../../services/acc-request.service';
 
 
 @Component({
@@ -32,13 +33,16 @@ export class ProfileComponent implements OnInit {
   reviews:any;
   manages:any;
   isManages:boolean = false;
+  isAdmin:boolean = false;
+  requests:any;
 
   constructor(private userService: UserService, 
     private dialog: MatDialog, 
     private exerciseService:ExerciseService, 
     private facilityService:FacilityService,
     private reviewService: ReviewService,
-    private managesService: ManagesService
+    private managesService: ManagesService,
+    private accRequestService:AccRequestService
   ) {}
 
   async ngOnInit() {
@@ -47,8 +51,12 @@ export class ProfileComponent implements OnInit {
     this.loadExercises();
     this.loadReviews();
     this.isManages = role == 'MANAGER';
+    this.isAdmin = role == 'ADMIN';
     if(this.isManages == true){
       this.loadManages();
+    }
+    if(this.isAdmin == true){
+      this.loadAccRequests();
     }
     // console.log(this.isManages);
     // let dialogRef = this.dialog.open(EditUserComponent, {
@@ -62,15 +70,25 @@ export class ProfileComponent implements OnInit {
     this.exerciseService.getExercisesForUser().pipe(
       mergeMap(exercises => {
         this.exercises = exercises;
+        
         const facilityObservables = exercises.map((exercise: { facilityId: number; facility: any; }) => 
           this.facilityService.getFacilityById(exercise.facilityId).pipe(
             map(facility => {
               exercise.facility = facility;
               return exercise;
+            }),
+            catchError(err => {
+              console.error(`Failed to load facility with ID ${exercise.facilityId}`, err);
+              return of(null as typeof exercise | null);  // Explicitly set the type
             })
           )
         );
-        return forkJoin(facilityObservables);
+    
+        return forkJoin<(typeof exercises[0] | null)[]>(facilityObservables).pipe(
+          map((updatedExercises: (typeof exercises[0] | null)[]) => 
+            updatedExercises.filter((exercise): exercise is typeof exercises[0] => exercise !== null)
+          )
+        );
       })
     ).subscribe({
       next: (updatedExercises) => {
@@ -81,31 +99,41 @@ export class ProfileComponent implements OnInit {
         console.error('Failed to load user info', err);
       }
     });
+    
   }
 
   loadReviews(){
     this.reviewService.getReviewsByUser().pipe(
       mergeMap(reviews => {
-        this.reviews = reviews;
         const facilityObservables = reviews.map((review: { facilityId: number; facility: any; }) => 
           this.facilityService.getFacilityById(review.facilityId).pipe(
             map(facility => {
               review.facility = facility;
               return review;
+            }),
+            catchError(err => {
+              console.error(`Failed to load facility with ID ${review.facilityId}`, err);
+              return of(null as typeof review | null);  // Explicitly set the type to include null
             })
           )
         );
-        return forkJoin(facilityObservables);
+    
+        return forkJoin<(typeof reviews[0] | null)[]>(facilityObservables).pipe(
+          map((updatedReviews: (typeof reviews[0] | null)[]) => 
+            updatedReviews.filter((review): review is typeof reviews[0] => review !== null)
+          )
+        );
       })
     ).subscribe({
       next: (updatedReviews) => {
         this.reviews = updatedReviews;
-        // console.log(this.reviews);
+        console.log(this.reviews);
       },
       error: (err) => {
         console.error('Failed to load user info', err);
       }
     });
+    
   }
   
   loadManages(){
@@ -141,6 +169,43 @@ export class ProfileComponent implements OnInit {
       error: (err) => {
         console.error('Failed to load user info', err);
       }
+    });
+  }
+
+  loadAccRequests(){
+    this.accRequestService.getAllRequests().subscribe(response => {
+      // console.log('Status Code:', response.status);
+      // console.log('Response Body:', response.body);
+      this.requests = response;
+      // console.log(response);
+    }, error => {
+      console.log('Error Status Code:', error.status);
+      console.log('Error Message:', error.message);
+      this.requests = null;
+    });
+  }
+
+  acceptRequest(id:number){
+    this.accRequestService.acceptRequest(id).subscribe(response => {
+      // console.log('Status Code:', response.status);
+      // console.log('Response Body:', response.body);
+      window.location.reload();
+      // console.log(response);
+    }, error => {
+      console.log('Error Status Code:', error.status);
+      console.log('Error Message:', error.message);
+    });
+  }
+
+  rejectRequest(id:number){
+    this.accRequestService.rejectRequest(id).subscribe(response => {
+      // console.log('Status Code:', response.status);
+      // console.log('Response Body:', response.body);
+      window.location.reload();
+      // console.log(response);
+    }, error => {
+      console.log('Error Status Code:', error.status);
+      console.log('Error Message:', error.message);
     });
   }
 

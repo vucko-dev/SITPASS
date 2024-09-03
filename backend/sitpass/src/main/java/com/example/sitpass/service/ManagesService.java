@@ -17,4 +17,7 @@ public interface ManagesService {
 
 
   List<Manages> findByUserId(Long userId);
+
+  Manages findByUserIdAndFacilityId(Long userId, Long facilityId);
+
 }

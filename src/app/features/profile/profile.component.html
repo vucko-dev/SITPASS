@@ -1,7 +1,7 @@
 <div>
     <app-navbar></app-navbar>
     <div class="profile-content">
-        <div class="profile-content-img" [style.background-image]="'url(' + 'data:image/jpeg;base64,' + userInfo.image.image + ')'">
+        <div class="profile-content-img" [style.background-image]="'url(' + 'data:image/jpeg;base64,' + userInfo?.image?.image + ')'">
         </div>
         <mat-tab-group>
           <mat-tab label="Informacije">
@@ -19,7 +19,7 @@
               </div>
             </ng-template>
           </mat-tab>
-          <mat-tab label="Podesavanja">
+          <mat-tab label="Podesavanja" class="card-container">
             <ng-template matTabContent>
               <div class="profile-content-div">
                 <div class="profile-content-button">
@@ -34,7 +34,7 @@
               </div>
             </ng-template>
           </mat-tab>
-          <mat-tab label="Poseceni objekti">
+          <mat-tab *ngIf="exercises!=null && exercises.length != 0" label="Poseceni objekti" class="card-container">
             <ng-template matTabContent>
               <div class="visited-facilities-container">
                 <div *ngFor="let exercise of exercises" class="visited-facility-container">
@@ -45,7 +45,7 @@
               </div>
             </ng-template>
           </mat-tab>
-          <mat-tab label="Utisci">
+          <mat-tab *ngIf="reviews!=null && reviews.length!=0 " label="Utisci" class="card-container">
             <ng-template matTabContent>
               <div class="reviews-container">
                 <div *ngFor="let review of reviews" class="review-container">
@@ -65,11 +65,39 @@
               </div>
             </ng-template>
           </mat-tab>
-          <mat-tab *ngIf="isManages" label="Menadzer">
+          <mat-tab *ngIf="isManages" label="Menadzer" class="card-container">
             <ng-template matTabContent>
               <div class="visited-facilities-container">
                 <div *ngFor="let manage of manages" class="visited-facility-container">
                   <h3 class="visited-facility-container-title">{{manage.facility.name}}</h3>
+                </div>
+              </div>
+            </ng-template>
+          </mat-tab>
+          <mat-tab *ngIf="isAdmin && requests!=null && requests.length!=0 " label="Zahtevi za registraciju" class="card-container">
+            <ng-template matTabContent>
+              <!-- <div class="visited-facilities-container">
+                <div *ngFor="let manage of manages" class="visited-facility-container">
+                  <h3 class="visited-facility-container-title">{{manage.facility.name}}</h3>
+                </div>
+              </div> -->
+              <div *ngFor="let request of requests" class="request-container">
+                <div class="request-container-data">
+                  <p>{{request.createdAt[2]}}.{{request.createdAt[1]}}.{{request.createdAt[0]}} {{ request.createdAt[3] }}</p>
+                  <p>{{request.firstName}} {{request.lastName}}</p>
+                  <p>{{request.email}}</p>
+                </div>
+                <div *ngIf="request.status=='PENDING'" class="request-container-commands">
+                  <div class="request-container-commands-command">
+                    <a class="request-container-commands-command-link" (click)="acceptRequest(request.id)">Potvrdi</a>
+                  </div>
+                  <div class="request-container-commands-command">
+                    <a class="request-container-commands-command-link" (click)="rejectRequest(request.id)">Otkazi</a>
+                  </div>
+                </div>
+                <div *ngIf="request.status!='PENDING'">
+                    <p *ngIf="request.status=='ACCEPTED'" >Prihvacen</p>
+                    <p *ngIf="request.status=='REJECTED'" >Odbijen</p>
                 </div>
               </div>
             </ng-template>

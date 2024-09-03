@@ -111,6 +111,7 @@ public class UserServiceImpl implements UserService {
   public User promote(String username){
     User user = userRepository.findByEmail(username);
     user.setRoles(roleService.findByName("MANAGER"));
+    userRepository.save(user);
     return user;
   }
 
@@ -118,6 +119,7 @@ public class UserServiceImpl implements UserService {
   public User demote(String username){
     User user = userRepository.findByEmail(username);
     user.setRoles(roleService.findByName("USER"));
+    userRepository.save(user);
     return user;
   }
 

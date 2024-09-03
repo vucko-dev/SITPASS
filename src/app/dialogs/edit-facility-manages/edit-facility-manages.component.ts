@@ -68,9 +68,9 @@ export class EditFacilityManagesComponent {
   }
 
   addManages(startTime:string, endTime:string, userId:string){
-    console.log(startTime);
-    console.log(endTime);
-    console.log(userId);
+    // console.log(startTime);
+    // console.log(endTime);
+    // console.log(userId);
     // console.log
     this.managesService.addManages({
       startTime:startTime,
@@ -91,7 +91,19 @@ export class EditFacilityManagesComponent {
     });
   }
 
-  removeManages(){
-    
+  removeManages(userId:number){
+    var facilityId:number = localStorage.getItem('currentFacility')?Number(localStorage.getItem('currentFacility')):0;
+    this.managesService.deleteManagesByUserIdAndFacilityId(userId,facilityId).subscribe(response => {
+      // console.log('Status Code:', response.status);
+      // console.log('Response Body:', response.body);
+      // this.adminId = response.id;
+      // this.loadAllUsers();
+      // console.log(this.adminId);
+      window.location.reload();
+    }, error => {
+      console.log('Error Status Code:', error.status);
+      console.log('Error Message:', error.message);
+      this.note = error.error.message;
+    });
   }
 }

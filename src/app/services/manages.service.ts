@@ -44,4 +44,11 @@ export class ManagesService {
       observe: 'response'
     });
   }
+
+  deleteManagesByUserIdAndFacilityId(userId:number, facilityId:number): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.apiUrl}/${userId}/${facilityId}`, {
+      headers: this.authService.authHeader(),
+      observe: 'response'
+    });
+  }
 }

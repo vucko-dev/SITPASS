@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div *ngIf="user.hasManagerRight == true" class="facility-manages-container-one-user-commands-command">
-                <a class="facility-manages-container-one-user-commands-command-link" (click)="removeManages()">Obrisi</a>
+                <a class="facility-manages-container-one-user-commands-command-link" (click)="removeManages(user.id)">Obrisi</a>
             </div>
         </div>
     </div>  

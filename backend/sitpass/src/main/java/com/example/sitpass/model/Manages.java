@@ -1,6 +1,8 @@
 package com.example.sitpass.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -19,6 +21,7 @@ public class Manages {
   @Column(name = "end_time")
   private LocalDate endTime;
 
+//  @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private User user;

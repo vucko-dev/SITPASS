@@ -4,6 +4,7 @@ import com.example.sitpass.dto.ManagesDTO;
 import com.example.sitpass.model.Facility;
 import com.example.sitpass.model.Manages;
 import com.example.sitpass.model.User;
+import com.example.sitpass.repository.FacilityRepository;
 import com.example.sitpass.repository.ManagesRepository;
 import com.example.sitpass.service.FacilityService;
 import com.example.sitpass.service.ManagesService;
@@ -28,6 +29,9 @@ public class ManagesServiceImpl implements ManagesService {
   @Autowired
   private FacilityService facilityService;
 
+  @Autowired
+  private FacilityRepository facilityRepository;
+
   @Override
   public Boolean hasRightsToFacility(Long userId, Long facilityId) {
     Manages manages = managesRepository.findByFacilityIdAndUserId(facilityId, userId);
@@ -36,8 +40,12 @@ public class ManagesServiceImpl implements ManagesService {
       Boolean ans = today.isAfter(manages.getEndTime());
       if(ans){
         this.delete(manages.getId());
+        return false;
       }
-      return !ans;
+      return true;
+//      else{
+//        return today.isAfter(manages.getStartTime()) && today.isBefore(manages.getEndTime());
+//      }
     }
     return false;
   }
@@ -66,7 +74,9 @@ public class ManagesServiceImpl implements ManagesService {
     manages.setStartTime(managesDTO.getStartTime());
     manages.setUser(userService.findById(managesDTO.getUserId()));
     manages.setFacility(facilityService.getFacilityById(managesDTO.getFacilityId()));
-    facilityService.getFacilityById(managesDTO.getFacilityId()).setActive(true);
+    Facility facility = facilityService.getFacilityById(managesDTO.getFacilityId());
+    facility.setActive(true);
+    facilityRepository.save(facility);
     User user = userService.findById(managesDTO.getUserId());
     userService.promote(user.getUsername());
     return this.managesRepository.save(manages);
@@ -77,14 +87,18 @@ public class ManagesServiceImpl implements ManagesService {
     Manages manages = managesRepository.findById(id);
     Facility facility = manages.getFacility();
     User user = manages.getUser();
-    List<Manages> allUserManages = managesRepository.findByUserId(user.getId());
     this.managesRepository.delete(manages);
+    List<Manages> allUserManages = managesRepository.findByUserId(user.getId());
     if(allUserManages.size()<=0){
       userService.demote(user.getUsername());
     }
     List<Manages> facilityManages = managesRepository.findByFacilityId(facility.getId());
-    if(facilityManages.size()<=0){
+    if(facilityManages.isEmpty()){
       facility.setActive(false);
+      facilityRepository.save(facility);
+    } else {
+      System.out.println(facilityManages.size());
+
     }
   }
 
@@ -96,5 +110,10 @@ public class ManagesServiceImpl implements ManagesService {
   @Override
   public List<Manages> findByUserId(Long userId) {
     return this.managesRepository.findByUserId(userId);
+  }
+
+  @Override
+  public Manages findByUserIdAndFacilityId(Long userId, Long facilityId){
+    return this.managesRepository.findByFacilityIdAndUserId(facilityId, userId);
   }
 }

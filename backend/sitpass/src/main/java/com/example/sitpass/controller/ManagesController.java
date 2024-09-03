@@ -48,9 +48,9 @@ public class ManagesController {
     return new ResponseEntity<>(manages, HttpStatus.CREATED);
   }
 
-  @DeleteMapping("{id}")
+  @DeleteMapping("/{id}")
   @PreAuthorize("hasAuthority('ADMIN')")
-  public ResponseEntity<Manages> deleteManages(@PathVariable Long id) {
+  public ResponseEntity<Manages> deleteManagesById(@PathVariable Long id) {
     Manages manages = managesService.findById(id);
     if(manages == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -58,6 +58,20 @@ public class ManagesController {
     managesService.delete(manages.getId());
     return new ResponseEntity<>(manages, HttpStatus.NO_CONTENT);
   }
+
+  @DeleteMapping("/{userId}/{facilityId}")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public ResponseEntity<ManagesDTO> deleteManagesByUserIdAndFacilityId(@PathVariable Long userId, @PathVariable Long facilityId) {
+    Manages manages = managesService.findByUserIdAndFacilityId(userId, facilityId);
+    if(manages == null) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    managesService.delete(manages.getId());
+    ManagesDTO managesDTO = managesMapper.toDto(manages);
+    return new ResponseEntity<>(managesDTO, HttpStatus.NO_CONTENT);
+  }
+
+
 
   @GetMapping("/{id}")
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")

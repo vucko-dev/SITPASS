@@ -129,7 +129,7 @@
                             <p>Ovaj review je skriven i vidljiv je samo administratorima i menadzerima objekta</p>
                         </div>
                         <div class="detailed-object-details-footer-comments-comment-header-user">
-                            <div class="detailed-object-details-footer-comments-comment-header-user-image" [style.background-image]="'url(' + 'data:image/jpeg;base64,' + review.user.image.image + ')'"></div>
+                            <div class="detailed-object-details-footer-comments-comment-header-user-image" [style.background-image]="'url(' + 'data:image/jpeg;base64,' + review?.user?.image?.image + ')'"></div>
                             <p class="detailed-object-details-footer-comments-comment-header-user-name">{{review.user.firstName}} {{review.user.lastName}}</p>
                             <p class="detailed-object-details-footer-comments-comment-header-user-date">{{review.createdAt[2]}}.{{review.createdAt[1]}}.{{review.createdAt[0]}} {{ review.createdAt[3] }}:{{ review.createdAt[4] | number:'2.0' }}</p>
                             <p class="detailed-object-details-footer-comments-comment-header-user-exerciseCount">Poseceno puta: {{review.exerciseCount}}</p>
