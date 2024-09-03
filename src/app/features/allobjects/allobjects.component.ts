@@ -10,6 +10,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectDropdownComponent } from '../multi-select-dropdown/multi-select-dropdown.component';
 import { Discipline, WorkDay } from '../../models/interfaces';
+import { UserService } from '../../services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddFacilityDialogComponent } from '../../dialogs/add-facility-dialog/add-facility-dialog.component';
 
 @Component({
   selector: 'app-allobjects',
@@ -38,9 +41,15 @@ export class AllobjectsComponent {
   facilities: any[] = [];
   filteredFacilities: any[] = [];
   disciplines: any[] =[];
-  constructor(private facilityService: FacilityService, private disciplineService: DisciplineService) {}
+  isAdmin:boolean = false;
+  constructor(private facilityService: FacilityService, 
+    private disciplineService: DisciplineService,
+    private userService: UserService,
+    private dialog: MatDialog,
 
-  ngOnInit(): void {
+  ) {}
+
+  async ngOnInit(): Promise<void> {
     this.facilityService.getFacilities().subscribe((data: any[]) => {
       this.facilities = data;
       this.filteredFacilities = data;
@@ -50,6 +59,8 @@ export class AllobjectsComponent {
       this.disciplines = data;
       this.disciplinesOptions = this.disciplines.map(discipline => discipline.name);
     });
+    const role = await this.userService.getUserRole();
+    this.isAdmin = role == 'ADMIN';
   }
 
   @ViewChildren('citiesDropdown') citiesDropdowns!: QueryList<MultiSelectDropdownComponent>;
@@ -149,6 +160,10 @@ export class AllobjectsComponent {
   
       return matchesCity && matchesDisciplines && matchesLowGrade && matchesHighGrade && matchesTime && matchesSearchTerm;
     });
+  }
+
+  addFacilityDialog(){
+    this.dialog.open(AddFacilityDialogComponent, {});
   }
   
   

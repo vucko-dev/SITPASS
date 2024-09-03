@@ -79,7 +79,7 @@ public class FacilityServiceImpl implements FacilityService {
     User user = userService.getCurrentUser();
     String role = user.getRoles().get(0).getName();
     if(facility==null){
-      throw new RuntimeException("No facility found");
+      return null;
     }
     if(role.equals("ADMIN") || facility.getActive()){
       return facility;

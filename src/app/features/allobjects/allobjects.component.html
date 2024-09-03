@@ -53,12 +53,16 @@
         <div class="search-parametars-reset">
             <a class="search-parametars-reset-link" (click)="resetFilter()">Resetuj filtere</a>
         </div>
+
+        <div class="add-facility-button">
+            <a class="add-facility-button-link" (click)="addFacilityDialog()">Dodaj teretanu</a>
+        </div>
+
     </div>
     
     <div class="search-results">
 
         <p *ngIf="filteredFacilities.length === 0">Nema rezultata.</p>
-
         <app-object 
             *ngFor="let facility of filteredFacilities" 
             [title]="facility.name" 
@@ -70,6 +74,5 @@
         >
         </app-object>
     </div>
-    
     <app-footer></app-footer>
 </div>

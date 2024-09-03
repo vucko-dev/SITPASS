@@ -39,6 +39,13 @@ export class FacilityService {
     })
   };
 
+  addFacility(data:any): Observable<HttpResponse<any>>{
+    return this.http.post<any>(`${this.apiUrl}`,data,{
+      headers: this.authService.authHeader(),
+      observe: 'response'
+    })
+  };
+
   addImages(id: number, files: File[]): Observable<any> {
     const formData: FormData = new FormData();
 

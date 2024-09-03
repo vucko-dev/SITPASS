@@ -23,7 +23,7 @@
     gap:20px;
 }
 
-.search-parametars-reset{
+.search-parametars-reset, .add-facility-button{
     border:1px solid lightgray;
     padding:5px 10px;
     border-radius: 10px;
@@ -32,7 +32,7 @@
 
 }
 
-.search-parametars-reset-link{
+.search-parametars-reset-link, .add-facility-button-link{
     color: #fff!important;
     cursor: pointer;
     font-size: 12px;

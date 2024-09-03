@@ -76,7 +76,7 @@
         </div>
         <div class="detailed-object-details-footer">
             <h2 class="detailed-object-details-footer-title">Ocene i utisci</h2>
-            <div *ngIf="totalRating!='0'" class="detailed-object-details-footer-grades">
+            <div *ngIf="totalRating!=undefined && totalRating!='0'" class="detailed-object-details-footer-grades">
                 <h3 class="detailed-object-details-footer-grades-total">{{totalRating}}</h3>
                 <table class="detailed-object-details-footer-grades-specific-grades">
                     <tr>

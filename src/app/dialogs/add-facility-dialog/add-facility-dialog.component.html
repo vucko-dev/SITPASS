@@ -1,0 +1,70 @@
+<div class="edit-facility-container">
+    <h2>Dodavanje objekta</h2>
+    <form (ngSubmit)="onAddFacility()">
+      <div>
+        <label>Naziv:</label>
+        <input type="text" [(ngModel)]="facilityData.name" name="name" required>
+      </div>
+      <div>
+        <label>Opis:</label>
+        <textarea [(ngModel)]="facilityData.description" name="description" required></textarea>
+      </div>
+      <div>
+        <label>Adresa:</label>
+        <input type="text" [(ngModel)]="facilityData.address" name="address" required>
+      </div>
+      <div>
+        <label>Grad:</label>
+        <input type="text" [(ngModel)]="facilityData.city" name="city" required>
+      </div>
+      <div style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
+        <label>Aktivan:</label>
+        <input type="checkbox" [(ngModel)]="facilityData.active" name="active">
+      </div>
+      
+      <div>
+        <label>Discipline:</label>
+        <div *ngFor="let discipline of allDisciplines" style="display: flex; align-self:stretch;flex-direction:row; justify-content: space-between; align-items: center;">
+          <span>        {{ discipline.name }}        </span>
+          <input type="checkbox" 
+                 [checked]="isDisciplineSelected(discipline.id)" 
+                 (change)="onDisciplineToggle(discipline)"
+                 style="width: auto  !important;"
+                 >
+        </div>
+      </div>
+      
+      <div>
+        <p style="margin-bottom: 10px;">Radni dani:</p>
+        <div *ngFor="let workday of facilityData.workDays; let i = index">
+          <span *ngIf="workday.dayOfWeek === 'MONDAY'">Ponedeljak</span>
+          <span *ngIf="workday.dayOfWeek === 'TUESDAY'">Utorak</span>
+          <span *ngIf="workday.dayOfWeek === 'WEDNESDAY'">Sreda</span>
+          <span *ngIf="workday.dayOfWeek === 'THURSDAY'">Četvrtak</span>
+          <span *ngIf="workday.dayOfWeek === 'FRIDAY'">Petak</span>
+          <span *ngIf="workday.dayOfWeek === 'SATURDAY'">Subota</span>
+          <span *ngIf="workday.dayOfWeek === 'SUNDAY'">Nedelja</span>
+          <!-- <input type="text" [(ngModel)]="workDay.dayOfWeek" name="dayOfWeek-{{i}}" required> -->
+         <div style="display: flex;flex-direction: row;align-items: center;">
+          <div>
+            <label>Od:</label>
+            <input type="time" [(ngModel)]="workday.from" name="from-{{i}}" style="width: auto;" required>
+          </div>
+          <div>
+            <label>Do:</label>
+            <input type="time" [(ngModel)]="workday.until" name="until-{{i}}"  style="width: auto;"  required>
+          </div>
+         </div>
+        </div>
+      </div>
+      
+      <div>
+        <label>Slike:</label>
+        <input type="file" (change)="onFileSelected($event)" multiple>
+      </div>
+      <p class="edit-facility-container-note">{{note}}</p>
+  
+      <button type="submit">Dodaj</button>
+    </form>
+  </div>
+  
