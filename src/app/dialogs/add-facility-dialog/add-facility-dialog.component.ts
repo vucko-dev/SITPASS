@@ -91,11 +91,6 @@ export class AddFacilityDialogComponent {
   }
 
   uploadImages(facilityId: number): void {
-    // if(this.selectedFiles.length == 0){
-    //   this.dialogRef.close();
-    //   window.location.reload();
-    //   return;
-    // }
     this.facilityService.addImages(facilityId, this.selectedFiles).subscribe(
       (response) => {
         console.log('Images uploaded successfully', response);
@@ -119,9 +114,7 @@ export class AddFacilityDialogComponent {
       this.facilityData.disciplines.splice(index, 1);
     } else {
       this.facilityData.disciplines.push(discipline);
-    }
-    // console.log(this.facilityData.disciplines);
-  }
+    }  }
 
   onAddFacility(){
     console.log(this.facilityData);
@@ -147,8 +140,6 @@ export class AddFacilityDialogComponent {
       (response) => {
         this.responseAfterSuccess = response.body;
         console.log("Facility created!");
-        // this.dialogRef.close();
-        // window.location.reload()
         console.log(this.responseAfterSuccess);
         this.uploadImages(this.responseAfterSuccess.id);
       },

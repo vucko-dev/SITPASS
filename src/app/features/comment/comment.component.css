@@ -1,0 +1,23 @@
+.comment {
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  
+  .replies {
+    margin-left: 20px;
+    border-left: 2px solid #ddd;
+    padding-left: 10px;
+  }
+
+  .reply{
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    height: 30px;
+    max-height: 30px;
+    min-height: 30px;
+  }
+  

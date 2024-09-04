@@ -2,17 +2,6 @@
     <app-navbar></app-navbar>
     <div class="detailed-object-images-gallery">
         <img *ngFor="let image of images" [src]="'data:image/jpeg;base64,' + image.image" alt="" class="detailed-object-images-gallery-image">
-
-        <!-- <img src="../../assets/images/gym_background.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background2.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background3.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background4.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background2.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background3.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background4.jpg" alt="" class="detailed-object-images-gallery-image">
-        <img src="../../assets/images/gym_background.jpg" alt="" class="detailed-object-images-gallery-image"> -->
-
     </div>
     <div class="detailed-object-details">
         <div class="detailed-object-details-header">
@@ -32,7 +21,6 @@
                     <a class="detailed-object-details-header-main-action-button-link" (click)="onOpenManagers()">Menadzeri</a>
                 </div>
             </div>
-            <!-- <Trebas sad ispitati da li je korisnik menadzer i napraviti ono da je korisnik menadzer kad upravlja teretanom -->
             <p *ngIf="reviewsCount>0" class="detailed-object-details-header-grade">Ocena: {{totalRating}}</p>
             <p *ngIf="reviewsCount<=0" class="detailed-object-details-header-grade">Ocena: ovaj objekat nije ocenjivan</p>
             <div class="detailed-object-details-header-activities">
@@ -142,7 +130,13 @@
                             <p class="detailed-object-details-footer-comments-comment-header-grade">Ukupno: {{review.rate.total}} </p>
                         </div>
                     </div>
-                    <p *ngIf="review?.commentDTO?.text!=undefined" class="detailed-object-details-footer-comments-comment-comment">{{review?.commentDTO?.text}}</p>
+                    <app-comment *ngIf="review?.commentDTO?.text!=undefined" [comment]="review?.commentDTO"></app-comment>
+                    <!-- <p *ngIf="review?.commentDTO?.text!=undefined" class="detailed-object-details-footer-comments-comment-comment">{{review?.commentDTO?.text}}</p> -->
+                    <!-- <div>
+                        <div *ngFor="let comment of review?.commentDTO?.replies">
+                            <app-comment [comment]="comment"></app-comment>
+                        </div>
+                    </div> -->
                     <div *ngIf="role=='ADMIN' || (role=='MANAGER' && hasManagerRight==true)"  class="detailed-object-details-footer-comments-comment-commands">
                         <div *ngIf="review.hidden == true" class="detailed-object-details-header-main-action-button">
                             <a class="detailed-object-details-header-main-action-button-link" (click)="showReview(review.id)">Prikazi review</a>
@@ -153,6 +147,9 @@
                         <div class="detailed-object-details-header-main-action-button">
                             <a class="detailed-object-details-header-main-action-button-link" (click)="deleteReview(review.id)">Obrisi review</a>
                         </div>
+                        <!-- <div class="detailed-object-details-header-main-action-button">
+                            <a class="detailed-object-details-header-main-action-button-link" (click)="deleteReview(review.id)">Odgovori</a>
+                        </div> -->
                     </div>
                 </div>
                 <div *ngIf="exerciseCount > 0 && alreadyComment == false" class="detailed-object-details-footer-comments-comment">

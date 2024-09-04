@@ -33,7 +33,6 @@ export class UserService {
         if (response.accessToken) {
           return this.http.put(`${this.apiUrl}/password`, userData, { headers: this.authService.authHeader() });
         } else {
-          // Handle case where the accessToken is not present (e.g., return an empty observable or throw an error)
           return throwError(() => new Error('No access token in response'));
         }
       })

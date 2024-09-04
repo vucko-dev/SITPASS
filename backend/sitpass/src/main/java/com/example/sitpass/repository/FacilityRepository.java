@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface FacilityRepository  extends JpaRepository<Facility, Long> {
     Facility findByName(String name);
-//    List<Facility> findByCity(String city);
 }

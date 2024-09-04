@@ -40,11 +40,10 @@ export class EditFacilityManagesComponent {
           error: (err) => {
             console.error(`Failed to check manager rights for user ID ${user.id}`, err);
             this.note = "Greska";
-            user.hasManagerRight = false;  // or handle the error as needed
+            user.hasManagerRight = false;
           }
         });
       });
-      // console.log(this.users);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
@@ -55,11 +54,8 @@ export class EditFacilityManagesComponent {
 
   loadAdmin(){
     this.userService.getUserInfo().subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
       this.adminId = response.id;
       this.loadAllUsers();
-      // console.log(this.adminId);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
@@ -68,21 +64,12 @@ export class EditFacilityManagesComponent {
   }
 
   addManages(startTime:string, endTime:string, userId:string){
-    // console.log(startTime);
-    // console.log(endTime);
-    // console.log(userId);
-    // console.log
     this.managesService.addManages({
       startTime:startTime,
       endTime:endTime,
       userId:userId,
       facilityId:Number(localStorage.getItem('currentFacility'))
     }).subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
-      // this.adminId = response.id;
-      // this.loadAllUsers();
-      // console.log(this.adminId);
       window.location.reload();
     }, error => {
       console.log('Error Status Code:', error.status);
@@ -94,11 +81,6 @@ export class EditFacilityManagesComponent {
   removeManages(userId:number){
     var facilityId:number = localStorage.getItem('currentFacility')?Number(localStorage.getItem('currentFacility')):0;
     this.managesService.deleteManagesByUserIdAndFacilityId(userId,facilityId).subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
-      // this.adminId = response.id;
-      // this.loadAllUsers();
-      // console.log(this.adminId);
       window.location.reload();
     }, error => {
       console.log('Error Status Code:', error.status);

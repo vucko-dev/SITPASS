@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 public class ImageLoader implements CommandLineRunner {
 
   @Autowired
-  private UserRepository userRepository; // Vaš JPA Repository
+  private UserRepository userRepository;
   @Autowired
   private ImageRepository imageRepository;
 
@@ -26,7 +26,7 @@ public class ImageLoader implements CommandLineRunner {
   @Transactional
   public void run(String... args) throws Exception {
     for (Image image : imageRepository.findAll()) {
-      String imageName = deriveImageNameFromImage(image); // Ova funkcija vraća ime slike na temelju informacija o članku (npr. naziv članka)
+      String imageName = deriveImageNameFromImage(image);
       Path imagePath = Paths.get("src/main/resources/static/images/" + imageName);
       byte[] imageBytes = Files.readAllBytes(imagePath);
       image.setImage(imageBytes);

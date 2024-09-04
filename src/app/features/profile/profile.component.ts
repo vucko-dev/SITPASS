@@ -174,10 +174,7 @@ export class ProfileComponent implements OnInit {
 
   loadAccRequests(){
     this.accRequestService.getAllRequests().subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
       this.requests = response;
-      // console.log(response);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
@@ -187,10 +184,7 @@ export class ProfileComponent implements OnInit {
 
   acceptRequest(id:number){
     this.accRequestService.acceptRequest(id).subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
       window.location.reload();
-      // console.log(response);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
@@ -199,10 +193,7 @@ export class ProfileComponent implements OnInit {
 
   rejectRequest(id:number){
     this.accRequestService.rejectRequest(id).subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
       window.location.reload();
-      // console.log(response);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);

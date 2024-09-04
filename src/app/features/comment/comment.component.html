@@ -1,0 +1,17 @@
+<div class="comment">
+    <div class="comment-body">
+      <p *ngIf="comment?.parentCommentId!=null && comment?.parentCommentId!=0"><strong>{{ userData?.firstName }}  {{ userData?.lastName }}</strong> odgovorio/la:</p>
+      <p>{{ comment?.text }}</p>
+      <p>{{note}}</p>
+      <!-- <small>{{ comment.createdAt | date:'short' }}</small> -->
+       <form (ngSubmit)="onAddReply()">
+        <textarea class="reply" type="text" placeholder="Text" [(ngModel)]="text" name="text"></textarea>
+        <button type="submit">Odgovori</button>
+       </form>
+    </div>
+  
+    <div class="replies" *ngIf="comment?.replies ">
+      <app-comment *ngFor="let reply of comment?.replies" [comment]="reply"></app-comment>
+    </div>
+  </div>
+  

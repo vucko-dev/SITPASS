@@ -54,7 +54,7 @@
             <a class="search-parametars-reset-link" (click)="resetFilter()">Resetuj filtere</a>
         </div>
 
-        <div class="add-facility-button">
+        <div *ngIf="isAdmin" class="add-facility-button">
             <a class="add-facility-button-link" (click)="addFacilityDialog()">Dodaj teretanu</a>
         </div>
 

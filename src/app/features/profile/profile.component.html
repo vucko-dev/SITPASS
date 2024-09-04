@@ -7,7 +7,6 @@
           <mat-tab label="Informacije">
             <ng-template matTabContent>
               <div *ngIf="userInfo" class="profile-content-div">
-                <!-- <p><strong>ID:</strong> {{ userInfo.id }}</p> -->
                 <p><strong>Email:</strong> {{ userInfo.email }}</p>
                 <p><strong>Ime i prezime:</strong> {{ userInfo.firstName }} {{ userInfo.lastName }}</p>
                 <p><strong>Telefon:</strong> {{ userInfo.phoneNumber }}</p>
@@ -15,7 +14,6 @@
                 <p><strong>Grad:</strong> {{ userInfo.city }}</p>
                 <p><strong>Postanski broj:</strong> {{ userInfo.zipCode }}</p>
                 <p><strong>Datum rodjenja:</strong> {{ userInfo.birthday | date:'mediumDate' }}</p>
-                <!-- <p><strong>Roles:</strong> {{ userRoles.join(', ') }}</p> -->
               </div>
             </ng-template>
           </mat-tab>
@@ -76,11 +74,6 @@
           </mat-tab>
           <mat-tab *ngIf="isAdmin && requests!=null && requests.length!=0 " label="Zahtevi za registraciju" class="card-container">
             <ng-template matTabContent>
-              <!-- <div class="visited-facilities-container">
-                <div *ngFor="let manage of manages" class="visited-facility-container">
-                  <h3 class="visited-facility-container-title">{{manage.facility.name}}</h3>
-                </div>
-              </div> -->
               <div *ngFor="let request of requests" class="request-container">
                 <div class="request-container-data">
                   <p>{{request.createdAt[2]}}.{{request.createdAt[1]}}.{{request.createdAt[0]}} {{ request.createdAt[3] }}</p>

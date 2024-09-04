@@ -33,8 +33,6 @@ export class AddExerciseComponent {
 
 
   addExercise(){
-    // console.log(this.getFormattedDate(this.data.from));
-    // console.log(this.getFormattedDate(this.data.until));
     if(this.data.from == undefined || this.data.until == undefined || Number.isNaN(this.data.from[0]) ||  Number.isNaN(this.data.until[0])){
       this.note = 'Unesite neophodna polja';
       return;
@@ -76,6 +74,7 @@ export class AddExerciseComponent {
       hours,
       minutes
     ];
+
     return formattedDate;
   }
 }

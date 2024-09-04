@@ -17,11 +17,12 @@ import { FormsModule } from '@angular/forms';
 import { RateService } from '../../services/rate.service';
 import { AppComponent } from '../../app.component';
 import { EditFacilityManagesComponent } from '../../dialogs/edit-facility-manages/edit-facility-manages.component';
+import { CommentComponent } from '../comment/comment.component';
 
 @Component({
   selector: 'app-detailed-object',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, CommonModule, FormsModule],
+  imports: [NavbarComponent, FooterComponent, CommonModule, FormsModule, CommentComponent],
   templateUrl: './detailed-object.component.html',
   styleUrl: './detailed-object.component.css'
 })
@@ -93,7 +94,6 @@ export class DetailedObjectComponent {
         this.calculateEquipment(Number(id));
         this.calculateHygiene(Number(id));
         this.calculateSpace(Number(id));
-        // this.loadUserData();
       }
     });
     const role = await this.userService.getUserRole();
@@ -102,10 +102,7 @@ export class DetailedObjectComponent {
   
   calculateStuff(id:number):void{
     this.rateService.getTotalStaff(id).subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
       this.stuff = response;
-      // console.log(response);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
@@ -115,10 +112,7 @@ export class DetailedObjectComponent {
 
   calculateHygiene(id:number):void{
     this.rateService.getTotalHygiene(id).subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
       this.hygiene = response;
-      // console.log(response);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
@@ -128,10 +122,7 @@ export class DetailedObjectComponent {
 
   calculateSpace(id:number):void{
     this.rateService.getTotalSpace(id).subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
       this.space = response;
-      // console.log(response);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
@@ -141,10 +132,7 @@ export class DetailedObjectComponent {
 
   calculateEquipment(id:number):void{
     this.rateService.getTotalEquipment(id).subscribe(response => {
-      // console.log('Status Code:', response.status);
-      // console.log('Response Body:', response.body);
       this.equipment = response;
-      // console.log(response);
     }, error => {
       console.log('Error Status Code:', error.status);
       console.log('Error Message:', error.message);
@@ -155,8 +143,6 @@ export class DetailedObjectComponent {
   loadExerciseCount(id: number): void{
     this.exerciseService.getExercisesCountForSpecificFacility(id).subscribe(data=>{
       this.exerciseCount = data;
-      // console.log('Broj poseta:');
-      // console.log(data);
     })
   }
 
@@ -173,16 +159,6 @@ export class DetailedObjectComponent {
         }
         review.rate.total = (Number(review.rate.staff) + Number(review.rate.equipment) + Number(review.rate.space) + Number(review.rate.hygiene))/4;
       });
-      // console.log(this.reviews);
-      if(this.reviewsCount >0){
-        // this.calculateEquipment();
-        // this.calculateHygiene();
-        // this.calculateSpace();
-        // this.calculateStuff();
-      }
-      // console.log(this.reviewsCount);
-      // console.log(data);
-      console.log(this.reviews);
     });
   }
 
@@ -201,7 +177,6 @@ export class DetailedObjectComponent {
       this.sortedWorkdays = this.workdays.sort((a, b) => {
         return this.dayOrder.indexOf(a.dayOfWeek) - this.dayOrder.indexOf(b.dayOfWeek);
       });
-      // console.log(data);
     },
     error: (err) => {
       console.error('Failed to facility info', err);
@@ -220,7 +195,6 @@ export class DetailedObjectComponent {
     this.userService.getUserInfo().subscribe({
       next: (data) => {
         this.userData = data;
-        // console.log(data);
       },
       error: (err) => {
         console.error('Failed to load user info', err);
@@ -245,13 +219,8 @@ export class DetailedObjectComponent {
   }
 
   onReviewPost(){
-    // this.reviewData.rate.staff = this.staffInput;
-    // this.reviewData.rate.equipment = this.equipmentInput;
-    // this.reviewData.rate.hygiene = this.hygieneInput;
-    // this.reviewData.rate.space = this.spaceInput;
     var n:number = localStorage.getItem('currentFacility')?Number(localStorage.getItem('currentFacility')):0;
     this.reviewData.facilityId = n;
-    // this.reviewData.commentDTO.text = this.comment;
 
     console.log(this.reviewData)
     this.reviewService.addReview(this.reviewData).subscribe(response => {
@@ -304,9 +273,6 @@ onSortChange(event: Event) {
 
 showReview(id:number){
   this.reviewService.showReview(id).subscribe(response => {
-    // console.log(response);
-    // console.log('Status Code:', response.status);
-    // console.log('Response Body:', response.body);
     window.location.reload();
   }, error => {
     console.log('Error Status Code:', error.status);
@@ -317,9 +283,6 @@ showReview(id:number){
 
 hideReview(id:number){
   this.reviewService.hideReview(id).subscribe(response => {
-    // console.log(response);
-    // console.log('Status Code:', response.status);
-    // console.log('Response Body:', response.body);
     window.location.reload();
   }, error => {
     console.log('Error Status Code:', error.status);
@@ -330,9 +293,6 @@ hideReview(id:number){
 
 deleteReview(id:number){
   this.reviewService.deleteReview(id).subscribe(response => {
-    // console.log(response);
-    // console.log('Status Code:', response.status);
-    // console.log('Response Body:', response.body);
     window.location.reload();
   }, error => {
     console.log('Error Status Code:', error.status);

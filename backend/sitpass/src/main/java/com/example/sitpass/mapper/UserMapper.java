@@ -21,7 +21,6 @@ public class UserMapper implements MapperInterface<User, UserRequest> {
   private ImageService imageService;
 
 
-  //Ne koristi se
   @Override
   public User toEntity(UserRequest dto){
     if (dto == null) {
@@ -67,9 +66,6 @@ public class UserMapper implements MapperInterface<User, UserRequest> {
     userRequest.setAddress(entity.getAddress());
     userRequest.setCreatedAt(entity.getCreatedAt());
     userRequest.setPhoneNumber(entity.getPhoneNumber());
-    //Ne znam bas kako bih mapirao sliku ali i nece trebati, ovo koristim svakako samo za izlistavanje user-a
-    //kada adminu treba da vidi menadzere objekta npr. - za to ni ne treba slika, ne treba ni pola ovih informacija
-    //ovo koristim samo da smanjim json response jer ako je puno korisnika a slike dugacke to je veliki problem
     userRequest.setImage(null);
 
     return userRequest;

@@ -15,7 +15,6 @@ export class AuthPageGuard implements CanActivate {
       this.router.navigate(['/']);
       return false;
     } else {
-      // this.router.navigate(['/']);
       return true;
     }
   }

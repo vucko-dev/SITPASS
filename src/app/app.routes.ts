@@ -17,5 +17,5 @@ export const routes: Routes = [
   { path: 'objects', component: AllobjectsComponent, canActivate: [AuthGuard] },
   { path: 'object/:id', component: DetailedObjectComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '' }  // Redirect any unknown paths to home
+  { path: '**', redirectTo: '' } 
 ];

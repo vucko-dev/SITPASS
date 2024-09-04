@@ -10,3 +10,12 @@ export interface WorkDay {
     from:number[];
     until:number[];
 }
+
+export interface Comment {
+    id: number;
+    text: string;
+    userId: number;
+    createdAt: Date;
+    replies?: Comment[];  
+  }
+  

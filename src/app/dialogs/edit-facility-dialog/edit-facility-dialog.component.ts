@@ -43,7 +43,6 @@ export class EditFacilityDialogComponent implements OnInit {
           until: `${this.padTime(workday.until[0])}:${this.padTime(workday.until[1])}`
         };
       });
-      // console.log(data);
       this.sortWorkdays();
     });
 
@@ -93,7 +92,6 @@ export class EditFacilityDialogComponent implements OnInit {
     } else {
       this.facilityData.disciplines.push(discipline);
     }
-    // console.log(this.facilityData.disciplines);
   }
 
   onUpdateFacility() {

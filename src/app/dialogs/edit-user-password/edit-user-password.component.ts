@@ -46,7 +46,6 @@ export class EditUserPasswordComponent {
           console.log('User updated successfully', response);
           this.authService.logout();
           this.dialogRef.close();
-          // this.appComponent.showMessage('Uspesno ste izmenili profil. Vraceni ste na stranicu za prijavu.', 'green');
           this.router.navigate(['/auth']);
         },
         error: (err) => {

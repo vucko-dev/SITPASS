@@ -24,12 +24,11 @@ export class AuthComponent {
       next: (response) => {
         console.log('Login successful', response);
         this.appComponent.showMessage('Uspesno ste se prijavili!', 'green');
-        this.router.navigate(['/home']); // Redirect to home on success
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         console.error('Login failed', err);
         this.appComponent.showMessage('Proverite unos. Takodje postoji mogucnost da vas nalog jos nije odobren od strane administracije.', 'red');
-        // Handle login error (e.g., show an error message)
       }
     });
   }

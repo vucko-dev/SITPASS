@@ -32,7 +32,18 @@ public class RateServiceImpl implements RateService {
   @Override
   public Rate save(RateDTO rateDTO) {
     Rate rate = new Rate();
-//    rate.setId(rateDTO.getId());
+    if(rateDTO.getEquipment()<1||rateDTO.getEquipment()>10){
+      throw new RuntimeException("Opremljenost mora biti izmedju 1 i 10");
+    }
+    if(rateDTO.getHygiene()<1||rateDTO.getHygiene()>10){
+      throw new RuntimeException("Higijena mora biti izmedju 1 i 10");
+    }
+    if(rateDTO.getSpace()<1||rateDTO.getSpace()>10){
+      throw new RuntimeException("Prostor mora biti izmedju 1 i 10");
+    }
+    if(rateDTO.getStaff()<1||rateDTO.getStaff()>10){
+      throw new RuntimeException("Osoblje mora biti izmedju 1 i 10");
+    }
     rate.setEquipment(rateDTO.getEquipment());
     rate.setHygiene(rateDTO.getHygiene());
     rate.setSpace(rateDTO.getSpace());
@@ -62,11 +73,6 @@ public class RateServiceImpl implements RateService {
       throw new RuntimeException("Facility not found");
     }
   }
-
-//  Double calculateTotalStaffRatingByFacilityId(Long id);
-//  Double calculateTotalEquipmentRatingByFacilityId(Long id);
-//  Double claculateTotalHygienRatingByFacilityId(Long id);
-//  Double calculateTotalSpaceRatingByFacilityId(Long id);
 
   @Override
   public Double calculateTotalStaffRatingByFacilityId(Long id) {

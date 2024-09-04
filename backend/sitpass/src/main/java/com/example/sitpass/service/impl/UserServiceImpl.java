@@ -73,7 +73,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public User updateUser(String username, UserRequest userRequest) {
     User updatedUser = userRepository.findByEmail(username);
-//    updatedUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
     updatedUser.setFirstName(userRequest.getFirstName());
     updatedUser.setLastName(userRequest.getLastName());
     updatedUser.setPhoneNumber(userRequest.getPhoneNumber());

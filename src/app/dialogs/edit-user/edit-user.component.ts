@@ -39,7 +39,7 @@ export class EditUserComponent implements OnInit {
   }
   
   convertArrayToDate(dateArray: number[]): string {
-    // Convert array [yyyy, mm, dd] to 'yyyy-MM-dd' format
+    // [yyyy, mm, dd] to 'yyyy-MM-dd' format
     const year = dateArray[0];
     const month = String(dateArray[1]).padStart(2, '0');
     const day = String(dateArray[2]).padStart(2, '0');
@@ -48,7 +48,7 @@ export class EditUserComponent implements OnInit {
   
 
   onUpdateUser() {
-    // Convert 'yyyy-MM-dd' to [yyyy, mm, dd] array format if needed
+    //'yyyy-MM-dd' to [yyyy, mm, dd] 
     if (this.userData.birthday && typeof this.userData.birthday === 'string') {
       this.userData.birthday = this.convertDateToArray(this.userData.birthday);
     }
@@ -56,11 +56,8 @@ export class EditUserComponent implements OnInit {
     this.userService.updateUser(this.userData).subscribe({
       next: (response) => {
         console.log('User updated successfully', response);
-        // this.authService.logout();
         this.dialogRef.close();
         window.location.reload();
-        // this.appComponent.showMessage('Uspesno ste izmenili profil. Vraceni ste na stranicu za prijavu.', 'green');
-        // this.router.navigate(['/auth']);
       },
       error: (err) => {
         console.error('Failed to update user', err);

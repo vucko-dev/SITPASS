@@ -64,7 +64,6 @@ public class ExerciseServiceImpl implements ExerciseService {
         LocalTime workdayFrom = workday.getFrom();
         LocalTime workdayUntil = workday.getUntil();
 
-        // Check if 'from' and 'until' are within the workday's time range
         if (!from.toLocalTime().isBefore(workdayFrom) && !until.toLocalTime().isAfter(workdayUntil)) {
           isValidTimeRange = true;
           break;
@@ -81,24 +80,6 @@ public class ExerciseServiceImpl implements ExerciseService {
     return this.exerciseRepository.save(exercise);
   }
 
-
-//  @Override
-//  public List<ExerciseDTO> getExercisesByUserId(Long userId){
-//    List <Exercise> exercises = exerciseRepository.findByUserId(userId);
-//    return exercises.stream()
-//      .map(exercise -> {
-//        ExerciseDTO dto = new ExerciseDTO();
-//
-//        dto.setId(exercise.getId());
-//        dto.setUserId(exercise.getUser().getId());
-//        dto.setFrom(exercise.getFrom());
-//        dto.setUntil(exercise.getUntil());
-//        dto.setFacilityId(exercise.getFacility().getId());
-//
-//        return dto;
-//      })
-//      .collect(Collectors.toList());
-//  }
 
   @Override
   public List<Exercise> getExercisesByUserId(Long userId){

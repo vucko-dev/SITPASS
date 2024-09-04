@@ -59,7 +59,6 @@ public class FacilityServiceImpl implements FacilityService {
 
   @Override
   public Facility getFacilityById(Long id) {
-//    System.out.println(id);
     Facility facility =  facilityRepository.findById(id).orElseGet(null);
     User user = userService.getCurrentUser();
     String role = user.getRoles().get(0).getName();
@@ -160,17 +159,6 @@ public class FacilityServiceImpl implements FacilityService {
     }
         updatedFacility.setWorkdays(workdays);
 
-//    Set<ImageDTO> imagesDTO = facilityDTO.getImages();
-//    Set<Image> images = new HashSet<>();
-//    for (ImageDTO imageDTO : imagesDTO) {
-//      try {
-//        Image image = imageService.save(imageDTO);
-//        images.add(image);
-//      } catch (IOException e) {
-//        throw new RuntimeException(e);
-//      }
-//    }
-//    updatedFacility.setImages(images);
     return this.facilityRepository.save(updatedFacility);
   }
 
@@ -242,10 +230,6 @@ public class FacilityServiceImpl implements FacilityService {
     return this.facilityRepository.save(facility);
   }
 
-//  @Override
-//  public List<Facility> getFacilitiesByCityName(String cityName){
-//    return facilityRepository.findByCity(cityName);
-//  }
 
   @Override
   public Facility addImages(Long facilityId, List<MultipartFile>images){

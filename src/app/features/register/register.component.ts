@@ -38,7 +38,7 @@ export class RegisterComponent {
         next: (response) => {
           console.log('Registration successful', response);
           this.appComponent.showMessage('Poslali ste zahtev za registraciju!', 'green');
-          this.router.navigate(['/auth']); // Redirect to login page after successful registration
+          this.router.navigate(['/auth']);
         },
         error: (err) => {
           console.error('Registration failed', err);
@@ -47,7 +47,6 @@ export class RegisterComponent {
           } else {
             this.appComponent.showMessage('Doslo je do greske pri registraciji. Probajte ponovo.', 'red');
           }
-          // Handle registration error (e.g., show an error message)
         }
       });
   }

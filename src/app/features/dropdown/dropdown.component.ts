@@ -15,7 +15,6 @@ export class DropdownComponent {
   @Output() selectionChange = new EventEmitter<string>();
 
   isOpen = false;
-  // selectedOption: string | null = null;
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;

@@ -59,7 +59,6 @@ public class ReviewServiceImpl implements ReviewService {
       throw new RuntimeException("Niste posetili ovu teretanu!");
     }
     Review review = new Review();
-//    review.setId(reviewDTO.getId());
     if(facilityService.getFacilityById(reviewDTO.getFacilityId()).getActive()==false) {
       throw new RuntimeException("Teretana nije aktivna.");
     }
@@ -166,11 +165,6 @@ public class ReviewServiceImpl implements ReviewService {
     if(comment != null){
       commentService.deleteCommentById(comment.getId());
     }
-//
-//    Rate rate = review.getRate();
-//    if(rate != null){
-//      rateService.deleteFacilityRating(rate.getId());
-//    }
     reviewRepository.delete(review);
   }
 

@@ -123,8 +123,6 @@ export class AllobjectsComponent {
   
 
   filterFacilities() {
-    console.log(this.selectedDisciplines);
-    console.log(this.selectedCities);
   
     const lowTimeDate = this.selectedLowTime ? this.convertToDate(this.selectedLowTime) : null;
     const highTimeDate = this.selectedHighTime ? this.convertToDate(this.selectedHighTime) : null;
@@ -140,11 +138,6 @@ export class AllobjectsComponent {
       const matchesTime = facility.workdays.some((workday:WorkDay) => {
         const fromTime = this.convertToDate(`${workday.from[0]}:${workday.from[1]}`);
         const untilTime = this.convertToDate(`${workday.until[0]}:${workday.until[1]}`);
-
-        // console.log(fromTime);
-        // console.log(untilTime);
-        // console.log(lowTimeDate);
-        // console.log(highTimeDate);
   
         const isWithinLowTime = !lowTimeDate  || (fromTime <= lowTimeDate && lowTimeDate<=untilTime);
         const isWithinHighTime =  !highTimeDate || (untilTime >= highTimeDate && highTimeDate>=fromTime);

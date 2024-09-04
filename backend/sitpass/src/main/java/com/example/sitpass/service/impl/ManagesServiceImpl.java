@@ -98,7 +98,6 @@ public class ManagesServiceImpl implements ManagesService {
       facilityRepository.save(facility);
     } else {
       System.out.println(facilityManages.size());
-
     }
   }
 

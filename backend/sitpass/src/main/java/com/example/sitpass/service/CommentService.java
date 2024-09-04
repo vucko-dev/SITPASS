@@ -10,4 +10,6 @@ public interface CommentService {
   List<Comment> getCommentsByReviewId(Long reviewId);
   Comment getCommentById(Long commentId);
   void deleteCommentById(Long commentId);
+  Comment addReplyComment(CommentDTO commentDTO, Long reviewId, Long userId);
+  boolean hasRightToReply(Long userId, Long reviewId, Long commentId);
 }

@@ -12,7 +12,6 @@ import { ReviewService } from '../../services/review.service';
   styleUrl: './object.component.css'
 })
 export class ObjectComponent {
-  // objectImg: string = 'assets/images/object_img.jpg';
 
   constructor(private reviewService:ReviewService){}
 
@@ -29,7 +28,6 @@ export class ObjectComponent {
   ngOnInit(): void {
     this.reviewService.getReviewsCountByFacilityId(this.id).subscribe((data) => {
       this.reviewsCount = data;
-      // console.log(data);
     });
   }
 }

@@ -31,13 +31,6 @@ public class ExerciseController {
 
   @Autowired
   public ExerciseMapper exerciseMapper;
-//  @GetMapping
-//  @PreAuthorize("hasAuthority('USER')")
-//  public ResponseEntity<List<ExerciseDTO>> getUserExercises(Principal principal) {
-//    User user = userService.findByUsername(principal.getName());
-//    List<ExerciseDTO> exercises = exerciseService.getExercisesByUserId(user.getId());
-//    return new ResponseEntity<>(exercises, HttpStatus.OK);
-//  }
 
   @GetMapping
   @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MANAGER')")

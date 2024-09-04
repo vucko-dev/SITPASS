@@ -21,7 +21,6 @@ public class Manages {
   @Column(name = "end_time")
   private LocalDate endTime;
 
-//  @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private User user;

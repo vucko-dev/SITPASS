@@ -13,7 +13,7 @@ import { UserService } from '../../services/user.service';
 export class EditImageDialogComponent {
   note:string = '';
 
-  selectedFile: File | null = null;  // Declare the type
+  selectedFile: File | null = null; 
 
   constructor(
     private userService:UserService,
@@ -42,7 +42,7 @@ export class EditImageDialogComponent {
     const input = event.target as HTMLInputElement;
   
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0] as File;  // Explicitly cast to File
+      this.selectedFile = input.files[0] as File; 
     } else {
       console.error('No file selected');
       this.selectedFile = null;

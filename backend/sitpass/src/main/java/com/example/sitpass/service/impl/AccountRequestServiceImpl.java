@@ -61,14 +61,6 @@ public class AccountRequestServiceImpl implements AccountRequestService {
 
   public AccountRequest updateAccountRequest(Long id, AccountRequestDTO accountRequestDTO) {
     AccountRequest updatedAccountRequest = accountRequestRepository.findById(id).orElseGet(null);
-//    updatedAccountRequest.setPassword(passwordEncoder.encode(accountRequestDTO.getPassword()));
-//    updatedAccountRequest.setFirstName(accountRequestDTO.getFirstName());
-//    updatedAccountRequest.setLastName(accountRequestDTO.getLastName());
-//    updatedAccountRequest.setPhoneNumber(accountRequestDTO.getPhoneNumber());
-//    updatedAccountRequest.setAddress(accountRequestDTO.getAddress());
-//    updatedAccountRequest.setBirthday(accountRequestDTO.getBirthday());
-//    updatedAccountRequest.setCity(accountRequestDTO.getCity());
-//    updatedAccountRequest.setZipCode(accountRequestDTO.getZipCode());
     updatedAccountRequest.setStatus(accountRequestDTO.getStatus());
 
     if(accountRequestDTO.getStatus().equals(RequestStatus.ACCEPTED)){

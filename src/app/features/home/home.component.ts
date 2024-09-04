@@ -42,7 +42,6 @@ export class HomeComponent {
   loadUserData():void{
     this.userService.getUserInfo().subscribe((data) => {
       this.userCity = data.city;
-      // console.log(this.userCity);
     });
   }
 
@@ -50,11 +49,8 @@ export class HomeComponent {
     this.facilityService.getFacilities().subscribe((data: any[]) => {
       this.facilities = data;
       this.nearFacilities =  this.facilities.filter(facility => facility.city === this.userCity);
-      // console.log(this.nearFacilities);
-      // this.nearFacilities = this.facilities.map(facility => facility.city == );
       this.mostPopularFacilities = this.facilities.filter(facility => facility.totalRating > 0);
       this.mostPopularFacilities =  this.mostPopularFacilities.sort((a, b) => b.totalRating - a.totalRating);
-      // console.log(this.mostPopularFacilities);
       this.tryNewFacilities = this.getUnvisitedFacilities(this.facilities, this.visitedFacilities);
     });
   }
@@ -69,12 +65,10 @@ export class HomeComponent {
     
       forkJoin(facilityRequests).subscribe({
         next: (facilities) => {
-          // Assign facilities to their respective exercises
           this.exercises.forEach((exercise, index) => {
             exercise.facility = facilities[index];
           });
     
-          // Extract and remove duplicates from facilities
           this.visitedFacilities = this.exercises.map(exercise => exercise.facility);
           this.visitedFacilities = this.removeDuplicates(this.visitedFacilities);
           this.tryNewFacilities = this.getUnvisitedFacilities(this.facilities, this.visitedFacilities);
@@ -88,30 +82,6 @@ export class HomeComponent {
         }
       });
     });
-    // this.exerciseService.getExercisesForUser().subscribe((data: any[]) =>{
-    //   this.exercises = data;
-    //   this.exercises.forEach(exercise => {
-    //     this.facilityService.getFacilityById(exercise.facilityId).subscribe({
-    //       next: (facility) => {
-    //         // Add the facility to the exercise object
-    //         exercise.facility = facility;
-    //       },
-    //       error: (err) => {
-    //         console.error(`Failed to load facility for exercise ID ${exercise.id}`, err);
-    //       }
-    //     });
-    //   });
-    //   this.visitedFacilities = this.exercises.map(exercise=>exercise.facility);
-    //   this.visitedFacilities = this.removeDuplicates(this.visitedFacilities);      // console.log(this.visitedFacilities);
-    //   // console.log('Exercises:');
-    //   // console.log(this.removeFacilityDuplicates(this.visitedFacilities));
-    //   this.tryNewFacilities = this.getUnvisitedFacilities(this.facilities, this.visitedFacilities);
-    //   this.userDisciplines = this.visitedFacilities.map(facility=>facility.disciplines);
-    //   this.userDisciplines = this.userDisciplines.flat();
-    //   this.userDisciplines = this.removeDuplicates(this.userDisciplines);
-    //   this.tryNewFacilities = this.getTryNewFacilities(this.tryNewFacilities, this.userDisciplines);
-    //   // console.log(this.userDisciplines);
-    // })
   }
 
 
@@ -136,9 +106,7 @@ export class HomeComponent {
 
   getTryNewFacilities(facilities: any[], userDisciplines: any[]): any[] {
     return facilities.filter(facility =>
-      // Check that every discipline in the facility is not in userDisciplines
       facility.disciplines.every((discipline: { id: any; }) =>
-        // Return true if no discipline in userDisciplines matches the current discipline
         !userDisciplines.some(userDiscipline => userDiscipline.id === discipline.id)
       )
     );

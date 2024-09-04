@@ -64,10 +64,6 @@ public class User implements UserDetails {
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private List<Role> roles;
 
-//  @Lob  // Ova anotacija označava BLOB ili CLOB polje.
-//  @Column(name="image")
-//  private byte[] image;
-
   @OneToOne(fetch = FetchType.EAGER)
   @JoinTable(name = "user_image",
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
